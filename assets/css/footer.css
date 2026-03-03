@@ -1,0 +1,94 @@
+/* ═══════════════════════════════════════════════════════
+   PERCEPTYA — FOOTER
+══════════════════════════════════════════════════════ */
+
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  padding: 64px 0 0;
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+
+/* Left col */
+.footer-logo {
+  font-family: var(--font); font-weight: 700;
+  font-size: 16px; letter-spacing: .14em;
+  color: var(--white); text-decoration: none;
+  display: inline-block; margin-bottom: 12px;
+}
+.footer-logo span { color: var(--orange); }
+
+.footer-tagline {
+  font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6; max-width: 280px;
+  margin-bottom: 20px;
+}
+
+.footer-social { display: flex; gap: 8px; }
+.footer-social a {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #666; text-decoration: none; transition: all .18s;
+}
+.footer-social a:hover { border-color: var(--orange); color: var(--orange); }
+.footer-social svg { width: 11px; height: 11px; fill: currentColor; }
+
+/* Right col */
+.footer-links { display: flex; gap: 48px; justify-content: flex-end; }
+
+.footer-col h4 {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--orange); letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+
+.footer-col a {
+  display: block; font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none; margin-bottom: 10px;
+  transition: color .15s;
+}
+.footer-col a:hover { color: var(--white); }
+
+/* Bottom strip */
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+
+.footer-copyright {
+  font-family: var(--mono); font-size: 11px;
+  color: rgba(255,255,255,0.22);
+}
+
+.footer-strip {
+  font-family: var(--mono); font-size: 11px;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: .04em;
+}
+
+@media (max-width: 767px) {
+  .footer-main   { grid-template-columns: 1fr; gap: 32px; }
+  .footer-links  { justify-content: flex-start; gap: 32px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}

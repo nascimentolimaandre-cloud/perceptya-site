@@ -1,0 +1,40 @@
+/* ═══════════════════════════════════════════════════════
+   PERCEPTYA — DESIGN TOKENS
+   Single source of truth for all CSS variables
+══════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────── */
+  --orange:        #FF6B2B;
+  --orange-dim:    #e05a20;
+  --orange-glow:   rgba(255,107,43,0.12);
+  --orange-border: rgba(255,107,43,0.25);
+
+  /* ── Neutrals ──────────────────────────────────────── */
+  --bg:            #080808;
+  --bg2:           #0f0f0f;
+  --bg3:           #141414;
+  --white:         #ffffff;
+  --muted:         #888;
+  --border:        rgba(255,255,255,0.08);
+  --border2:       rgba(255,255,255,0.12);
+
+  /* ── Terminal ──────────────────────────────────────── */
+  --green-term:    #00FF85;
+  --cyan-term:     #00D4FF;
+
+  /* ── Typography ────────────────────────────────────── */
+  --font:          'Urbanist', sans-serif;
+  --mono:          'DM Mono', monospace;
+
+  /* ── Layout ─────────────────────────────────────────── */
+  --header-h:      58px;
+  --max-w:         1440px;
+  --pad-x:         24px;
+}
+
+/* Responsive overrides */
+@media (min-width: 480px)  { :root { --pad-x: 32px; } }
+@media (min-width: 768px)  { :root { --header-h: 66px; --pad-x: 48px; } }
+@media (min-width: 1024px) { :root { --pad-x: 56px; } }
+@media (min-width: 1280px) { :root { --pad-x: 64px; } }

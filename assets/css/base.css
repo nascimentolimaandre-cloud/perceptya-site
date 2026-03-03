@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════
+   PERCEPTYA — BASE STYLES
+   Reset · Typography · Utilities · Buttons · Cards
+══════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; color-scheme: dark; }
+html, body { height: 100%; overflow-x: hidden; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Container ──────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* ── Section pattern ────────────────────────────────── */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 96px 0;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 16px; height: 1px;
+  background: var(--orange);
+}
+
+.section-headline {
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.65);
+  max-width: 600px;
+  margin-bottom: 48px;
+}
+
+/* ── Divider ────────────────────────────────────────── */
+.divider { width: 100%; height: 1px; background: var(--border); }
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn-primary {
+  font-size: 14px; font-weight: 500;
+  color: #fff; background: var(--orange); border: none;
+  padding: 13px 22px; border-radius: 5px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  text-decoration: none; transition: all .2s; white-space: nowrap;
+  letter-spacing: .01em;
+}
+.btn-primary:hover {
+  background: var(--orange-dim);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255,107,43,.35);
+}
+.btn-primary svg { width: 13px; height: 13px; flex-shrink: 0; transition: transform .2s; }
+.btn-primary:hover svg { transform: translateX(3px); }
+
+.btn-secondary {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 13px 22px; border-radius: 5px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  text-decoration: none; white-space: nowrap;
+  backdrop-filter: blur(8px); transition: all .2s;
+}
+.btn-secondary:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.12);
+}
+
+.btn-ghost {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  background: none; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none; transition: color .2s; padding: 0;
+}
+.btn-ghost:hover { color: var(--white); }
+
+/* ── Cards ──────────────────────────────────────────── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--border2); }
+.card-accent { border-left: 2px solid var(--orange); }
+
+/* ── Grid utilities ─────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+@media (max-width: 1023px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 767px)  {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section { padding: 64px 0; }
+}
+
+/* ── Pill tags ──────────────────────────────────────── */
+.pill {
+  font-family: var(--mono); font-size: 9.5px;
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  padding: 5px 10px; border-radius: 3px;
+  letter-spacing: .04em; white-space: nowrap;
+}
+
+/* ── Animations ─────────────────────────────────────── */
+@keyframes fadeUp  { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes blink   { 0%,100% { opacity:1; } 50% { opacity:0; } }

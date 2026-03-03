@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perceptya — Data & AI Transformation</title>
+<!-- TODO: Add favicon: <link rel="icon" href="assets/img/favicon.ico"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange:        #FF6B2B;
+  --orange-dim:    #e05a20;
+  --orange-glow:   rgba(255,107,43,0.12);
+  --orange-border: rgba(255,107,43,0.25);
+  --white:         #ffffff;
+  --muted:         #888;
+  --border:        rgba(255,255,255,0.08);
+  --border2:       rgba(255,255,255,0.12);
+  --green-term:    #00FF85;
+  --cyan-term:     #00D4FF;
+  --font:          'Urbanist', sans-serif;
+  --mono:          'DM Mono', monospace;
+  --header-h:      58px;
+  --max-w:         1440px;
+  --pad-x:         24px;
+}
+
+html, body {
+  height: 100%;
+  background: #080808 !important;
+  color-scheme: dark;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  background: #080808 !important;
+}
+
+/* ═══════════════════════════════════════════
+   CONTAINER — max 1440px, left-anchored
+═══════════════════════════════════════════ */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* ═══════════════════════════════════════════
+   VIDEO BACKGROUND
+═══════════════════════════════════════════ */
+.video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #080808;
+}
+
+/*
+  iframe cover technique:
+  Since iframes ignore object-fit, we simulate "cover" by making the
+  iframe always larger than the viewport, maintaining the video's 16:9
+  aspect ratio, then centering it. JS recalculates on resize.
+*/
+.video-bg iframe {
+  position: absolute;
+  border: none;
+  pointer-events: none;
+  /* Initial values overridden by JS — just a safe default */
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Dark overlay */
+.video-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Bottom fade */
+    linear-gradient(to top,    rgba(8,8,8,0.92) 0%,   transparent 45%),
+    /* LEFT text zone — strong dark band where copy lives */
+    linear-gradient(to right,  rgba(8,8,8,0.92) 0%,   rgba(8,8,8,0.78) 35%, rgba(8,8,8,0.30) 58%, transparent 78%),
+    /* Top fade */
+    linear-gradient(to bottom, rgba(8,8,8,0.55) 0%,   transparent 22%),
+    /* Base tint */
+    rgba(8,8,8,0.22);
+  /* Mobile override applied via separate rule below */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Text shield on hero-copy — all screen sizes */
+.hero-copy::before {
+  content: '';
+  position: absolute;
+  inset: -32px -48px -32px -48px;
+  background: radial-gradient(ellipse at 25% 50%, rgba(8,8,8,0.65) 0%, transparent 72%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Mobile: even stronger overlay */
+@media (max-width: 767px) {
+  .video-bg::after {
+    background:
+      linear-gradient(to top,    rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.82) 30%, rgba(8,8,8,0.40) 60%, transparent 80%),
+      rgba(8,8,8,0.45);
+  }
+  .hero-copy::before {
+    inset: -20px;
+    background: radial-gradient(ellipse at 30% 50%, rgba(8,8,8,0.65) 0%, transparent 75%);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════ */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: var(--header-h);
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.60);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Inner wrapper respects max-width */
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-logo {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: var(--white);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-logo span { color: var(--orange); }
+
+.social-icons { display: none; align-items: center; gap: 8px; }
+.social-icons a {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #777;
+  text-decoration: none;
+  transition: all .18s;
+}
+.social-icons a:hover { border-color: var(--orange); color: var(--orange); }
+.social-icons svg { width: 11px; height: 11px; fill: currentColor; display: block; }
+
+/* Desktop nav */
+.desktop-nav { display: none; }
+.desktop-nav a {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none; letter-spacing: .015em;
+  transition: color .18s;
+}
+.desktop-nav a:hover { color: var(--white); }
+
+.desktop-right { display: none; align-items: center; gap: 14px; }
+
+/* Lang toggle */
+.lang-toggle { display: flex; align-items: center; gap: 2px; }
+.lang-toggle span {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  cursor: pointer; padding: 4px 7px; border-radius: 4px;
+  display: flex; align-items: center; gap: 4px;
+  transition: all .15s; white-space: nowrap;
+}
+.lang-toggle span .flag { font-size: 12px; line-height: 1; }
+.lang-toggle span.active { color: var(--white); background: rgba(255,255,255,.08); }
+.lang-toggle span:hover:not(.active) { color: rgba(255,255,255,0.75); }
+.lang-sep { width: 1px; height: 11px; background: rgba(255,255,255,0.12); margin: 0 1px; }
+
+.btn-nav {
+  font-size: 13px; font-weight: 500;
+  color: #fff; background: var(--orange); border: none;
+  padding: 8px 16px; border-radius: 5px; cursor: pointer;
+  letter-spacing: .01em; white-space: nowrap;
+  transition: background .2s, box-shadow .2s, transform .2s;
+}
+.btn-nav:hover { background: var(--orange-dim); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,107,43,.3); }
+
+/* Hamburger */
+.hamburger {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; width: 34px; height: 34px; padding: 5px;
+  background: none; border: none; cursor: pointer; z-index: 2;
+}
+.hamburger span {
+  display: block; height: 1.5px;
+  background: rgba(255,255,255,0.85); border-radius: 2px;
+  transition: all .25s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile drawer */
+.mobile-nav {
+  display: none; position: fixed;
+  top: var(--header-h); left: 0; right: 0;
+  background: rgba(8,8,8,0.97);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 20px 28px;
+  z-index: 190; flex-direction: column; gap: 2px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-size: 17px; font-weight: 400;
+  color: rgba(255,255,255,0.85); text-decoration: none;
+  padding: 13px 6px; border-bottom: 1px solid var(--border);
+  transition: color .15s;
+}
+.mobile-nav a:last-of-type { border-bottom: none; }
+.mobile-nav a:hover { color: var(--white); }
+.mobile-nav-footer {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════
+   HERO — MOBILE BASE
+═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  padding-top: var(--header-h);
+}
+
+/* Inner container holds copy (+ terminal on desktop) */
+.hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+}
+
+/* Copy block */
+.hero-copy {
+  position: relative;   /* needed for ::before text shield */
+  padding: 40px 0 40px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--orange); letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 18px;
+  opacity: 0; animation: fadeUp .5s ease forwards .1s;
+}
+.eyebrow::before {
+  content: ''; display: block;
+  width: 16px; height: 1px; background: var(--orange);
+}
+
+h1 {
+  font-weight: 500;
+  font-size: clamp(36px, 10vw, 72px);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  color: #ffffff;
+  margin-bottom: 18px;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,0.9);
+  opacity: 0; animation: fadeUp .55s ease forwards .2s;
+}
+h1 em { font-style: normal; color: var(--orange); }
+
+.hero-sub {
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.72);
+  max-width: 480px;
+  margin-bottom: 28px;
+  text-shadow: 0 1px 16px rgba(0,0,0,0.98), 0 1px 3px rgba(0,0,0,0.95);
+  opacity: 0; animation: fadeUp .55s ease forwards .32s;
+}
+.hero-sub strong { color: rgba(255,255,255,0.95); font-weight: 400; }
+
+.pills {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeUp .55s ease forwards .42s;
+}
+.pill {
+  font-family: var(--mono); font-size: 9.5px;
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  padding: 5px 10px; border-radius: 3px;
+  letter-spacing: .04em; white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.ctas {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .55s ease forwards .50s;
+}
+.btn-primary {
+  font-size: 14px; font-weight: 500;
+  color: #fff; background: var(--orange); border: none;
+  padding: 13px 22px; border-radius: 5px; cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  transition: all .2s; white-space: nowrap;
+}
+.btn-primary:hover { background: var(--orange-dim); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,107,43,.35); }
+.btn-primary svg { width: 13px; height: 13px; flex-shrink: 0; transition: transform .2s; }
+.btn-primary:hover svg { transform: translateX(3px); }
+
+.btn-secondary {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 13px 22px; border-radius: 5px; cursor: pointer;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  transition: all .2s;
+}
+.btn-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); }
+
+/* ── Terminal — offset right, bleeds ─── */
+.hero-terminal {
+  display: none;
+}
+
+.terminal-wrapper {
+  width: 100%;
+  margin-right: -20px;
+  border-radius: 10px 0 0 0;
+  overflow: hidden;
+  position: relative;
+}
+.terminal-wrapper::before {
+  content: '';
+  position: absolute; inset: -1px;
+  background: linear-gradient(135deg, rgba(255,107,43,.15), rgba(0,212,255,.06), transparent 55%);
+  border-radius: 10px 0 0 0;
+  z-index: -1;
+}
+.terminal {
+  background: rgba(8,8,8,0.82);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-right: none; border-bottom: none;
+  border-radius: 10px 0 0 0;
+  font-family: var(--mono);
+  line-height: 1.62;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.terminal-bar {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.dots { display: flex; gap: 5px; }
+.dot  { width: 9px; height: 9px; border-radius: 50%; }
+.dot-r { background: #3a1c1c; } .dot-y { background: #2e2a1a; } .dot-g { background: #1a2e1c; }
+.terminal-title { font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: .06em; }
+
+.terminal-body {
+  padding: 16px 16px 20px;
+  font-size: 11.5px;
+  overflow-x: auto;
+}
+.t-line { display: flex; align-items: flex-start; min-height: 19px; opacity: 0; transition: opacity .12s; white-space: nowrap; }
+.t-line.visible { opacity: 1; }
+.t-blank { height: 8px; opacity: 1 !important; }
+.t-prompt  { color: var(--green-term); margin-right: 7px; flex-shrink: 0; font-weight: 500; }
+.t-cmd     { color: #b0b0b0; }
+.t-section { color: var(--cyan-term); font-weight: 500; }
+.t-check   { color: var(--green-term); margin-right: 5px; flex-shrink: 0; }
+.t-label   { color: #4a4a4a; }
+.t-value   { color: rgba(255,255,255,0.85); }
+.t-accent  { color: var(--green-term); font-weight: 500; }
+.t-success { color: var(--green-term); font-weight: 500; }
+.t-output  { color: #333; }
+.t-output-val { color: #555; }
+.cursor {
+  display: inline-block; width: 7px; height: 12px;
+  background: var(--green-term); vertical-align: middle;
+  margin-left: 2px; animation: blink 1.1s step-end infinite;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp  { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes blink   { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+/* ═══════════════════════════════════════════
+   sm — 480px+
+═══════════════════════════════════════════ */
+@media (min-width: 480px) {
+  :root { --pad-x: 32px; }
+  .social-icons { display: flex; }
+}
+
+/* ═══════════════════════════════════════════
+   md — 768px+  →  Desktop 2-col
+═══════════════════════════════════════════ */
+@media (min-width: 768px) {
+  :root { --header-h: 66px; --pad-x: 48px; }
+
+  /* Header: logo + nav LEFT, lang + cta RIGHT */
+  .header-inner { justify-content: flex-start; gap: 0; }
+  .header-left  { gap: 48px; } /* logo sits beside nav links */
+  .hamburger    { display: none; }
+  .mobile-nav   { display: none !important; }
+  .desktop-nav  { display: flex; align-items: center; gap: 36px; }
+  .desktop-right {
+    display: flex;
+    margin-left: auto; /* push to right edge of container */
+  }
+
+  /* Hero inner: 2 columns, align children to TOP */
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;          /* TOP alignment */
+    padding-top: 0;
+  }
+
+  .hero-copy {
+    padding: 72px 48px 80px 0;   /* top padding sets the start line */
+    grid-column: 1;
+  }
+
+  .hero-terminal {
+    display: flex;
+    grid-column: 2;
+    padding-top: 72px;           /* same as hero-copy top padding → aligned */
+    padding-left: 36px;
+    align-items: flex-start;
+    opacity: 0; animation: fadeIn .7s ease forwards .55s;
+  }
+
+  .terminal-wrapper { border-radius: 12px 0 0 12px; margin-right: -48px; }
+  .terminal         { border-radius: 12px 0 0 12px; font-size: 12.5px; }
+  .terminal-body    { min-height: 320px; }
+
+  /* Desktop: coverVideo() JS handles sizing at all resolutions */
+}
+
+/* ═══════════════════════════════════════════
+   lg — 1024px+
+═══════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  :root { --pad-x: 56px; }
+  .hero-copy    { padding: 88px 56px 80px 0; }
+  .hero-terminal { padding-top: 88px; padding-left: 48px; }
+  .terminal-wrapper { margin-right: -56px; }
+  .terminal { font-size: 13px; }
+  .terminal-body { min-height: 380px; }
+}
+
+/* ═══════════════════════════════════════════
+   xl — 1280px+ (near max-width)
+═══════════════════════════════════════════ */
+@media (min-width: 1280px) {
+  :root { --pad-x: 64px; }
+  .hero-copy    { padding-top: 96px; }
+  .hero-terminal { padding-top: 96px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     VIDEO BACKGROUND
+═══════════════════════════════════ -->
+<div class="video-bg">
+  <iframe
+    src="https://player.cloudinary.com/embed/?cloud_name=dklf3lssu&public_id=gemini_generated_video_C2BF10B3_wndj7w&autoplay=true&loop=true&muted=true&controls=false&showLogo=false&showInfo=false&fluid=true&aspectRatio=16:9"
+    allow="autoplay; fullscreen; encrypted-media"
+    allowfullscreen
+    frameborder="0"
+    scrolling="no"
+  ></iframe>
+</div>
+
+<!-- ═══════════════════════════════════
+     HEADER
+═══════════════════════════════════ -->
+<header>
+<div class="header-inner">
+  <div class="header-left">
+    <a href="#" class="nav-logo">PERCEPT<span>Y</span>A</a>
+    <div class="social-icons">
+      <a href="#" title="LinkedIn" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="#" title="Instagram" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <nav class="desktop-nav">
+    <a href="#">Manifesto</a>
+    <a href="#">Services</a>
+    <a href="#">Industries</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="desktop-right">
+    <div class="lang-toggle">
+      <span class="active"><span class="flag">🇺🇸</span> EN</span>
+      <div class="lang-sep"></div>
+      <span><span class="flag">🇧🇷</span> PT</span>
+      <div class="lang-sep"></div>
+      <span><span class="flag">🇪🇸</span> ES</span>
+    </div>
+    <button class="btn-nav">Start AI Value Discovery</button>
+  </div>
+
+  <button class="hamburger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div><!-- /.header-inner -->
+</header>
+
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#">Manifesto</a>
+  <a href="#">Services</a>
+  <a href="#">Industries</a>
+  <a href="#">Contact</a>
+  <div class="mobile-nav-footer">
+    <div class="lang-toggle">
+      <span class="active"><span class="flag">🇺🇸</span> EN</span>
+      <div class="lang-sep"></div>
+      <span><span class="flag">🇧🇷</span> PT</span>
+      <div class="lang-sep"></div>
+      <span><span class="flag">🇪🇸</span> ES</span>
+    </div>
+    <button class="btn-nav">Start Journey</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     HERO
+═══════════════════════════════════ -->
+<section class="hero">
+<div class="hero-inner">
+
+  <!-- Copy -->
+  <div class="hero-copy">
+    <div class="eyebrow">Data &amp; AI Transformation Boutique</div>
+
+    <h1>Turn Data and AI into <em>real</em> business results.</h1>
+
+    <p class="hero-sub">
+      We help companies move from <strong>fragmented data and stalled pilots</strong>
+      to production-grade AI that grows revenue, cuts costs, and improves customer experience —
+      with a clear economic thesis from day one.
+    </p>
+
+    <div class="pills">
+      <span class="pill">ROI-First</span>
+      <span class="pill">Tech Agnostic</span>
+      <span class="pill">Production, Not Pilots</span>
+      <span class="pill">PERCEPTYA AI VALUE SYSTEM™</span>
+    </div>
+
+    <div class="ctas">
+      <button class="btn-primary">
+        Start AI Value Discovery
+        <svg viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="btn-secondary">Read our Manifesto</button>
+    </div>
+  </div>
+
+  <!-- Terminal — bleeding right -->
+  <div class="hero-terminal">
+    <div class="terminal-wrapper">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dots">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+          </div>
+          <span class="terminal-title">perceptya — ai-value-discovery</span>
+        </div>
+        <div class="terminal-body" id="termBody"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.hero-inner -->
+</section>
+
+<script>
+/* ── Hamburger ─────────────────────────────────────────────── */
+const burger    = document.getElementById('burger');
+const mobileNav = document.getElementById('mobileNav');
+burger.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  burger.classList.toggle('open', open);
+});
+
+/* ── Terminal ──────────────────────────────────────────────── */
+const LINES = [
+  { type:'prompt',  text:'run ai-value-discovery --client=enterprise' },
+  { type:'blank' },
+  { type:'section', text:'> Initializing PERCEPTYA AI VALUE SYSTEM™...' },
+  { type:'blank' },
+  { type:'section', text:'> Phase 1: AI Value Discovery' },
+  { type:'check',   label:'Executive alignment',    value:'complete' },
+  { type:'check',   label:'AI Maturity Score',      value:'2.4 / 5.0', accent:'→ gap analysis ready' },
+  { type:'check',   label:'Use cases identified',   value:'23' },
+  { type:'check',   label:'Top 7 prioritized',      value:'by economic impact' },
+  { type:'check',   label:'Financial Impact Model', value:'$4.2M', accent:'(12 months)' },
+  { type:'check',   label:'Architecture Blueprint', value:'Data Foundation + Agent Layer' },
+  { type:'check',   label:'18-month Roadmap',       value:'sequenced · costed · board-ready' },
+  { type:'blank' },
+  { type:'success', text:'SUCCESS: AI Value Discovery complete.' },
+  { type:'output',  label:'Output →', value:'Roadmap_v1.pdf | Impact_Model.xlsx' },
+  { type:'blank' },
+  { type:'cursor',  text:'> Ready to industrialize. Run Phase 2? [Y/n]: ' },
+];
+
+const body = document.getElementById('termBody');
+let cur = 0;
+
+function build(d) {
+  const el = document.createElement('div');
+  el.className = 't-line';
+  if (d.type === 'blank')    { el.className = 't-line t-blank'; return el; }
+  if (d.type === 'prompt')   el.innerHTML = `<span class="t-prompt">user@perceptya:~$</span><span class="t-cmd"> ${d.text}</span>`;
+  else if (d.type === 'section') el.innerHTML = `<span class="t-section">${d.text}</span>`;
+  else if (d.type === 'check') {
+    let h = `<span class="t-check">  [✓]</span><span class="t-label"> ${d.label}: </span><span class="t-value">${d.value}</span>`;
+    if (d.accent) h += `<span class="t-accent"> ${d.accent}</span>`;
+    el.innerHTML = h;
+  }
+  else if (d.type === 'success') el.innerHTML = `<span class="t-success">  ${d.text}</span>`;
+  else if (d.type === 'output')  el.innerHTML = `<span class="t-output">  ${d.label} </span><span class="t-output-val">${d.value}</span>`;
+  else if (d.type === 'cursor')  el.innerHTML = `<span class="t-section">${d.text}</span><span class="cursor"></span>`;
+  return el;
+}
+
+function next() {
+  if (cur >= LINES.length) { setTimeout(restart, 5000); return; }
+  const d  = LINES[cur++];
+  const el = build(d);
+  body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('visible'));
+  const delay = d.type==='blank'?55 : d.type==='prompt'?420 : d.type==='success'?300 : d.type==='cursor'?0 : 120;
+  setTimeout(next, delay);
+}
+
+function restart() {
+  body.querySelectorAll('.t-line').forEach(l => { l.style.transition='opacity .3s'; l.style.opacity='0'; });
+  setTimeout(() => { body.innerHTML=''; cur=0; setTimeout(next,400); }, 480);
+}
+
+setTimeout(next, 900);
+
+/* ── Video cover ────────────────────────────────────────────────────
+   Makes the Cloudinary iframe behave like object-fit:cover
+   Video aspect ratio: 16:9
+─────────────────────────────────────────────────────────────────── */
+(function coverVideo() {
+  const RATIO = 16 / 9;
+  const iframe = document.querySelector('.video-bg iframe');
+  if (!iframe) return;
+
+  function resize() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    let w, h;
+
+    if (vw / vh > RATIO) {
+      // Viewport is wider than 16:9 — fit width, overflow height
+      w = vw;
+      h = vw / RATIO;
+    } else {
+      // Viewport is taller than 16:9 (portrait / mobile) — fit height
+      h = vh;
+      w = vh * RATIO;
+    }
+
+    // Add 2px safety margin to avoid sub-pixel gaps
+    w = Math.ceil(w) + 2;
+    h = Math.ceil(h) + 2;
+
+    iframe.style.width  = w + 'px';
+    iframe.style.height = h + 'px';
+    iframe.style.top    = Math.round((vh - h) / 2) + 'px';
+    iframe.style.left   = Math.round((vw - w) / 2) + 'px';
+    iframe.style.transform = 'none';
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+})();
+</script>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.2 — THE PROBLEM WE SOLVE
+  Brief: "Why AI Initiatives Stall"
+  H: "Most organizations have the ambition. Few have the foundation."
+  Body: 4 pain-point cards (2×2 grid), dark cards with orange left-border
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="problem" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.3 — OUR METHODOLOGY
+  Brief: "The Perceptya AI Value System™"
+  H: "A structured path from data chaos to AI that earns its place on the P&L."
+  Body: Phase 1 (6–10 wks) + Phase 2 (modular 3–12+ mo) visual timeline/2-col
+  CTA: "Explore the full methodology →" → services.html
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="methodology" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.4 — PROPRIETARY ACCELERATORS
+  Brief: "Built to move faster. Designed to reduce risk."
+  Body: 4 accelerator cards (same content mirrored on services.html §6.4)
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="accelerators" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.5 — DIFFERENTIALS
+  Brief: 9 proprietary differentials (locked copy, do not rewrite)
+  Layout: grid of 9 cards or numbered list
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="differentials" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.6 — INDUSTRIES SNAPSHOT
+  Brief: 6 sectors — Retail, Financial Services, Logistics,
+         Manufacturing, Healthcare, B2B/SaaS
+  Layout: horizontal tabs or 3×2 grid teaser → links to industries.html
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="industries" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.7 — DELIVERY MODEL
+  Brief: "How we engage"
+  Body: 3 tracks — Discovery / Industrialization / PODs
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="delivery" style="display:none;">
+  <!-- TODO -->
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  📌 SECTION 4.8 — HOME CTA STRIP
+  Brief: Final CTA before footer
+  H: "Ready to find out where AI creates real value for your business?"
+  CTA: "Start AI Value Discovery →" → contact.html
+  Secondary: "Read our Manifesto →" → manifesto.html
+  Status: TO BUILD
+════════════════════════════════════════════════════ -->
+<section class="section" id="cta-strip" style="display:none;">
+  <!-- TODO -->
+</section>
+
+</body>
+</html>
