@@ -431,6 +431,322 @@ h1 em { font-style: normal; color: var(--orange); }
 @keyframes blink   { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
 /* ═══════════════════════════════════════════
+   CONTENT SECTIONS — sits on top of hero video
+═══════════════════════════════════════════ */
+.content-sections {
+  position: relative;
+  z-index: 2;
+  background: #080808;
+}
+
+/* ── Section base patterns ─────────────────── */
+.section {
+  padding: 96px 0;
+}
+.section-label {
+  font-family: var(--mono); font-size: 10px; color: var(--orange);
+  letter-spacing: .12em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 16px; height: 1px; background: var(--orange);
+}
+.section-headline {
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1; letter-spacing: -.02em;
+  color: var(--white); margin-bottom: 16px;
+}
+.section-headline em { font-style: normal; color: var(--orange); }
+.section-sub {
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.65);
+  max-width: 620px; margin-bottom: 48px;
+}
+
+/* ── Grid utilities ────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* ── Cards ─────────────────────────────────── */
+.card {
+  background: var(--bg2, #0f0f0f);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 32px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--border2); }
+.card-accent { border-left: 2px solid var(--orange); }
+
+/* ── §4.2 — Problem Cards ──────────────────── */
+.problem-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+.problem-icon svg {
+  width: 18px; height: 18px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.card-title {
+  font-size: 17px; font-weight: 500;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.card-body {
+  font-size: 15px; font-weight: 300;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── Scroll reveal ─────────────────────────── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .08s; }
+.reveal-d2 { transition-delay: .16s; }
+.reveal-d3 { transition-delay: .24s; }
+.reveal-d4 { transition-delay: .32s; }
+
+@media (max-width: 767px) {
+  .section { padding: 64px 0; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   §4.3 — METHODOLOGY COMPONENT
+═══════════════════════════════════════════ */
+#methodology {
+  background: #0b0b0b;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* System title bar */
+.meth-system-eyebrow {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+  margin-bottom: 40px;
+}
+
+/* Pipeline wrapper */
+.meth-pipeline {
+  display: flex; align-items: stretch; gap: 0;
+  margin-bottom: 4px;
+}
+
+/* Phase box */
+.meth-phase {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 18px 18px 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative;
+}
+.meth-phase.ph1 { flex: 4; border-right: none; border-radius: 8px 0 0 8px; }
+.meth-phase.ph2 { flex: 5; border-radius: 0 8px 8px 0; }
+
+/* Phase header */
+.meth-ph-header { display: flex; align-items: center; gap: 10px; }
+.meth-ph-badge {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  padding: 3px 8px; border-radius: 3px; white-space: nowrap;
+}
+.meth-ph-label {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4); white-space: nowrap;
+}
+.meth-ph-dur {
+  font-family: var(--mono); font-size: 9px; color: var(--muted);
+  margin-left: auto; white-space: nowrap;
+}
+
+/* Phase divider */
+.meth-connector {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; flex-shrink: 0;
+  background: rgba(255,107,43,0.04);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.meth-connector svg { width: 20px; height: 20px; }
+
+/* Nodes row */
+.meth-nodes { display: flex; gap: 8px; }
+
+/* Individual node */
+.meth-node {
+  flex: 1; min-width: 0;
+  background: #111; border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 12px;
+  cursor: pointer; transition: all .2s;
+  display: flex; flex-direction: column; gap: 10px;
+  text-align: left; position: relative;
+}
+.meth-node:hover { border-color: rgba(255,107,43,0.35); background: #141414; }
+.meth-node.active {
+  border-color: var(--orange); background: rgba(255,107,43,0.07);
+  box-shadow: 0 0 24px rgba(255,107,43,0.12);
+}
+/* Active arrow pointer */
+.meth-node.active::after {
+  content: ''; position: absolute;
+  bottom: -9px; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 8px solid transparent; border-right: 8px solid transparent;
+  border-top: 8px solid var(--orange);
+  z-index: 2;
+}
+
+.node-num {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--orange); letter-spacing: .06em;
+}
+.node-icon svg {
+  width: 17px; height: 17px; display: block;
+  stroke: rgba(255,255,255,0.35); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke .2s;
+}
+.meth-node:hover .node-icon svg,
+.meth-node.active .node-icon svg { stroke: var(--orange); }
+.node-lbl {
+  font-size: 11px; font-weight: 500; line-height: 1.35;
+  color: rgba(255,255,255,0.6); transition: color .2s;
+}
+.meth-node:hover .node-lbl,
+.meth-node.active .node-lbl { color: var(--white); }
+
+/* ── Detail Panel ─────────────────────────── */
+.meth-detail-wrap {
+  display: none; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 8px;
+  margin-top: 12px;
+}
+.meth-detail-wrap.open { display: block; animation: fadeUp .3s ease forwards; }
+
+/* Panel header */
+.dp-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 24px; background: #111;
+  border-bottom: 1px solid var(--border);
+}
+.dp-phase-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  padding: 3px 8px; border-radius: 3px; flex-shrink: 0;
+}
+.dp-title { font-size: 17px; font-weight: 500; color: var(--white); flex: 1; }
+.dp-close {
+  width: 30px; height: 30px; border-radius: 4px;
+  background: none; border: 1px solid var(--border);
+  color: var(--muted); cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; font-size: 16px; line-height: 1;
+}
+.dp-close:hover { border-color: var(--border2); color: var(--white); }
+
+/* Panel body — two columns */
+.dp-body { display: grid; grid-template-columns: 1fr 320px; }
+
+/* Left: 4 frames 2×2 */
+.dp-frames {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-right: 1px solid var(--border);
+}
+.dp-frame {
+  padding: 20px 22px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.dp-frame:nth-child(2n) { border-right: none; }
+.dp-frame:nth-child(3),
+.dp-frame:nth-child(4) { border-bottom: none; }
+.frame-tag {
+  font-family: var(--mono); font-size: 9px; color: var(--orange);
+  letter-spacing: .12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 11px;
+}
+.frame-tag::before { content: ''; width: 10px; height: 1px; background: var(--orange); }
+.frame-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.frame-list li {
+  font-size: 12.5px; font-weight: 300; line-height: 1.5;
+  color: rgba(255,255,255,0.65); padding-left: 13px; position: relative;
+}
+.frame-list li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+.frame-value {
+  font-size: 13.5px; font-weight: 300; line-height: 1.65;
+  color: rgba(255,255,255,0.8);
+}
+.frame-value strong { color: var(--white); font-weight: 500; }
+
+/* Panel CTA bar */
+.dp-cta-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 22px; border-top: 1px solid var(--border);
+  background: #0d0d0d; grid-column: 1 / -1;
+}
+.dp-cta-text {
+  font-size: 12px; font-weight: 300; color: var(--muted); flex: 1;
+}
+
+/* Right: mockup panel */
+.dp-mockup {
+  padding: 20px; background: #090909;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.mockup-caption {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .07em;
+  text-transform: uppercase; color: rgba(255,255,255,0.2);
+}
+.mockup-artifact {
+  flex: 1; border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden; background: #0e0e0e;
+}
+.artifact-chrome {
+  background: #141414; padding: 7px 10px;
+  display: flex; align-items: center; gap: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.a-dot { width: 6px; height: 6px; border-radius: 50%; }
+.a-dot:nth-child(1) { background: #3a1c1c; }
+.a-dot:nth-child(2) { background: #2e2a1a; }
+.a-dot:nth-child(3) { background: #1a2e1c; }
+.artifact-chrome span {
+  font-family: var(--mono); font-size: 8.5px;
+  color: rgba(255,255,255,0.18); margin-left: 6px; letter-spacing: .04em;
+}
+.artifact-inner { padding: 12px; }
+
+/* Responsive — ≤1023px: stacked */
+@media (max-width: 1023px) {
+  .meth-pipeline { flex-direction: column; }
+  .meth-phase.ph1 { border-radius: 8px 8px 0 0; border-right: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
+  .meth-phase.ph2 { border-radius: 0 0 8px 8px; }
+  .meth-connector { width: 100%; height: 36px; }
+  .dp-body { grid-template-columns: 1fr; }
+  .dp-frames { border-right: none; }
+  .dp-mockup { display: none; }
+}
+@media (max-width: 767px) {
+  .meth-nodes { flex-direction: column; }
+  .meth-node.active::after { display: none; }
+  .dp-frames { grid-template-columns: 1fr; }
+  .dp-frame { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+  .dp-frame:last-child { border-bottom: none !important; }
+  .meth-ph-dur { display: none; }
+}
+
+/* ═══════════════════════════════════════════
    sm — 480px+
 ═══════════════════════════════════════════ */
 @media (min-width: 480px) {
@@ -745,28 +1061,1144 @@ setTimeout(next, 900);
 </script>
 
 
+<!-- ═══════════════════════════════════
+     CONTENT SECTIONS WRAPPER
+     Covers the fixed video background
+═══════════════════════════════════ -->
+<div class="content-sections">
+
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 4.2 — THE PROBLEM WE SOLVE
-  Brief: "Why AI Initiatives Stall"
-  H: "Most organizations have the ambition. Few have the foundation."
-  Body: 4 pain-point cards (2×2 grid), dark cards with orange left-border
-  Status: TO BUILD
+  §4.2 — THE PROBLEM WE SOLVE
 ════════════════════════════════════════════════════ -->
-<section class="section" id="problem" style="display:none;">
-  <!-- TODO -->
+<section class="section" id="problem">
+  <div class="container">
+
+    <div class="section-label reveal">Why AI Initiatives Stall</div>
+
+    <h2 class="section-headline reveal">
+      Most organizations have the ambition.<br>
+      Few have the <em>foundation</em>.
+    </h2>
+
+    <p class="section-sub reveal">
+      The challenge isn't access to AI tools — it's what comes before: fragmented data, POCs that never reach production, initiatives disconnected from P&L, and governance gaps that block adoption. Perceptya is built to solve exactly this.
+    </p>
+
+    <div class="grid-2">
+
+      <!-- Card 1 — Fragmented Data -->
+      <div class="card card-accent reveal reveal-d1">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+            <path d="M12 6v12" opacity=".35"/>
+            <line x1="8" y1="9" x2="8" y2="9.01" stroke-width="3"/>
+            <line x1="16" y1="15" x2="16" y2="15.01" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="card-title">Fragmented Data</div>
+        <p class="card-body">Siloed systems, no single source of truth, data quality that blocks AI at every step.</p>
+      </div>
+
+      <!-- Card 2 — Pilots That Never Scale -->
+      <div class="card card-accent reveal reveal-d2">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <circle cx="12" cy="12" r="3" opacity=".35"/>
+          </svg>
+        </div>
+        <div class="card-title">Pilots That Never Scale</div>
+        <p class="card-body">POCs that prove a point but never reach production. Governance gaps. No MLOps.</p>
+      </div>
+
+      <!-- Card 3 — No Economic Thesis -->
+      <div class="card card-accent reveal reveal-d3">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="card-title">No Economic Thesis</div>
+        <p class="card-body">AI initiatives not connected to revenue, margin, or measurable business outcomes.</p>
+      </div>
+
+      <!-- Card 4 — Capability & Adoption Gaps -->
+      <div class="card card-accent reveal reveal-d4">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="card-title">Capability &amp; Adoption Gaps</div>
+        <p class="card-body">Technical execution without change management, governance, or user adoption.</p>
+      </div>
+
+    </div><!-- /.grid-2 -->
+
+  </div><!-- /.container -->
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 4.3 — OUR METHODOLOGY
-  Brief: "The Perceptya AI Value System™"
-  H: "A structured path from data chaos to AI that earns its place on the P&L."
-  Body: Phase 1 (6–10 wks) + Phase 2 (modular 3–12+ mo) visual timeline/2-col
-  CTA: "Explore the full methodology →" → services.html
-  Status: TO BUILD
+  §4.3 — OUR METHODOLOGY
 ════════════════════════════════════════════════════ -->
-<section class="section" id="methodology" style="display:none;">
-  <!-- TODO -->
+<section class="section" id="methodology">
+<div class="container">
+
+  <!-- Header -->
+  <div class="meth-system-eyebrow reveal">
+    <div>
+      <div class="section-label">Our Methodology</div>
+      <h2 class="section-headline" style="margin-bottom:8px;">
+        A structured path from <em>data chaos</em><br>to AI that earns its place on the P&L.
+      </h2>
+      <p class="section-sub" style="margin-bottom:0;">
+        The PERCEPTYA AI VALUE SYSTEM™ is not a framework we adapt — it's a methodology built for one purpose: capturing real economic value from AI in production.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Pipeline ──────────────────────────────── -->
+  <div class="meth-pipeline reveal">
+
+    <!-- PHASE 1 -->
+    <div class="meth-phase ph1">
+      <div class="meth-ph-header">
+        <div class="meth-ph-badge">PHASE 1</div>
+        <div class="meth-ph-label">AI Value Discovery</div>
+        <div class="meth-ph-dur">6–10 Weeks · Fixed Scope</div>
+      </div>
+      <div class="meth-nodes">
+
+        <button class="meth-node" data-node="p1n1">
+          <div class="node-num">01</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="node-lbl">Executive Alignment &amp; Ambition</div>
+        </button>
+
+        <button class="meth-node" data-node="p1n2">
+          <div class="node-num">02</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M3.05 11a9 9 0 0 1 17.9 0"/></svg></div>
+          <div class="node-lbl">AI &amp; Data Maturity Assessment</div>
+        </button>
+
+        <button class="meth-node" data-node="p1n3">
+          <div class="node-num">03</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <div class="node-lbl">Use Case Identification &amp; Prioritization</div>
+        </button>
+
+        <button class="meth-node" data-node="p1n4">
+          <div class="node-num">04</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v4H3z"/><path d="M3 10h12v4H3z"/><path d="M3 17h8v4H3z"/></svg></div>
+          <div class="node-lbl">Target Architecture &amp; Roadmap</div>
+        </button>
+
+      </div><!-- /.meth-nodes -->
+    </div><!-- /.ph1 -->
+
+    <!-- Connector arrow -->
+    <div class="meth-connector">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="meth-phase ph2">
+      <div class="meth-ph-header">
+        <div class="meth-ph-badge">PHASE 2</div>
+        <div class="meth-ph-label">AI Industrialization &amp; Value Capture</div>
+        <div class="meth-ph-dur">Modular · 3–12+ Months</div>
+      </div>
+      <div class="meth-nodes">
+
+        <button class="meth-node" data-node="p2na">
+          <div class="node-num">A</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <div class="node-lbl">Data Foundation Modernization</div>
+        </button>
+
+        <button class="meth-node" data-node="p2nb">
+          <div class="node-num">B</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="node-lbl">Priority Use Case Implementation</div>
+        </button>
+
+        <button class="meth-node" data-node="p2nc">
+          <div class="node-num">C</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2z"/></svg></div>
+          <div class="node-lbl">Agent Architecture Deployment</div>
+        </button>
+
+        <button class="meth-node" data-node="p2nd">
+          <div class="node-num">D</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="node-lbl">AI Operating Model &amp; Governance</div>
+        </button>
+
+        <button class="meth-node" data-node="p2ne">
+          <div class="node-num">E</div>
+          <div class="node-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+          <div class="node-lbl">ROI &amp; Value Tracking</div>
+        </button>
+
+      </div><!-- /.meth-nodes -->
+    </div><!-- /.ph2 -->
+
+  </div><!-- /.meth-pipeline -->
+
+  <!-- ── Detail Panels ─────────────────────── -->
+
+  <!-- P1N1 — Executive Alignment & Ambition -->
+  <div class="meth-detail-wrap" id="panel-p1n1">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 1 · Step 01</span>
+      <div class="dp-title">Executive Alignment &amp; Ambition</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>C-suite and business leaders available</li>
+            <li>Overview of key business challenges</li>
+            <li>Ongoing AI/data initiatives</li>
+            <li>Strategic priorities for the next 18–36 months</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Executive alignment workshops</li>
+            <li>Value pool mapping by business area</li>
+            <li>Target metrics and KPI definition</li>
+            <li>Governance principles establishment</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>AI Ambition Statement</li>
+            <li>Value Pools Map (by business area)</li>
+            <li>Target Metrics Framework</li>
+            <li>Princípios de Governança</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>Executive clarity before a single line of code.</strong> Know exactly where AI can move your P&amp;L — not vague aspirations, but a focused mandate that drives every Discovery decision.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>value-pools-map.pdf</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 210" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="18" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">VALUE POOLS MAP</text>
+              <!-- Row 1 -->
+              <rect x="10" y="28" width="82" height="54" rx="3" fill="rgba(255,107,43,0.18)" stroke="rgba(255,107,43,0.5)" stroke-width="1"/>
+              <text x="51" y="49" text-anchor="middle" fill="#FF6B2B" font-size="8" font-family="DM Mono">REVENUE</text>
+              <text x="51" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="DM Mono">+12–18%</text>
+              <text x="51" y="73" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">GROWTH</text>
+              <rect x="99" y="28" width="82" height="54" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.25)" stroke-width="1"/>
+              <text x="140" y="49" text-anchor="middle" fill="#FF6B2B" font-size="8" font-family="DM Mono">EFFICIENCY</text>
+              <text x="140" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="DM Mono">–20–35%</text>
+              <text x="140" y="73" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">COST</text>
+              <rect x="188" y="28" width="82" height="54" rx="3" fill="rgba(0,212,255,0.08)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+              <text x="229" y="49" text-anchor="middle" fill="#00D4FF" font-size="8" font-family="DM Mono">CX</text>
+              <text x="229" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="DM Mono">NPS +15</text>
+              <text x="229" y="73" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">EXPERIENCE</text>
+              <!-- Row 2: business units -->
+              <text x="10" y="102" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Business Units mapped to value pools:</text>
+              <rect x="10" y="110" width="56" height="22" rx="3" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="38" y="124" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="7" font-family="DM Mono">Commercial</text>
+              <rect x="72" y="110" width="46" height="22" rx="3" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="95" y="124" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="7" font-family="DM Mono">Ops</text>
+              <rect x="124" y="110" width="56" height="22" rx="3" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="152" y="124" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="7" font-family="DM Mono">Customer</text>
+              <rect x="186" y="110" width="50" height="22" rx="3" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="211" y="124" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="7" font-family="DM Mono">Finance</text>
+              <rect x="242" y="110" width="28" height="22" rx="3" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="256" y="124" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="7" font-family="DM Mono">HR</text>
+              <!-- Ambition statement box -->
+              <rect x="10" y="143" width="260" height="58" rx="4" fill="#0f0f0f" stroke="rgba(255,107,43,0.3)" stroke-width="1"/>
+              <text x="20" y="157" fill="#FF6B2B" font-size="7" font-family="DM Mono" letter-spacing="1">AI AMBITION STATEMENT</text>
+              <text x="20" y="170" fill="rgba(255,255,255,0.55)" font-size="7.5" font-family="Urbanist">"Become AI-native in commercial and ops by 2027,</text>
+              <text x="20" y="182" fill="rgba(255,255,255,0.55)" font-size="7.5" font-family="Urbanist">targeting $4.2M incremental impact in year one."</text>
+              <text x="20" y="194" fill="rgba(255,255,255,0.2)" font-size="6.5" font-family="DM Mono">Approved: CEO · CFO · CTO</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Week 1 of Discovery. The starting point for every transformation that delivers real results.</span>
+      <a href="services.html#phase1" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this phase in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p1n1 -->
+
+  <!-- P1N2 — AI & Data Maturity Assessment -->
+  <div class="meth-detail-wrap" id="panel-p1n2">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 1 · Step 02</span>
+      <div class="dp-title">AI &amp; Data Maturity Assessment</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Access to data systems and technical stack</li>
+            <li>Data, engineering and analytics leaders</li>
+            <li>Existing architecture documentation</li>
+            <li>History of past data and AI initiatives</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Technical data and infrastructure assessment</li>
+            <li>Capability team interviews</li>
+            <li>Data quality and governance audit</li>
+            <li>Gap analysis by maturity dimension</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>AI Maturity Score™ (0–5.0 por dimensão)</li>
+            <li>Gap Analysis Report</li>
+            <li>Capability Heatmap</li>
+            <li>Pain Points Prioritizados</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>An honest diagnosis — not a sales pitch.</strong> Your AI Maturity Score becomes the map every future data and AI investment will follow.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>ai-maturity-score.pdf</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 220" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="16" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">AI MATURITY SCORE™</text>
+              <!-- Radar background rings -->
+              <polygon points="140,30 210,78 185,160 95,160 70,78" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <polygon points="140,50 190,86 170,148 110,148 90,86" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <polygon points="140,70 170,94 155,136 125,136 110,94" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <polygon points="140,90 150,102 140,124 140,124 130,102" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <!-- Axes -->
+              <line x1="140" y1="30" x2="140" y2="164" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="140" y1="95" x2="210" y2="78" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="140" y1="95" x2="185" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="140" y1="95" x2="95" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="140" y1="95" x2="70" y2="78" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <!-- Data polygon (score ~2.4/5.0 → ~48% of range) -->
+              <polygon points="140,57 181,86 163,145 117,145 99,86" fill="rgba(255,107,43,0.14)" stroke="#FF6B2B" stroke-width="1.5"/>
+              <circle cx="140" cy="57" r="3.5" fill="#FF6B2B"/>
+              <circle cx="181" cy="86" r="3.5" fill="#FF6B2B"/>
+              <circle cx="163" cy="145" r="3.5" fill="#FF6B2B"/>
+              <circle cx="117" cy="145" r="3.5" fill="#FF6B2B"/>
+              <circle cx="99" cy="86" r="3.5" fill="#FF6B2B"/>
+              <!-- Axis labels -->
+              <text x="140" y="24" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7" font-family="DM Mono">Data Quality</text>
+              <text x="215" y="80" text-anchor="start" fill="rgba(255,255,255,0.35)" font-size="7" font-family="DM Mono">MLOps</text>
+              <text x="188" y="168" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7" font-family="DM Mono">Governance</text>
+              <text x="92" y="168" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7" font-family="DM Mono">Architecture</text>
+              <text x="65" y="80" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="7" font-family="DM Mono">Talent</text>
+              <!-- Center score -->
+              <text x="140" y="100" text-anchor="middle" fill="#FF6B2B" font-size="18" font-weight="600" font-family="Urbanist">2.4</text>
+              <text x="140" y="110" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="6.5" font-family="DM Mono">out of 5.0</text>
+              <!-- Score bar -->
+              <rect x="20" y="178" width="240" height="5" rx="2.5" fill="rgba(255,255,255,0.06)"/>
+              <rect x="20" y="178" width="115" height="5" rx="2.5" fill="rgba(255,107,43,0.7)"/>
+              <text x="20" y="194" fill="rgba(255,255,255,0.2)" font-size="6.5" font-family="DM Mono">BEGINNER</text>
+              <text x="140" y="194" text-anchor="middle" fill="#FF6B2B" font-size="6.5" font-family="DM Mono">▲ YOU ARE HERE</text>
+              <text x="260" y="194" text-anchor="end" fill="rgba(255,255,255,0.2)" font-size="6.5" font-family="DM Mono">AI-NATIVE</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Weeks 2–4. The benchmark that makes every future decision defensible.</span>
+      <a href="services.html#phase1" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this phase in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p1n2 -->
+
+  <!-- P1N3 — Use Case Identification & Prioritization -->
+  <div class="meth-detail-wrap" id="panel-p1n3">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 1 · Step 03</span>
+      <div class="dp-title">Use Case Identification &amp; Prioritization</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>AI Maturity Score output</li>
+            <li>Business unit leaders</li>
+            <li>P&amp;L data by process and area</li>
+            <li>Industry AI adoption benchmarks</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Use case ideation workshops by business area</li>
+            <li>Financial impact modeling per use case</li>
+            <li>Technical feasibility scoring</li>
+            <li>Quick wins and strategic bets identification</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>Use Case Portfolio (20–30 candidatos)</li>
+            <li>Impact × Feasibility Matrix</li>
+            <li>Business Cases (Top 5–10)</li>
+            <li>Quick Win Roadmap</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>A ranked list of AI bets by real economic impact</strong> — not what's technically interesting, but what moves the needle for your business.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>use-case-matrix.xlsx</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">IMPACT × FEASIBILITY MATRIX</text>
+              <!-- Grid area -->
+              <rect x="30" y="22" width="230" height="168" rx="2" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <!-- Quadrant dividers -->
+              <line x1="145" y1="22" x2="145" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="30" y1="106" x2="260" y2="106" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,3"/>
+              <!-- Quadrant labels -->
+              <text x="87" y="35" text-anchor="middle" fill="rgba(0,255,133,0.35)" font-size="7" font-family="DM Mono">QUICK WINS</text>
+              <text x="202" y="35" text-anchor="middle" fill="rgba(255,107,43,0.45)" font-size="7" font-family="DM Mono">STRATEGIC BETS</text>
+              <text x="87" y="183" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="7" font-family="DM Mono">LOW PRIORITY</text>
+              <text x="202" y="183" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="7" font-family="DM Mono">MONITOR</text>
+              <!-- Use case bubbles — Quick Wins (top-left) -->
+              <circle cx="75" cy="58" r="9" fill="rgba(0,255,133,0.25)" stroke="rgba(0,255,133,0.5)" stroke-width="1.2"/>
+              <text x="75" y="61.5" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="6.5" font-family="DM Mono">UC-03</text>
+              <circle cx="110" cy="75" r="7" fill="rgba(0,255,133,0.18)" stroke="rgba(0,255,133,0.35)" stroke-width="1"/>
+              <text x="110" y="78" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="6" font-family="DM Mono">UC-07</text>
+              <circle cx="58" cy="88" r="5" fill="rgba(0,255,133,0.12)" stroke="rgba(0,255,133,0.25)" stroke-width="1"/>
+              <text x="58" y="91" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="5.5" font-family="DM Mono">UC-11</text>
+              <!-- Strategic Bets (top-right) -->
+              <circle cx="195" cy="50" r="13" fill="rgba(255,107,43,0.2)" stroke="#FF6B2B" stroke-width="1.5"/>
+              <text x="195" y="53.5" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="DM Mono">UC-01</text>
+              <circle cx="230" cy="72" r="10" fill="rgba(255,107,43,0.14)" stroke="rgba(255,107,43,0.4)" stroke-width="1"/>
+              <text x="230" y="75.5" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-size="6" font-family="DM Mono">UC-04</text>
+              <circle cx="165" cy="80" r="8" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.3)" stroke-width="1"/>
+              <text x="165" y="83.5" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="6" font-family="DM Mono">UC-09</text>
+              <!-- Low priority + monitor (bottom) -->
+              <circle cx="65" cy="135" r="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <circle cx="100" cy="155" r="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <circle cx="175" cy="130" r="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <circle cx="220" cy="150" r="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <!-- Axis labels -->
+              <text x="15" y="106" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono" transform="rotate(-90,15,106)">IMPACT</text>
+              <text x="145" y="205" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono">FEASIBILITY</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Weeks 4–6. From 23 candidates to a portfolio of 7 use cases with approved business cases.</span>
+      <a href="services.html#phase1" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this phase in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p1n3 -->
+
+  <!-- P1N4 — Target Architecture & Roadmap -->
+  <div class="meth-detail-wrap" id="panel-p1n4">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 1 · Step 04</span>
+      <div class="dp-title">Target Architecture &amp; Roadmap</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Prioritized use cases and business cases</li>
+            <li>Current technology stack</li>
+            <li>Budget parameters</li>
+            <li>Regulatory and compliance constraints</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Target architecture design (data + AI layers)</li>
+            <li>Technology evaluation and selection</li>
+            <li>Phase sequencing and dependencies</li>
+            <li>Investment vs. return modeling</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>Architecture Blueprint</li>
+            <li>Roadmap 18–36 meses (sequenciado e custado)</li>
+            <li>Financial Impact Model</li>
+            <li>Plano de Industrialização</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>A board-ready plan with the numbers behind it.</strong> Your team knows exactly what to build, in what order, and what returns to expect — ready for executive approval.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>roadmap-18mo.pdf</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">18-MONTH ROADMAP</text>
+              <!-- Quarter labels -->
+              <text x="46" y="28" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Q1</text>
+              <text x="102" y="28" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Q2</text>
+              <text x="158" y="28" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Q3</text>
+              <text x="214" y="28" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Q4</text>
+              <text x="258" y="28" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Q5–Q6</text>
+              <!-- Track 1 — Data Foundation -->
+              <text x="10" y="48" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono">Data Foundation</text>
+              <rect x="20" y="53" width="90" height="12" rx="2" fill="rgba(255,107,43,0.6)"/>
+              <text x="65" y="62" text-anchor="middle" fill="white" font-size="6.5" font-family="DM Mono">Lakehouse MVP</text>
+              <rect x="112" y="53" width="60" height="12" rx="2" fill="rgba(255,107,43,0.35)"/>
+              <text x="142" y="62" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="DM Mono">Pipelines</text>
+              <!-- Track 2 — Use Case A -->
+              <text x="10" y="82" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono">UC Priority A</text>
+              <rect x="65" y="87" width="75" height="12" rx="2" fill="rgba(0,212,255,0.4)"/>
+              <text x="102" y="96" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="DM Mono">Build + Deploy</text>
+              <rect x="142" y="87" width="50" height="12" rx="2" fill="rgba(0,212,255,0.2)"/>
+              <text x="167" y="96" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="6.5" font-family="DM Mono">Scale</text>
+              <!-- Track 3 — Agent Layer -->
+              <text x="10" y="116" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono">Agent Layer</text>
+              <rect x="112" y="121" width="80" height="12" rx="2" fill="rgba(0,255,133,0.3)"/>
+              <text x="152" y="130" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="DM Mono">Design + Deploy</text>
+              <rect x="195" y="121" width="75" height="12" rx="2" fill="rgba(0,255,133,0.18)"/>
+              <text x="232" y="130" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="6.5" font-family="DM Mono">Expand</text>
+              <!-- Track 4 — Governance -->
+              <text x="10" y="150" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono">Governance</text>
+              <rect x="20" y="155" width="50" height="12" rx="2" fill="rgba(255,255,255,0.08)"/>
+              <text x="45" y="164" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6.5" font-family="DM Mono">Framework</text>
+              <rect x="72" y="155" width="198" height="12" rx="2" fill="rgba(255,255,255,0.05)"/>
+              <text x="171" y="164" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">Ongoing · Continuous Improvement</text>
+              <!-- ROI milestones -->
+              <line x1="20" y1="178" x2="270" y2="178" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <text x="10" y="192" fill="rgba(255,107,43,0.5)" font-size="6.5" font-family="DM Mono">VALUE</text>
+              <circle cx="110" cy="184" r="4" fill="rgba(255,107,43,0.5)" stroke="#FF6B2B" stroke-width="1"/>
+              <text x="110" y="200" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">$0.8M</text>
+              <circle cx="180" cy="184" r="5" fill="rgba(255,107,43,0.6)" stroke="#FF6B2B" stroke-width="1"/>
+              <text x="180" y="200" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">$2.1M</text>
+              <circle cx="250" cy="184" r="6" fill="rgba(255,107,43,0.75)" stroke="#FF6B2B" stroke-width="1.5"/>
+              <text x="250" y="200" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">$4.2M</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Weeks 6–10. The output that turns AI into a revenue line, not a cost line.</span>
+      <a href="services.html#phase1" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this phase in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p1n4 -->
+
+  <!-- P2NA — Data Foundation Modernization -->
+  <div class="meth-detail-wrap" id="panel-p2na">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 2 · Module A</span>
+      <div class="dp-title">Data Foundation Modernization</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Architecture Blueprint from Discovery</li>
+            <li>Current data infrastructure mapped</li>
+            <li>Requirements from prioritized use cases</li>
+            <li>Security and compliance policies</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Lakehouse / data products implementation</li>
+            <li>Data pipeline design and build</li>
+            <li>Governance, security and data cataloging</li>
+            <li>Observability and data quality in production</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>Data platform in production</li>
+            <li>Data Catalog with documented lineage</li>
+            <li>Monitored pipelines with SLAs</li>
+            <li>Governance policies implemented</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>AI that works requires data that flows.</strong> We build the foundation every use case depends on — reliable, traceable, and ready to scale.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>data-platform-architecture.pdf</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">LAKEHOUSE ARCHITECTURE</text>
+              <!-- Layers -->
+              <!-- Layer 1: Sources -->
+              <text x="20" y="34" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">SOURCES</text>
+              <rect x="20" y="38" width="40" height="18" rx="2" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="40" y="50" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">CRM</text>
+              <rect x="65" y="38" width="40" height="18" rx="2" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="85" y="50" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">ERP</text>
+              <rect x="110" y="38" width="50" height="18" rx="2" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="135" y="50" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">Streaming</text>
+              <rect x="165" y="38" width="40" height="18" rx="2" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="185" y="50" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">APIs</text>
+              <rect x="210" y="38" width="50" height="18" rx="2" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="235" y="50" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">Unstructured</text>
+              <!-- Arrow down -->
+              <line x1="140" y1="58" x2="140" y2="70" stroke="rgba(255,107,43,0.4)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <polygon points="135,68 140,75 145,68" fill="rgba(255,107,43,0.5)"/>
+              <!-- Layer 2: Ingestion -->
+              <rect x="20" y="77" width="240" height="20" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.25)" stroke-width="1"/>
+              <text x="140" y="90" text-anchor="middle" fill="rgba(255,107,43,0.8)" font-size="7" font-family="DM Mono">INGESTION LAYER — Batch + Streaming + CDC</text>
+              <!-- Arrow down -->
+              <line x1="140" y1="99" x2="140" y2="108" stroke="rgba(255,107,43,0.4)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <polygon points="135,106 140,113 145,106" fill="rgba(255,107,43,0.5)"/>
+              <!-- Layer 3: Storage -->
+              <rect x="20" y="114" width="240" height="24" rx="3" fill="rgba(0,212,255,0.08)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+              <text x="140" y="128" text-anchor="middle" fill="rgba(0,212,255,0.7)" font-size="7.5" font-family="DM Mono">LAKEHOUSE — Bronze · Silver · Gold</text>
+              <!-- Arrow down -->
+              <line x1="140" y1="140" x2="140" y2="149" stroke="rgba(0,212,255,0.3)" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <polygon points="135,147 140,154 145,147" fill="rgba(0,212,255,0.4)"/>
+              <!-- Layer 4: Serving -->
+              <rect x="20" y="155" width="110" height="20" rx="3" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="75" y="168" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="7" font-family="DM Mono">ML Feature Store</text>
+              <rect x="150" y="155" width="110" height="20" rx="3" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="205" y="168" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="7" font-family="DM Mono">Analytics &amp; BI</text>
+              <!-- Governance bar -->
+              <rect x="260" y="38" width="14" height="137" rx="3" fill="rgba(255,107,43,0.06)" stroke="rgba(255,107,43,0.15)" stroke-width="1"/>
+              <text x="267" y="107" text-anchor="middle" fill="rgba(255,107,43,0.4)" font-size="6.5" font-family="DM Mono" transform="rotate(90,267,107)">GOVERNANCE · OBSERVABILITY · DATA QUALITY</text>
+              <!-- Status badges -->
+              <rect x="20" y="185" width="55" height="14" rx="2" fill="rgba(0,255,133,0.12)" stroke="rgba(0,255,133,0.3)" stroke-width="1"/>
+              <text x="47" y="195" text-anchor="middle" fill="rgba(0,255,133,0.7)" font-size="6.5" font-family="DM Mono">✓ Prod</text>
+              <rect x="80" y="185" width="60" height="14" rx="2" fill="rgba(0,255,133,0.12)" stroke="rgba(0,255,133,0.3)" stroke-width="1"/>
+              <text x="110" y="195" text-anchor="middle" fill="rgba(0,255,133,0.7)" font-size="6.5" font-family="DM Mono">✓ Monitored</text>
+              <rect x="145" y="185" width="55" height="14" rx="2" fill="rgba(0,255,133,0.12)" stroke="rgba(0,255,133,0.3)" stroke-width="1"/>
+              <text x="172" y="195" text-anchor="middle" fill="rgba(0,255,133,0.7)" font-size="6.5" font-family="DM Mono">✓ Governed</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Module A. The foundation that enables every other module. Without it, AI doesn't scale.</span>
+      <a href="services.html#phase2" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this module in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p2na -->
+
+  <!-- P2NB — Priority Use Case Implementation -->
+  <div class="meth-detail-wrap" id="panel-p2nb">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 2 · Module B</span>
+      <div class="dp-title">Priority Use Case Implementation</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Top use cases prioritized in Discovery</li>
+            <li>Data foundation in production (Module A)</li>
+            <li>Baseline metrics per use case</li>
+            <li>Integration requirements with core systems</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Production model development</li>
+            <li>MLOps / LLMOps pipeline setup</li>
+            <li>Business systems integration</li>
+            <li>Monitoring, drift detection and adoption support</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>AI models in production (not demos)</li>
+            <li>Operational MLOps pipeline</li>
+            <li>Monitoring and performance dashboards</li>
+            <li>User adoption playbook</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>Not demos. Production systems.</strong> Revenue, margin and efficiency gains you can measure and report to the board — every sprint.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>model-monitoring-dashboard</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">MODEL PERFORMANCE</text>
+              <!-- KPI row -->
+              <rect x="10" y="22" width="60" height="40" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="40" y="36" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">ACCURACY</text>
+              <text x="40" y="52" text-anchor="middle" fill="#00FF85" font-size="16" font-weight="600" font-family="Urbanist">94%</text>
+              <rect x="76" y="22" width="60" height="40" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="106" y="36" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">PRECISION</text>
+              <text x="106" y="52" text-anchor="middle" fill="#00FF85" font-size="16" font-weight="600" font-family="Urbanist">91%</text>
+              <rect x="142" y="22" width="60" height="40" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="172" y="36" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">LATENCY</text>
+              <text x="172" y="52" text-anchor="middle" fill="#00D4FF" font-size="16" font-weight="600" font-family="Urbanist">38ms</text>
+              <rect x="208" y="22" width="62" height="40" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="239" y="36" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">DRIFT</text>
+              <text x="239" y="52" text-anchor="middle" fill="#FF6B2B" font-size="16" font-weight="600" font-family="Urbanist">OK</text>
+              <!-- Performance chart -->
+              <text x="10" y="78" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Accuracy over time (last 30d)</text>
+              <rect x="10" y="83" width="260" height="72" rx="3" fill="#0d0d0d" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <!-- Grid lines -->
+              <line x1="10" y1="107" x2="270" y2="107" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="10" y1="131" x2="270" y2="131" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <!-- Chart line -->
+              <polyline points="20,148 50,138 80,120 110,110 130,118 155,105 175,99 200,97 220,94 245,92 265,91" fill="none" stroke="#00FF85" stroke-width="1.5"/>
+              <polyline points="20,148 50,138 80,120 110,110 130,118 155,105 175,99 200,97 220,94 245,92 265,91 265,155 20,155" fill="rgba(0,255,133,0.05)"/>
+              <!-- Y labels -->
+              <text x="8" y="107" text-anchor="end" fill="rgba(255,255,255,0.2)" font-size="6" font-family="DM Mono">90%</text>
+              <text x="8" y="131" text-anchor="end" fill="rgba(255,255,255,0.2)" font-size="6" font-family="DM Mono">80%</text>
+              <!-- Business impact -->
+              <text x="10" y="172" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Business impact (vs. baseline)</text>
+              <rect x="10" y="178" width="78" height="28" rx="3" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="49" y="189" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="6.5" font-family="DM Mono">Revenue uplift</text>
+              <text x="49" y="200" text-anchor="middle" fill="#00FF85" font-size="11" font-weight="600" font-family="Urbanist">+$340K</text>
+              <rect x="95" y="178" width="78" height="28" rx="3" fill="rgba(0,212,255,0.07)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+              <text x="134" y="189" text-anchor="middle" fill="rgba(0,212,255,0.6)" font-size="6.5" font-family="DM Mono">Cost reduction</text>
+              <text x="134" y="200" text-anchor="middle" fill="#00D4FF" font-size="11" font-weight="600" font-family="Urbanist">–$180K</text>
+              <rect x="180" y="178" width="90" height="28" rx="3" fill="rgba(255,107,43,0.07)" stroke="rgba(255,107,43,0.2)" stroke-width="1"/>
+              <text x="225" y="189" text-anchor="middle" fill="rgba(255,107,43,0.7)" font-size="6.5" font-family="DM Mono">Productivity gain</text>
+              <text x="225" y="200" text-anchor="middle" fill="#FF6B2B" font-size="11" font-weight="600" font-family="Urbanist">+22%</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Module B. AI that delivers results from the first sprint — with numbers to defend to the board.</span>
+      <a href="services.html#phase2" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this module in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p2nb -->
+
+  <!-- P2NC — Agent Architecture Deployment -->
+  <div class="meth-detail-wrap" id="panel-p2nc">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 2 · Module C</span>
+      <div class="dp-title">Agent Architecture Deployment</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Mapping of agent-candidate processes</li>
+            <li>Integration requirements with core systems</li>
+            <li>Security policies and guardrails definition</li>
+            <li>Data foundation and use cases in production</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>AI agent design and build per process</li>
+            <li>Multi-agent orchestration and workflows</li>
+            <li>Integration with ERP, CRM and core systems</li>
+            <li>Guardrails, observability and rollback</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>AI Agents deployed in production</li>
+            <li>Operational orchestration layer</li>
+            <li>System integration connectors</li>
+            <li>Security and observability stack</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>Intelligent automation that operates at scale.</strong> Agents that make decisions, execute workflows and serve customers — without human bottlenecks, with full traceability.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>agent-orchestration-flow</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">AGENT ORCHESTRATION</text>
+              <!-- Orchestrator -->
+              <rect x="95" y="22" width="90" height="28" rx="4" fill="rgba(0,212,255,0.1)" stroke="#00D4FF" stroke-width="1.5"/>
+              <text x="140" y="34" text-anchor="middle" fill="#00D4FF" font-size="7.5" font-family="DM Mono">ORCHESTRATOR</text>
+              <text x="140" y="44" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">LangGraph / AutoGen</text>
+              <!-- Lines from orchestrator to agents -->
+              <line x1="97" y1="50" x2="45" y2="80" stroke="rgba(0,212,255,0.25)" stroke-width="1" stroke-dasharray="4,2"/>
+              <line x1="117" y1="50" x2="100" y2="80" stroke="rgba(0,212,255,0.25)" stroke-width="1" stroke-dasharray="4,2"/>
+              <line x1="163" y1="50" x2="180" y2="80" stroke="rgba(0,212,255,0.25)" stroke-width="1" stroke-dasharray="4,2"/>
+              <line x1="183" y1="50" x2="235" y2="80" stroke="rgba(0,212,255,0.25)" stroke-width="1" stroke-dasharray="4,2"/>
+              <!-- Agent nodes -->
+              <rect x="16" y="80" width="58" height="26" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.35)" stroke-width="1"/>
+              <text x="45" y="91" text-anchor="middle" fill="rgba(255,107,43,0.85)" font-size="6.5" font-family="DM Mono">Sales Agent</text>
+              <text x="45" y="101" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">CRM · Pipeline</text>
+              <rect x="80" y="80" width="58" height="26" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.35)" stroke-width="1"/>
+              <text x="109" y="91" text-anchor="middle" fill="rgba(255,107,43,0.85)" font-size="6.5" font-family="DM Mono">Ops Agent</text>
+              <text x="109" y="101" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">ERP · Workflow</text>
+              <rect x="144" y="80" width="64" height="26" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.35)" stroke-width="1"/>
+              <text x="176" y="91" text-anchor="middle" fill="rgba(255,107,43,0.85)" font-size="6.5" font-family="DM Mono">CS Agent</text>
+              <text x="176" y="101" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">Tickets · NPS</text>
+              <rect x="214" y="80" width="56" height="26" rx="3" fill="rgba(255,107,43,0.1)" stroke="rgba(255,107,43,0.35)" stroke-width="1"/>
+              <text x="242" y="91" text-anchor="middle" fill="rgba(255,107,43,0.85)" font-size="6.5" font-family="DM Mono">Finance Agent</text>
+              <text x="242" y="101" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="DM Mono">Reports · FP&amp;A</text>
+              <!-- Tool/integration layer -->
+              <line x1="140" y1="108" x2="140" y2="120" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <rect x="20" y="120" width="240" height="20" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="140" y="132" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono">TOOL LAYER — APIs · Databases · External Services</text>
+              <!-- Guardrails + observability -->
+              <rect x="20" y="148" width="115" height="20" rx="3" fill="rgba(255,107,43,0.06)" stroke="rgba(255,107,43,0.15)" stroke-width="1"/>
+              <text x="77" y="161" text-anchor="middle" fill="rgba(255,107,43,0.5)" font-size="7" font-family="DM Mono">✓ Guardrails Active</text>
+              <rect x="145" y="148" width="115" height="20" rx="3" fill="rgba(0,255,133,0.06)" stroke="rgba(0,255,133,0.15)" stroke-width="1"/>
+              <text x="202" y="161" text-anchor="middle" fill="rgba(0,255,133,0.5)" font-size="7" font-family="DM Mono">✓ Full Observability</text>
+              <!-- Stats -->
+              <text x="20" y="184" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Executions today:</text>
+              <text x="100" y="184" fill="#00FF85" font-size="7" font-family="DM Mono">1,247</text>
+              <text x="140" y="184" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Avg latency:</text>
+              <text x="200" y="184" fill="#00D4FF" font-size="7" font-family="DM Mono">280ms</text>
+              <text x="20" y="198" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Human escalations:</text>
+              <text x="120" y="198" fill="#FF6B2B" font-size="7" font-family="DM Mono">3.2%</text>
+              <text x="160" y="198" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Success rate:</text>
+              <text x="220" y="198" fill="#00FF85" font-size="7" font-family="DM Mono">96.8%</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Module C. Agents built to operate — not to impress in demos.</span>
+      <a href="services.html#phase2" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this module in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p2nc -->
+
+  <!-- P2ND — AI Operating Model & Governance -->
+  <div class="meth-detail-wrap" id="panel-p2nd">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 2 · Module D</span>
+      <div class="dp-title">AI Operating Model &amp; Governance</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Current organizational structure</li>
+            <li>Regulatory and compliance requirements</li>
+            <li>Corporate risk policies</li>
+            <li>AI systems in operation (Modules A–C)</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>AI CoE or federated model design</li>
+            <li>RACI and policy development</li>
+            <li>Leader and user training</li>
+            <li>Continuous AI prioritization process</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>AI Operating Model (CoE or federated)</li>
+            <li>Complete Governance Framework</li>
+            <li>RACI Matrix by AI domain</li>
+            <li>Risk, compliance and ethics policies</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>AI that doesn't get blocked by the organization.</strong> Governance designed to accelerate — not to create bureaucracy. Your team knows who decides, who executes, and who is accountable.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>ai-operating-model.pdf</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">AI GOVERNANCE FRAMEWORK</text>
+              <!-- CoE box at top -->
+              <rect x="90" y="22" width="100" height="24" rx="3" fill="rgba(255,107,43,0.12)" stroke="rgba(255,107,43,0.4)" stroke-width="1.5"/>
+              <text x="140" y="32" text-anchor="middle" fill="rgba(255,107,43,0.9)" font-size="7.5" font-family="DM Mono">AI CENTER OF</text>
+              <text x="140" y="41" text-anchor="middle" fill="rgba(255,107,43,0.9)" font-size="7.5" font-family="DM Mono">EXCELLENCE</text>
+              <!-- Lines down -->
+              <line x1="100" y1="46" x2="55" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <line x1="120" y1="46" x2="120" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <line x1="160" y1="46" x2="160" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <line x1="180" y1="46" x2="225" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <!-- Domain nodes -->
+              <rect x="20" y="72" width="68" height="20" rx="3" fill="#111" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="54" y="85" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">AI Strategy</text>
+              <rect x="96" y="72" width="48" height="20" rx="3" fill="#111" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="120" y="85" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">Engineering</text>
+              <rect x="148" y="72" width="24" height="20" rx="3" fill="#111" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="160" y="85" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">Risk</text>
+              <rect x="178" y="72" width="82" height="20" rx="3" fill="#111" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="219" y="85" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5" font-family="DM Mono">Change Mgmt</text>
+              <!-- RACI table -->
+              <text x="10" y="108" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">RACI by AI Domain</text>
+              <!-- Table header -->
+              <rect x="10" y="113" width="260" height="14" rx="0" fill="#141414"/>
+              <text x="80" y="123" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">Use Case Dev</text>
+              <text x="155" y="123" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">Model Governance</text>
+              <text x="230" y="123" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">Data Quality</text>
+              <!-- Rows -->
+              <line x1="10" y1="127" x2="270" y2="127" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <text x="30" y="137" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">CPO/CTO</text>
+              <text x="80" y="137" text-anchor="middle" fill="#FF6B2B" font-size="7" font-family="DM Mono">A</text>
+              <text x="155" y="137" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="DM Mono">R</text>
+              <text x="230" y="137" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">C</text>
+              <line x1="10" y1="141" x2="270" y2="141" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <text x="30" y="151" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">AI CoE Lead</text>
+              <text x="80" y="151" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="DM Mono">R</text>
+              <text x="155" y="151" text-anchor="middle" fill="#FF6B2B" font-size="7" font-family="DM Mono">A</text>
+              <text x="230" y="151" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="DM Mono">R</text>
+              <line x1="10" y1="155" x2="270" y2="155" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <text x="30" y="165" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="DM Mono">Data Engineer</text>
+              <text x="80" y="165" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">C</text>
+              <text x="155" y="165" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">C</text>
+              <text x="230" y="165" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="DM Mono">R</text>
+              <!-- Compliance badges -->
+              <rect x="10" y="180" width="58" height="14" rx="2" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="39" y="190" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="6.5" font-family="DM Mono">LGPD ✓</text>
+              <rect x="74" y="180" width="58" height="14" rx="2" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="103" y="190" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="6.5" font-family="DM Mono">ISO 27001 ✓</text>
+              <rect x="138" y="180" width="58" height="14" rx="2" fill="rgba(0,255,133,0.07)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/>
+              <text x="167" y="190" text-anchor="middle" fill="rgba(0,255,133,0.6)" font-size="6.5" font-family="DM Mono">AI Act ✓</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Module D. Without governance, AI becomes a liability. With it, a competitive advantage.</span>
+      <a href="services.html#phase2" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this module in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p2nd -->
+
+  <!-- P2NE — ROI & Value Tracking -->
+  <div class="meth-detail-wrap" id="panel-p2ne">
+    <div class="dp-header">
+      <span class="dp-phase-tag">Phase 2 · Module E</span>
+      <div class="dp-title">ROI &amp; Value Tracking</div>
+      <button class="dp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-frames">
+        <div class="dp-frame">
+          <div class="frame-tag">Inputs</div>
+          <ul class="frame-list">
+            <li>Baseline metrics captured pre-AI</li>
+            <li>AI systems in production (Modules A–C)</li>
+            <li>Business KPIs defined in Discovery</li>
+            <li>Financial Impact Model as benchmark</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Activities</div>
+          <ul class="frame-list">
+            <li>Value metrics framework design</li>
+            <li>Value tracking dashboard build</li>
+            <li>Value attribution per AI initiative</li>
+            <li>Monthly review and scaling adjustment cycle</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">Key Deliverables</div>
+          <ul class="frame-list">
+            <li>ROI Tracking Dashboard (real-time)</li>
+            <li>Value Attribution Model per use case</li>
+            <li>Monthly Value Reports for the board</li>
+            <li>Evidence-based scaling recommendations</li>
+          </ul>
+        </div>
+        <div class="dp-frame">
+          <div class="frame-tag">What You Get</div>
+          <p class="frame-value">
+            <strong>Proof. Every initiative tied to a number.</strong> Revenue uplift, cost reduction, productivity gain — tracked, attributed and reportable. No guesswork.
+          </p>
+        </div>
+      </div>
+      <div class="dp-mockup">
+        <div class="mockup-caption">Exemplo de entregável</div>
+        <div class="mockup-artifact">
+          <div class="artifact-chrome">
+            <div class="a-dot"></div><div class="a-dot"></div><div class="a-dot"></div>
+            <span>roi-tracking-dashboard</span>
+          </div>
+          <div class="artifact-inner">
+            <svg viewBox="0 0 280 215" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+              <text x="140" y="14" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono" letter-spacing="2">ROI &amp; VALUE DASHBOARD</text>
+              <!-- Top KPIs -->
+              <rect x="10" y="22" width="78" height="36" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="49" y="34" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="6.5" font-family="DM Mono">TOTAL VALUE (YTD)</text>
+              <text x="49" y="50" text-anchor="middle" fill="#00FF85" font-size="15" font-weight="700" font-family="Urbanist">$3.8M</text>
+              <rect x="96" y="22" width="78" height="36" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="135" y="34" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="6.5" font-family="DM Mono">REVENUE UPLIFT</text>
+              <text x="135" y="50" text-anchor="middle" fill="#FF6B2B" font-size="15" font-weight="700" font-family="Urbanist">+$2.1M</text>
+              <rect x="182" y="22" width="88" height="36" rx="3" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <text x="226" y="34" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="6.5" font-family="DM Mono">COST REDUCTION</text>
+              <text x="226" y="50" text-anchor="middle" fill="#00D4FF" font-size="15" font-weight="700" font-family="Urbanist">–$1.7M</text>
+              <!-- Value accumulation chart -->
+              <text x="10" y="72" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Value captured vs. projected (12mo)</text>
+              <rect x="10" y="77" width="260" height="66" rx="3" fill="#0d0d0d" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <!-- Area chart -->
+              <polyline points="20,135 50,132 80,125 110,118 135,112 160,102 185,93 210,85 240,80 265,74" fill="none" stroke="rgba(255,107,43,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+              <polyline points="20,140 50,137 80,128 110,119 135,111 160,100 185,89 210,81" fill="none" stroke="#FF6B2B" stroke-width="2"/>
+              <polyline points="20,140 50,137 80,128 110,119 135,111 160,100 185,89 210,81 210,143 20,143" fill="rgba(255,107,43,0.08)"/>
+              <text x="215" y="85" fill="rgba(255,107,43,0.5)" font-size="6" font-family="DM Mono">▲ Actual</text>
+              <text x="242" y="76" fill="rgba(255,255,255,0.2)" font-size="6" font-family="DM Mono">— Proj.</text>
+              <!-- Value by use case -->
+              <text x="10" y="158" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">Value by use case</text>
+              <rect x="10" y="163" width="72" height="8" rx="2" fill="rgba(255,107,43,0.7)"/>
+              <text x="86" y="170" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="DM Mono">Churn Prediction · $1.2M</text>
+              <rect x="10" y="175" width="50" height="8" rx="2" fill="rgba(0,212,255,0.5)"/>
+              <text x="64" y="182" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="DM Mono">Demand Forecast · $0.9M</text>
+              <rect x="10" y="187" width="34" height="8" rx="2" fill="rgba(0,255,133,0.4)"/>
+              <text x="48" y="194" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="DM Mono">CS Automation · $0.6M</text>
+              <rect x="150" y="163" width="24" height="8" rx="2" fill="rgba(255,255,255,0.1)"/>
+              <text x="178" y="170" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="DM Mono">Pricing AI · $0.4M</text>
+              <rect x="150" y="175" width="18" height="8" rx="2" fill="rgba(255,255,255,0.07)"/>
+              <text x="172" y="182" fill="rgba(255,255,255,0.35)" font-size="6.5" font-family="DM Mono">+ 3 more · $0.7M</text>
+              <text x="10" y="208" fill="rgba(255,107,43,0.4)" font-size="6.5" font-family="DM Mono">Next board report: Apr 2025 · On track ✓</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dp-cta-bar">
+      <span class="dp-cta-text">Module E. The only module that runs in parallel with every other — from day one to the last.</span>
+      <a href="services.html#phase2" class="btn-primary" style="font-size:13px;padding:9px 16px;">
+        Explore this module in detail
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div><!-- /panel-p2ne -->
+
+  <!-- Section CTA -->
+  <div style="text-align:center;margin-top:48px;" class="reveal">
+    <a href="services.html" class="btn-primary">
+      Explore the full methodology
+      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+</div><!-- /.container -->
 </section>
 
 
@@ -826,6 +2258,58 @@ setTimeout(next, 900);
 <section class="section" id="cta-strip" style="display:none;">
   <!-- TODO -->
 </section>
+
+</div><!-- /.content-sections -->
+
+<!-- ── Scroll reveal observer ──────────────────────── -->
+<script>
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+</script>
+
+<!-- ── Methodology interactivity ──────────────────── -->
+<script>
+(function() {
+  const nodes   = document.querySelectorAll('.meth-node');
+  const panels  = document.querySelectorAll('.meth-detail-wrap');
+  const closers = document.querySelectorAll('.dp-close');
+  let   active  = null;
+
+  function closeAll() {
+    panels.forEach(p => p.classList.remove('open'));
+    nodes.forEach(n => n.classList.remove('active'));
+    active = null;
+  }
+
+  function openPanel(nodeId) {
+    const panel = document.getElementById('panel-' + nodeId);
+    if (!panel || panel.innerHTML.trim() === '') return; // Phase 2 panels not yet built
+    closeAll();
+    panel.classList.add('open');
+    document.querySelector('[data-node="' + nodeId + '"]').classList.add('active');
+    active = nodeId;
+    // Smooth scroll to panel
+    setTimeout(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+
+  nodes.forEach(node => {
+    node.addEventListener('click', () => {
+      const id = node.getAttribute('data-node');
+      if (active === id) { closeAll(); } else { openPanel(id); }
+    });
+  });
+
+  closers.forEach(btn => {
+    btn.addEventListener('click', closeAll);
+  });
+})();
+</script>
 
 </body>
 </html>
