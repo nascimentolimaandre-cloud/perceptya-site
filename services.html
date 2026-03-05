@@ -11,7 +11,571 @@
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <style>
-  /* Page-specific overrides go here */
+
+/* ═══════════════════════════════════════════
+   SERVICES — PAGE-SPECIFIC STYLES
+═══════════════════════════════════════════ */
+
+/* ── Hero ─────────────────────────────────── */
+.svc-hero {
+  padding-top: calc(var(--header-h) + 72px);
+  padding-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.svc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.svc-hero .container { position: relative; z-index: 1; }
+
+.svc-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.svc-hero-copy .section-sub { margin-bottom: 32px; }
+.svc-hero-badges {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 32px;
+}
+.svc-hero-badge {
+  font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: .06em;
+  padding: 6px 12px; border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.svc-hero-badge.ph1-badge {
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+}
+.svc-hero-badge.ph2-badge {
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+}
+.svc-hero-badge svg { width: 12px; height: 12px; }
+
+/* Hero frame image — static pipeline diagram */
+.svc-hero-frame {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg2);
+}
+.svc-frame-bar {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.svc-frame-bar .dots { display: flex; gap: 5px; }
+.svc-frame-bar .dot { width: 8px; height: 8px; border-radius: 50%; }
+.svc-frame-bar .dot-r { background: #3a1c1c; }
+.svc-frame-bar .dot-y { background: #2e2a1a; }
+.svc-frame-bar .dot-g { background: #1a2e1c; }
+.svc-frame-bar span {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.2); letter-spacing: .06em;
+}
+.svc-frame-body { padding: 20px 16px; }
+
+@media (min-width: 768px) {
+  .svc-hero { padding-top: calc(var(--header-h) + 96px); padding-bottom: 96px; }
+  .svc-hero-grid { grid-template-columns: 1fr 1fr; gap: 56px; }
+}
+@media (min-width: 1024px) {
+  .svc-hero-grid { gap: 72px; }
+}
+
+
+/* ═══════════════════════════════════════════
+   SHARED INTERACTIVE PHASE COMPONENT
+   Used by both Phase 1 and Phase 2
+═══════════════════════════════════════════ */
+.phase-intro { margin-bottom: 48px; }
+.phase-intro .section-sub { margin-bottom: 0; }
+
+.phase-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* Left: Interactive frame */
+.phase-frame {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg2);
+}
+.phase-frame-body { padding: 16px; }
+
+/* Steps inside frame */
+.phase-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.phase-step {
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  position: relative;
+}
+.phase-step:hover { border-color: rgba(255,107,43,0.35); background: #141414; }
+.phase-step.active {
+  border-color: var(--orange);
+  background: rgba(255,107,43,0.07);
+  box-shadow: 0 0 20px rgba(255,107,43,0.1);
+}
+
+.step-num {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--orange); letter-spacing: .06em;
+  padding-top: 2px; flex-shrink: 0;
+}
+
+.step-content { flex: 1; min-width: 0; }
+.step-title {
+  font-size: 13px; font-weight: 500;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.6);
+  transition: color .2s;
+  margin-bottom: 4px;
+}
+.phase-step:hover .step-title,
+.phase-step.active .step-title { color: var(--white); }
+.step-timing {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: .04em;
+}
+.step-icon {
+  width: 20px; height: 20px; flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-icon svg {
+  width: 17px; height: 17px; display: block;
+  stroke: rgba(255,255,255,0.35); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke .2s;
+}
+.phase-step:hover .step-icon svg,
+.phase-step.active .step-icon svg { stroke: var(--orange); }
+
+/* Active indicator (right arrow on desktop) */
+.phase-step.active::after { display: none; }
+
+/* Bundle at bottom of frame */
+.phase-bundle {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(255,107,43,0.04);
+  border: 1px solid rgba(255,107,43,0.15);
+  border-radius: 6px;
+}
+.phase-bundle-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--orange); letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.phase-bundle-label::before { content: ''; width: 10px; height: 1px; background: var(--orange); }
+.phase-bundle-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.phase-bundle-tag {
+  font-family: var(--mono); font-size: 8.5px;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  padding: 4px 8px; border-radius: 3px;
+  letter-spacing: .03em;
+}
+
+/* Right: Detail panel */
+.phase-detail {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg2);
+  display: none;
+  animation: fadeUp .3s ease forwards;
+}
+.phase-detail.open { display: block; }
+
+.pd-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px;
+  background: #111;
+  border-bottom: 1px solid var(--border);
+}
+.pd-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+  color: var(--orange); background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  padding: 3px 8px; border-radius: 3px; flex-shrink: 0;
+}
+.pd-title { font-size: 17px; font-weight: 500; color: var(--white); flex: 1; }
+
+/* Detail body: 2×2 info grid */
+.pd-body { display: grid; grid-template-columns: 1fr; }
+.pd-frames { display: grid; grid-template-columns: 1fr 1fr; }
+.pd-f {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pd-f:nth-child(2n) { border-right: none; }
+.pd-f:nth-child(3),
+.pd-f:nth-child(4) { border-bottom: none; }
+
+.pd-f-tag {
+  font-family: var(--mono); font-size: 9px; color: var(--orange);
+  letter-spacing: .12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px;
+}
+.pd-f-tag::before { content: ''; width: 10px; height: 1px; background: var(--orange); }
+
+.pd-f-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.pd-f-list li {
+  font-size: 12.5px; font-weight: 300; line-height: 1.5;
+  color: rgba(255,255,255,0.65); padding-left: 13px; position: relative;
+}
+.pd-f-list li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+
+.pd-f-value {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: rgba(255,255,255,0.75);
+}
+.pd-f-value strong { color: var(--white); font-weight: 500; }
+
+/* Deliverable examples */
+.pd-examples {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  background: #0d0d0d;
+}
+.pd-examples-label {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.3); letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.pd-examples-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.pd-example-item {
+  display: flex; align-items: center; gap: 8px;
+  background: #111; border: 1px solid var(--border);
+  border-radius: 5px; padding: 8px 12px;
+  transition: border-color .2s;
+}
+.pd-example-item:hover { border-color: var(--border2); }
+.pd-example-icon {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,107,43,0.08);
+  border: 1px solid rgba(255,107,43,0.15);
+  border-radius: 4px; flex-shrink: 0;
+}
+.pd-example-icon svg {
+  width: 13px; height: 13px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.pd-example-name {
+  font-family: var(--mono); font-size: 10px;
+  color: rgba(255,255,255,0.55); letter-spacing: .03em;
+}
+.pd-example-ext {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.25); letter-spacing: .03em;
+}
+
+/* Phase sections */
+#phase1 {
+  background: #0b0b0b;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+#phase2 {
+  background: var(--bg);
+}
+
+@media (min-width: 768px) {
+  .phase-layout {
+    grid-template-columns: 340px 1fr;
+    gap: 0;
+  }
+  .phase-frame {
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+  }
+  .phase-detail {
+    border-radius: 0 8px 8px 0;
+  }
+  .phase-step.active::after {
+    content: '';
+    position: absolute;
+    right: -9px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid var(--orange);
+    z-index: 2;
+    display: block;
+  }
+}
+@media (min-width: 1024px) {
+  .phase-layout { grid-template-columns: 380px 1fr; }
+}
+@media (max-width: 767px) {
+  .pd-f { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+  .pd-f:last-child { border-bottom: none !important; }
+  .pd-frames { grid-template-columns: 1fr; }
+  .phase-detail { margin-top: 12px; }
+}
+
+
+/* ═══════════════════════════════════════════
+   ENGAGEMENT MODEL
+═══════════════════════════════════════════ */
+#engagement {
+  background: #0b0b0b;
+  border-top: 1px solid var(--border);
+}
+.eng-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.eng-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 24px;
+  transition: border-color .2s;
+  position: relative;
+}
+.eng-card:hover { border-color: var(--border2); }
+.eng-card-num {
+  font-family: var(--mono); font-size: 32px;
+  font-weight: 500; color: rgba(255,107,43,0.15);
+  position: absolute; top: 20px; right: 24px;
+  line-height: 1;
+}
+.eng-card-badge {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.eng-card-badge.discovery { color: var(--orange); }
+.eng-card-badge.industrial { color: var(--orange); }
+.eng-card-badge.pods { color: var(--green-term); }
+.eng-card-title { font-size: 18px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
+.eng-card-body { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
+.eng-card-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.eng-meta-tag {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 4px 8px; border-radius: 3px;
+  letter-spacing: .04em;
+}
+
+@media (min-width: 768px) {
+  .eng-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* ═══════════════════════════════════════════
+   WHY AI INITIATIVES STALL — Expanded
+═══════════════════════════════════════════ */
+#why-stall {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.stall-intro { margin-bottom: 48px; max-width: 720px; }
+.stall-intro .section-sub { margin-bottom: 0; }
+
+.stall-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.stall-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--orange);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.stall-card:hover { border-color: var(--border2); border-left-color: var(--orange); }
+
+.stall-card-header {
+  padding: 24px 28px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.stall-icon {
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: var(--orange-glow);
+  border: 1px solid var(--orange-border);
+  flex-shrink: 0;
+}
+.stall-icon svg {
+  width: 18px; height: 18px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.stall-card-info { flex: 1; }
+.stall-card-title {
+  font-size: 17px; font-weight: 500; color: var(--white);
+  margin-bottom: 6px;
+}
+.stall-card-desc {
+  font-size: 14px; font-weight: 300; line-height: 1.7;
+  color: var(--muted);
+}
+
+.stall-card-body {
+  padding: 0 28px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.stall-col-tag {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--orange); letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.stall-col-tag::before { content: ''; width: 8px; height: 1px; background: var(--orange); }
+.stall-col-tag.red { color: #ff4d4d; }
+.stall-col-tag.red::before { background: #ff4d4d; }
+.stall-col-tag.muted-tag { color: rgba(255,255,255,0.35); }
+.stall-col-tag.muted-tag::before { background: rgba(255,255,255,0.2); }
+
+.stall-col-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.stall-col-list li {
+  font-size: 12px; font-weight: 300; line-height: 1.55;
+  color: rgba(255,255,255,0.55); padding-left: 12px; position: relative;
+}
+.stall-col-list li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+.stall-col-list.red li::before { color: #ff4d4d; }
+
+/* Research stat badge */
+.stall-stat {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(255,107,43,0.05);
+  border: 1px solid rgba(255,107,43,0.12);
+  border-radius: 5px;
+}
+.stall-stat-value {
+  font-family: var(--mono); font-size: 20px;
+  font-weight: 500; color: var(--orange);
+  line-height: 1; margin-bottom: 4px;
+}
+.stall-stat-label {
+  font-size: 11px; font-weight: 300; line-height: 1.5;
+  color: rgba(255,255,255,0.45);
+}
+.stall-stat-source {
+  font-family: var(--mono); font-size: 8px;
+  color: rgba(255,255,255,0.2); letter-spacing: .04em;
+  margin-top: 4px;
+}
+
+@media (max-width: 1023px) {
+  .stall-card-body { grid-template-columns: 1fr; }
+}
+@media (min-width: 768px) {
+  .stall-cards { gap: 16px; }
+}
+
+
+/* ═══════════════════════════════════════════
+   CTA STRIP
+═══════════════════════════════════════════ */
+.svc-cta-strip {
+  position: relative;
+  background: var(--bg2);
+  overflow: hidden;
+  padding: 96px 0;
+  text-align: center;
+}
+.svc-cta-strip::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(255,107,43,0.09) 0%, transparent 70%);
+  pointer-events: none;
+}
+.svc-cta-strip::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.svc-cta-strip .container { position: relative; z-index: 1; }
+.svc-cta-headline {
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 500; line-height: 1.15;
+  letter-spacing: -.02em; color: var(--white);
+  max-width: 740px; margin: 0 auto 20px;
+}
+.svc-cta-headline em { font-style: normal; color: var(--orange); }
+.svc-cta-sub {
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  max-width: 560px; margin: 0 auto 40px;
+}
+.svc-cta-actions {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .svc-cta-strip { padding: 72px 0; text-align: left; }
+  .svc-cta-headline { max-width: 100%; }
+  .svc-cta-sub { max-width: 100%; }
+  .svc-cta-actions { justify-content: flex-start; }
+}
+
+
+/* ── Scroll reveal ─────────────────────────── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .08s; }
+.reveal-d2 { transition-delay: .16s; }
+.reveal-d3 { transition-delay: .24s; }
+.reveal-d4 { transition-delay: .32s; }
+
 </style>
 </head>
 <body>
@@ -20,12 +584,16 @@
 <header>
 <div class="header-inner">
   <div class="header-left">
-    <a href="index.html" class="nav-logo">PERCEPT<span>Y</span>A</a>
-    <div class="social-icons">
-      <a href="https://linkedin.com/company/perceptya" title="LinkedIn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </a>
-    </div>
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 50L50 10L84.64 30L84.64 70L50 90L15.36 70L15.36 30L50 10" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.5"/>
+        <circle cx="50" cy="50" r="15" stroke="#D4AF37" stroke-width="3"/>
+        <path d="M50 20L65 45H35L50 20Z" fill="#D4AF37" fill-opacity="0.8"/>
+        <path d="M50 80L35 55H65L50 80Z" fill="#152238" stroke="#D4AF37"/>
+        <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="1" stroke-dasharray="4 4"/>
+      </svg>
+      <span class="nav-logo-text">PERCEPT<em>Y</em>A</span>
+    </a>
     <nav class="desktop-nav">
       <a href="manifesto.html">Manifesto</a>
       <a href="services.html" class="active">Services</a>
@@ -34,126 +602,542 @@
     </nav>
   </div>
   <div class="desktop-right">
-    <div class="lang-toggle"><span class="active">EN</span><div class="lang-sep"></div><span>PT</span><div class="lang-sep"></div><span>ES</span></div>
+    <div class="lang-toggle">
+      <span class="active"><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#fff"/><rect y="0" width="18" height="1.85" fill="#B22234"/><rect y="3.7" width="18" height="1.85" fill="#B22234"/><rect y="7.4" width="18" height="1.85" fill="#B22234"/><rect y="10.15" width="18" height="1.85" fill="#B22234"/><rect width="7.5" height="6.5" fill="#3C3B6E"/><circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/><circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/><circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/><circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/><circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/><circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/><circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/><circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/><circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/></svg> EN</span>
+      <div class="lang-sep"></div>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#009C3B"/><polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/><circle cx="9" cy="6" r="2.8" fill="#002776"/><path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/></svg> PT</span>
+      <div class="lang-sep"></div>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg> ES</span>
+    </div>
     <button class="btn-nav" onclick="location.href='contact.html'">Start AI Value Discovery</button>
   </div>
-  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </div>
 </header>
-<nav class="mobile-nav">
+
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobileNav">
   <a href="manifesto.html">Manifesto</a>
   <a href="services.html" class="active">Services</a>
   <a href="industries.html">Industries</a>
   <a href="contact.html">Contact</a>
   <div class="mobile-nav-footer">
-    <div class="lang-toggle"><span class="active">EN</span><div class="lang-sep"></div><span>PT</span><div class="lang-sep"></div><span>ES</span></div>
+    <div class="lang-toggle">
+      <span class="active"><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#fff"/><rect y="0" width="18" height="1.85" fill="#B22234"/><rect y="3.7" width="18" height="1.85" fill="#B22234"/><rect y="7.4" width="18" height="1.85" fill="#B22234"/><rect y="10.15" width="18" height="1.85" fill="#B22234"/><rect width="7.5" height="6.5" fill="#3C3B6E"/><circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/><circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/><circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/><circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/><circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/><circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/><circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/><circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/><circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/></svg> EN</span>
+      <div class="lang-sep"></div>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#009C3B"/><polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/><circle cx="9" cy="6" r="2.8" fill="#002776"/><path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/></svg> PT</span>
+      <div class="lang-sep"></div>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg> ES</span>
+    </div>
     <button class="btn-nav" onclick="location.href='contact.html'">Start AI Value Discovery</button>
   </div>
-</nav>
+</div>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 6.1 — SERVICES HERO
-  Eyebrow: PERCEPTYA AI VALUE SYSTEM™
-  H: "From AI ambition to AI value. A structured, two-phase methodology."
-  Body: "We don't run pilots. We build the foundation..."
-  Background: Dark static (no video)
-  Status: TO BUILD
+  §6.1 — SERVICES HERO
 ════════════════════════════════════════════════════ -->
-<section class="section" id="services-hero" style="padding-top: calc(var(--header-h) + 96px);">
+<section class="svc-hero section" id="services-hero">
   <div class="container">
-    <div class="section-label">PERCEPTYA AI VALUE SYSTEM™</div>
-    <h1 class="section-headline" style="font-size:clamp(32px,4.5vw,56px); max-width:760px;">
-      From AI ambition to AI value.<br>A structured, two-phase methodology.
-    </h1>
-    <p class="section-sub">
-      We don't run pilots. We build the foundation, prioritize use cases by economic impact, and industrialize AI into production-grade systems that grow and improve over time.
-    </p>
+    <div class="svc-hero-grid">
+      <div class="svc-hero-copy">
+        <div class="section-label reveal">PERCEPTYA AI VALUE SYSTEM&trade;</div>
+        <h1 class="section-headline reveal" style="font-size:clamp(32px,4.5vw,56px); max-width:560px;">
+          From AI <em>ambition</em> to AI <em>value</em>.
+        </h1>
+        <p class="section-sub reveal">
+          A structured, two-phase methodology designed for organizations serious about capturing economic value from AI. We don't run pilots — we build the foundation, prioritize by impact, and industrialize into production-grade systems that deliver measurable results.
+        </p>
+        <div class="svc-hero-badges reveal">
+          <span class="svc-hero-badge ph1-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Phase 1 &middot; AI Value Discovery &middot; 6&ndash;10 Weeks
+          </span>
+          <span class="svc-hero-badge ph2-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Phase 2 &middot; AI Industrialization &middot; 3&ndash;12+ Months
+          </span>
+        </div>
+        <div class="reveal">
+          <a href="contact.html" class="btn-primary">
+            Start AI Value Discovery
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <!-- Right: Static frame image -->
+      <div class="svc-hero-frame reveal">
+        <div class="svc-frame-bar">
+          <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <span>perceptya-ai-value-system.svg</span>
+        </div>
+        <div class="svc-frame-body">
+          <svg viewBox="0 0 520 280" style="width:100%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+            <text x="260" y="18" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="9" font-family="DM Mono" letter-spacing="3">PERCEPTYA AI VALUE SYSTEM&trade;</text>
+            <rect x="10" y="32" width="220" height="234" rx="6" fill="rgba(255,107,43,0.04)" stroke="rgba(255,107,43,0.25)" stroke-width="1"/>
+            <text x="20" y="50" fill="#FF6B2B" font-size="8" font-family="DM Mono" letter-spacing="1.5">PHASE 1 — AI VALUE DISCOVERY</text>
+            <text x="210" y="50" text-anchor="end" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">6–10 WKS</text>
+            <rect x="20" y="60" width="200" height="36" rx="4" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><text x="30" y="74" fill="#FF6B2B" font-size="7.5" font-family="DM Mono">01</text><text x="48" y="74" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Executive Alignment</text><text x="48" y="87" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono">Week 1</text>
+            <rect x="20" y="102" width="200" height="36" rx="4" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><text x="30" y="116" fill="#FF6B2B" font-size="7.5" font-family="DM Mono">02</text><text x="48" y="116" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">AI &amp; Data Maturity Assessment</text><text x="48" y="129" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono">Weeks 2–4</text>
+            <rect x="20" y="144" width="200" height="36" rx="4" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><text x="30" y="158" fill="#FF6B2B" font-size="7.5" font-family="DM Mono">03</text><text x="48" y="158" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Use Case Prioritization</text><text x="48" y="171" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono">Weeks 4–6</text>
+            <rect x="20" y="186" width="200" height="36" rx="4" fill="#111" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><text x="30" y="200" fill="#FF6B2B" font-size="7.5" font-family="DM Mono">04</text><text x="48" y="200" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Architecture &amp; Roadmap</text><text x="48" y="213" fill="rgba(255,255,255,0.25)" font-size="7" font-family="DM Mono">Weeks 6–10</text>
+            <rect x="20" y="230" width="200" height="28" rx="4" fill="rgba(255,107,43,0.08)" stroke="rgba(255,107,43,0.2)" stroke-width="1"/><text x="120" y="248" text-anchor="middle" fill="rgba(255,107,43,0.7)" font-size="7" font-family="DM Mono" letter-spacing="0.5">5 EXECUTIVE DELIVERABLES</text>
+            <line x1="240" y1="150" x2="280" y2="150" stroke="rgba(255,107,43,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/><polygon points="278,145 288,150 278,155" fill="rgba(255,107,43,0.6)"/>
+            <rect x="290" y="32" width="220" height="234" rx="6" fill="rgba(0,212,255,0.03)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+            <text x="300" y="50" fill="#00D4FF" font-size="8" font-family="DM Mono" letter-spacing="1.5">PHASE 2 — INDUSTRIALIZATION</text>
+            <text x="490" y="50" text-anchor="end" fill="rgba(255,255,255,0.2)" font-size="7" font-family="DM Mono">3–12+ MO</text>
+            <rect x="300" y="60" width="200" height="28" rx="4" fill="#111" stroke="rgba(0,212,255,0.12)" stroke-width="1"/><text x="310" y="78" fill="#00D4FF" font-size="7.5" font-family="DM Mono">A</text><text x="325" y="78" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Data Foundation</text>
+            <rect x="300" y="94" width="200" height="28" rx="4" fill="#111" stroke="rgba(0,212,255,0.12)" stroke-width="1"/><text x="310" y="112" fill="#00D4FF" font-size="7.5" font-family="DM Mono">B</text><text x="325" y="112" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Use Case Implementation</text>
+            <rect x="300" y="128" width="200" height="28" rx="4" fill="#111" stroke="rgba(0,212,255,0.12)" stroke-width="1"/><text x="310" y="146" fill="#00D4FF" font-size="7.5" font-family="DM Mono">C</text><text x="325" y="146" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Agent Architecture</text>
+            <rect x="300" y="162" width="200" height="28" rx="4" fill="#111" stroke="rgba(0,212,255,0.12)" stroke-width="1"/><text x="310" y="180" fill="#00D4FF" font-size="7.5" font-family="DM Mono">D</text><text x="325" y="180" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">Operating Model &amp; Governance</text>
+            <rect x="300" y="196" width="200" height="28" rx="4" fill="#111" stroke="rgba(0,212,255,0.12)" stroke-width="1"/><text x="310" y="214" fill="#00D4FF" font-size="7.5" font-family="DM Mono">E</text><text x="325" y="214" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Urbanist" font-weight="500">ROI &amp; Value Tracking</text>
+            <rect x="300" y="232" width="200" height="28" rx="4" fill="rgba(0,255,133,0.06)" stroke="rgba(0,255,133,0.2)" stroke-width="1"/><text x="400" y="250" text-anchor="middle" fill="rgba(0,255,133,0.7)" font-size="7" font-family="DM Mono" letter-spacing="0.5">PRODUCTION AI + TRACKED ROI</text>
+          </svg>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 6.2 — PHASE 1: AI VALUE DISCOVERY
-  Duration: 6–10 Weeks · Fixed-scope engagement
-  Objective: Executive clarity + actionable plan
-  4 sub-phases with deliverables:
-    Sub 1 — Executive Alignment & Ambition (Week 1)
-    Sub 2 — AI & Data Maturity Assessment (Weeks 2–4)
-    Sub 3 — Use Case Identification & Prioritization (Weeks 4–6)
-    Sub 4 — Target Architecture & Roadmap (Weeks 6–10)
-  Output bundle: 5 deliverables
-  Layout: Timeline or 4-step accordion/stepper
-  Status: TO BUILD
+  §6.2 — PHASE 1: AI VALUE DISCOVERY (Interactive)
 ════════════════════════════════════════════════════ -->
 <section class="section" id="phase1">
   <div class="container">
-    <div class="section-label">Phase 1</div>
-    <h2 class="section-headline">AI Value Discovery</h2>
-    <p class="section-sub" style="margin-bottom:0;">
-      6–10 Weeks · Fixed-scope engagement
-    </p>
-    <!-- TODO: 4-step timeline / sub-phase cards + deliverables -->
-    [Phase 1 content placeholder]
+    <div class="phase-intro reveal">
+      <div class="section-label">Phase 1</div>
+      <h2 class="section-headline"><em>AI Value Discovery</em></h2>
+      <p class="section-sub">6&ndash;10 weeks of structured engagement that delivers executive clarity, a prioritized use case portfolio, architecture blueprint, and a board-ready roadmap backed by economic modeling. Every transformation starts here.</p>
+    </div>
+
+    <div class="phase-layout reveal" id="p1-layout">
+      <!-- LEFT: Interactive Frame -->
+      <div class="phase-frame">
+        <div class="svc-frame-bar"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span>ai-value-discovery.process</span></div>
+        <div class="phase-frame-body">
+          <div class="phase-steps" id="p1-steps">
+            <button class="phase-step active" data-step="p1s1"><div class="step-num">01</div><div class="step-content"><div class="step-title">Executive Alignment &amp; Ambition</div><div class="step-timing">Week 1</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></button>
+            <button class="phase-step" data-step="p1s2"><div class="step-num">02</div><div class="step-content"><div class="step-title">AI &amp; Data Maturity Assessment</div><div class="step-timing">Weeks 2&ndash;4</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M3.05 11a9 9 0 0 1 17.9 0"/></svg></div></button>
+            <button class="phase-step" data-step="p1s3"><div class="step-num">03</div><div class="step-content"><div class="step-title">Use Case Identification &amp; Prioritization</div><div class="step-timing">Weeks 4&ndash;6</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div></button>
+            <button class="phase-step" data-step="p1s4"><div class="step-num">04</div><div class="step-content"><div class="step-title">Target Architecture &amp; Roadmap</div><div class="step-timing">Weeks 6&ndash;10</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v4H3z"/><path d="M3 10h12v4H3z"/><path d="M3 17h8v4H3z"/></svg></div></button>
+          </div>
+          <div class="phase-bundle">
+            <div class="phase-bundle-label">Discovery Output Bundle</div>
+            <div class="phase-bundle-tags">
+              <span class="phase-bundle-tag">AI Maturity Score</span><span class="phase-bundle-tag">Use Case Portfolio</span><span class="phase-bundle-tag">Architecture Blueprint</span><span class="phase-bundle-tag">18&ndash;36 Mo Roadmap</span><span class="phase-bundle-tag">Financial Impact Model</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Detail Panels -->
+      <div class="phase-detail open" id="detail-p1s1">
+        <div class="pd-header"><span class="pd-tag">Step 01 &middot; Week 1</span><div class="pd-title">Executive Alignment &amp; Ambition</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Inputs</div><ul class="pd-f-list"><li>C-suite and business leaders available for workshops</li><li>Overview of key business challenges and strategic priorities</li><li>Inventory of ongoing AI and data initiatives</li><li>Strategic priorities for the next 18&ndash;36 months</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Executive alignment workshops with C-suite stakeholders</li><li>Value pool mapping across every business area</li><li>Target metrics and KPI definition tied to P&amp;L</li><li>Governance principles establishment for AI initiatives</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>AI Ambition Statement aligned to corporate strategy</li><li>Value Pools Map by business area and function</li><li>Target Metrics Framework with baseline benchmarks</li><li>Governance Principles for AI decision-making</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>Executive clarity before a single line of code.</strong> Your leadership team aligns on exactly where AI can move the P&amp;L — not vague aspirations, but a focused mandate that drives every Discovery decision forward.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Value Pools Map</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">AI Ambition Statement</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Metrics Framework</div><div class="pd-example-ext">.xlsx</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p1s2">
+        <div class="pd-header"><span class="pd-tag">Step 02 &middot; Weeks 2&ndash;4</span><div class="pd-title">AI &amp; Data Maturity Assessment</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Inputs</div><ul class="pd-f-list"><li>Access to data systems, technical stack and infrastructure</li><li>Data, engineering and analytics team leaders</li><li>Existing architecture documentation and data dictionaries</li><li>History of past data and AI initiatives and their outcomes</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Comprehensive technical data and infrastructure assessment</li><li>Capability interviews across data, ML and engineering teams</li><li>Data quality audit and governance maturity evaluation</li><li>Gap analysis across 5 maturity dimensions with scoring</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>AI Maturity Score&trade; (0&ndash;5.0 per dimension)</li><li>Gap Analysis Report with remediation priorities</li><li>Capability Heatmap across teams and functions</li><li>Prioritized Pain Points linked to business impact</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>An honest diagnosis — not a sales pitch.</strong> Your AI Maturity Score becomes the definitive baseline every future data and AI investment decision will reference.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">AI Maturity Score Report</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Capability Heatmap</div><div class="pd-example-ext">.xlsx</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Gap Analysis Report</div><div class="pd-example-ext">.pdf</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p1s3">
+        <div class="pd-header"><span class="pd-tag">Step 03 &middot; Weeks 4&ndash;6</span><div class="pd-title">Use Case Identification &amp; Prioritization</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Inputs</div><ul class="pd-f-list"><li>AI Maturity Score output and gap analysis findings</li><li>Business unit leaders across revenue and operations</li><li>P&amp;L data by process, department and business area</li><li>Industry AI adoption benchmarks and competitive intelligence</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Cross-functional use case ideation workshops</li><li>Financial impact modeling per candidate use case</li><li>Technical feasibility and data readiness scoring</li><li>Quick wins vs. strategic bets classification</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>Full Use Case Portfolio (20&ndash;30 candidates identified)</li><li>Impact &times; Feasibility Prioritization Matrix</li><li>Detailed Business Cases for Top 5&ndash;10 use cases</li><li>Quick Win Roadmap for immediate value capture</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>A ranked portfolio of AI bets by real economic impact</strong> — not what's technically interesting, but what moves the needle for your business.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Impact &times; Feasibility Matrix</div><div class="pd-example-ext">.xlsx</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Use Case Business Cases</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="pd-example-name">Quick Win Roadmap</div><div class="pd-example-ext">.pptx</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p1s4">
+        <div class="pd-header"><span class="pd-tag">Step 04 &middot; Weeks 6&ndash;10</span><div class="pd-title">Target Architecture &amp; Roadmap</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Inputs</div><ul class="pd-f-list"><li>Prioritized use cases with validated business cases</li><li>Current technology stack and infrastructure landscape</li><li>Budget parameters and investment appetite</li><li>Regulatory, compliance and security constraints</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Target architecture design across data, ML and AI layers</li><li>Technology evaluation, selection and vendor mapping</li><li>Phase sequencing with dependency and risk analysis</li><li>Investment vs. return modeling over 18&ndash;36 months</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>Architecture Blueprint (data + AI + agent layers)</li><li>18&ndash;36 Month Roadmap — sequenced, costed, board-ready</li><li>Financial Impact Model with ROI projections</li><li>Industrialization Plan for Phase 2 execution</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>A board-ready plan with the numbers behind it.</strong> Your team knows exactly what to build, in what order, and what returns to expect — ready for executive approval.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Architecture Blueprint</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Financial Impact Model</div><div class="pd-example-ext">.xlsx</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="pd-example-name">18-Month Roadmap</div><div class="pd-example-ext">.pptx</div></div></div>
+        </div></div>
+      </div>
+    </div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 6.3 — PHASE 2: AI INDUSTRIALIZATION
-  Duration: Modular · 3–12+ Months
-  5 modules:
-    Module A — Data Foundation Modernization
-    Module B — Priority Use Case Implementation
-    Module C — Agent Architecture Deployment
-    Module D — AI Operating Model & Governance
-    Module E — ROI & Value Tracking
-  Layout: 5 module cards (expandable or tabs)
-  Status: TO BUILD
+  §6.3 — PHASE 2: AI INDUSTRIALIZATION (Interactive — same component)
 ════════════════════════════════════════════════════ -->
 <section class="section" id="phase2">
   <div class="container">
-    <div class="section-label">Phase 2</div>
-    <h2 class="section-headline">AI Industrialization & Value Capture</h2>
-    <p class="section-sub" style="margin-bottom:0;">
-      Modular · 3–12+ Months · Sequenced by Discovery findings
-    </p>
-    <!-- TODO: 5 module cards -->
-    [Phase 2 content placeholder]
+    <div class="phase-intro reveal">
+      <div class="section-label">Phase 2</div>
+      <h2 class="section-headline"><em>AI Industrialization</em> &amp; Value Capture</h2>
+      <p class="section-sub">Modular execution across 5 workstreams, sequenced by Discovery findings. Each module is designed for production from day one — with governance, monitoring, adoption, and continuous ROI tracking built in.</p>
+    </div>
+
+    <div class="phase-layout reveal" id="p2-layout">
+      <!-- LEFT: Interactive Frame -->
+      <div class="phase-frame">
+        <div class="svc-frame-bar"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span>ai-industrialization.modules</span></div>
+        <div class="phase-frame-body">
+          <div class="phase-steps" id="p2-steps">
+            <button class="phase-step active" data-step="p2sa"><div class="step-num">A</div><div class="step-content"><div class="step-title">Data Foundation Modernization</div><div class="step-timing">Lakehouse &middot; Pipelines &middot; Governance</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div></button>
+            <button class="phase-step" data-step="p2sb"><div class="step-num">B</div><div class="step-content"><div class="step-title">Priority Use Case Implementation</div><div class="step-timing">MLOps &middot; Production &middot; Adoption</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div></button>
+            <button class="phase-step" data-step="p2sc"><div class="step-num">C</div><div class="step-content"><div class="step-title">Agent Architecture Deployment</div><div class="step-timing">Orchestration &middot; Guardrails &middot; Integration</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2z"/></svg></div></button>
+            <button class="phase-step" data-step="p2sd"><div class="step-num">D</div><div class="step-content"><div class="step-title">AI Operating Model &amp; Governance</div><div class="step-timing">CoE &middot; RACI &middot; Policies &middot; Compliance</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div></button>
+            <button class="phase-step" data-step="p2se"><div class="step-num">E</div><div class="step-content"><div class="step-title">ROI &amp; Value Tracking</div><div class="step-timing">Dashboards &middot; Scorecards &middot; Evidence</div></div><div class="step-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div></button>
+          </div>
+          <div class="phase-bundle">
+            <div class="phase-bundle-label">Industrialization Outcomes</div>
+            <div class="phase-bundle-tags">
+              <span class="phase-bundle-tag">Production AI Systems</span><span class="phase-bundle-tag">Agent Deployments</span><span class="phase-bundle-tag">Governed Data Platform</span><span class="phase-bundle-tag">ROI Dashboards</span><span class="phase-bundle-tag">Operating Model</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Detail Panels -->
+      <div class="phase-detail open" id="detail-p2sa">
+        <div class="pd-header"><span class="pd-tag">Module A</span><div class="pd-title">Data Foundation Modernization</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Lakehouse and data products architecture implementation</li><li>Data pipeline design, build and orchestration (batch + streaming)</li><li>Governance, security, data cataloging and lineage documentation</li><li>Observability, data quality monitoring and alerting in production</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>Data platform in production with defined SLAs</li><li>Data Catalog with documented lineage and ownership</li><li>Monitored pipelines with alerting and auto-healing</li><li>Governance policies implemented, auditable and enforced</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Inputs Required</div><ul class="pd-f-list"><li>Architecture Blueprint from Discovery</li><li>Current data infrastructure fully mapped</li><li>Data requirements from prioritized use cases</li><li>Security, compliance and regulatory policies</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>AI that works requires data that flows.</strong> We build the foundation every use case depends on — reliable, traceable, governed, and ready to scale across the organization.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Lakehouse Architecture</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Data Catalog</div><div class="pd-example-ext">platform</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div><div class="pd-example-name">Pipeline Monitoring</div><div class="pd-example-ext">dashboard</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p2sb">
+        <div class="pd-header"><span class="pd-tag">Module B</span><div class="pd-title">Priority Use Case Implementation</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Production-grade model development and fine-tuning</li><li>MLOps / LLMOps pipeline setup with CI/CD automation</li><li>Business systems integration and API deployment</li><li>Monitoring, drift detection and user adoption support</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>AI models in production (not demos, not POCs)</li><li>Operational MLOps pipeline with CI/CD</li><li>Performance monitoring dashboards</li><li>User adoption playbook and training materials</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Inputs Required</div><ul class="pd-f-list"><li>Top use cases prioritized in Discovery</li><li>Data foundation in production (Module A)</li><li>Baseline metrics per use case</li><li>Integration requirements with core systems</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>Not demos. Production systems.</strong> Revenue, margin and efficiency gains you can measure and report to the board — every sprint, every month.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div><div class="pd-example-name">Model Performance Dashboard</div><div class="pd-example-ext">live</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">MLOps Pipeline Docs</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Adoption Playbook</div><div class="pd-example-ext">.pdf</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p2sc">
+        <div class="pd-header"><span class="pd-tag">Module C</span><div class="pd-title">Agent Architecture Deployment</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>AI agent design and multi-agent orchestration</li><li>Integration with core business systems and workflows</li><li>Security guardrails, access control and audit trails</li><li>Observability, logging and performance optimization</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>Production AI agents with orchestration layer</li><li>Agent monitoring and observability dashboards</li><li>Security framework with guardrails and audit trails</li><li>Integration documentation and operational runbooks</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Inputs Required</div><ul class="pd-f-list"><li>Agent use cases identified in Discovery</li><li>Business workflow mappings and process documentation</li><li>Security, compliance and regulatory requirements</li><li>System integration specifications and API contracts</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>AI agents built to operate, not just demo.</strong> Autonomous systems that eliminate repetitive work, accelerate decisions, and integrate safely into your enterprise workflows.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Agent Architecture Doc</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div><div class="pd-example-name">Agent Monitoring</div><div class="pd-example-ext">dashboard</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="pd-example-name">Security Guardrails</div><div class="pd-example-ext">.pdf</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p2sd">
+        <div class="pd-header"><span class="pd-tag">Module D</span><div class="pd-title">AI Operating Model &amp; Governance</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>AI CoE or federated model design and implementation</li><li>RACI definition and decision-making framework</li><li>Responsible AI policies and guardrail creation</li><li>Continuous prioritization and intake process design</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>AI Operating Model blueprint and org design</li><li>Governance framework with policies and controls</li><li>RACI matrix for AI decision-making</li><li>Intake and prioritization process for new use cases</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Inputs Required</div><ul class="pd-f-list"><li>Current organizational structure and decision flows</li><li>Governance principles established in Discovery</li><li>Regulatory and compliance landscape</li><li>Executive sponsorship and transformation mandate</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>AI that governs itself — not just runs.</strong> A sustainable operating model that scales AI adoption across the organization while maintaining control, compliance, and continuous improvement.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">Operating Model Blueprint</div><div class="pd-example-ext">.pdf</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">RACI Matrix</div><div class="pd-example-ext">.xlsx</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-example-name">AI Governance Policies</div><div class="pd-example-ext">.pdf</div></div></div>
+        </div></div>
+      </div>
+
+      <div class="phase-detail" id="detail-p2se">
+        <div class="pd-header"><span class="pd-tag">Module E</span><div class="pd-title">ROI &amp; Value Tracking</div></div>
+        <div class="pd-body"><div class="pd-frames">
+          <div class="pd-f"><div class="pd-f-tag">Key Activities</div><ul class="pd-f-list"><li>Value tracking framework design and implementation</li><li>ROI dashboards with automated data collection</li><li>Savings, revenue uplift and productivity measurement</li><li>Evidence-based scaling and adjustment recommendations</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Key Deliverables</div><ul class="pd-f-list"><li>ROI Tracking Dashboard (automated, real-time)</li><li>Value realization reports per use case</li><li>Executive scorecard for board reporting</li><li>Scaling recommendations based on evidence</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">Inputs Required</div><ul class="pd-f-list"><li>Financial Impact Model from Discovery</li><li>Baseline metrics per deployed use case</li><li>Access to business systems for data collection</li><li>Stakeholder definitions for reporting cadence</li></ul></div>
+          <div class="pd-f"><div class="pd-f-tag">What You Get</div><p class="pd-f-value"><strong>Proof that AI pays for itself.</strong> Continuous tracking of ROI, savings, revenue uplift, productivity gains, and NPS impact — with evidence-based recommendations for scaling.</p></div>
+        </div></div>
+        <div class="pd-examples"><div class="pd-examples-label">Example Deliverables</div><div class="pd-examples-grid">
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div><div class="pd-example-name">ROI Dashboard</div><div class="pd-example-ext">live</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="pd-example-name">Executive Scorecard</div><div class="pd-example-ext">.xlsx</div></div></div>
+          <div class="pd-example-item"><div class="pd-example-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="pd-example-name">Value Realization Report</div><div class="pd-example-ext">.pdf</div></div></div>
+        </div></div>
+      </div>
+    </div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 6.4 — PROPRIETARY ACCELERATORS
-  Brief: 4 accelerator cards — same as Home §4.4
-  Status: TO BUILD (mirror content from index.html §4.4)
-════════════════════════════════════════════════════ -->
-<section class="section" id="accelerators">
-  <div class="container">
-    <div class="section-label">Our Accelerators</div>
-    <h2 class="section-headline">Built to move faster. Designed to reduce risk.</h2>
-    <!-- TODO: 4 accelerator cards -->
-    [Accelerators placeholder]
-  </div>
-</section>
-
-
-<!-- ════════════════════════════════════════════════════
-  📌 SECTION 6.5 — ENGAGEMENT MODEL
-  3 tracks:
-    1 · AI Value Discovery (fixed scope, 6–10 wks)
-    2 · AI Industrialization (modular, 3–12+ mo)
-    3 · PODs (dedicated nearshore squads, monthly)
-  CTA: "Start with AI Value Discovery →"
-  Status: TO BUILD
+  §6.5 — ENGAGEMENT MODEL
 ════════════════════════════════════════════════════ -->
 <section class="section" id="engagement">
   <div class="container">
-    <div class="section-label">Engagement Model</div>
-    <h2 class="section-headline">Three ways to work with us.</h2>
-    <!-- TODO: 3 track cards -->
-    [Engagement model placeholder]
+    <div class="reveal">
+      <div class="section-label">How We Engage</div>
+      <h2 class="section-headline">Three ways to work with us.</h2>
+      <p class="section-sub">Every engagement is structured for clarity, accountability, and measurable outcomes. Choose the model that fits your stage.</p>
+    </div>
+    <div class="eng-grid">
+      <div class="eng-card reveal"><div class="eng-card-num">01</div><div class="eng-card-badge discovery">AI Value Discovery</div><div class="eng-card-title">Executive Clarity</div><div class="eng-card-body">Fixed scope, 6&ndash;10 weeks. The starting point for every engagement. Delivers AI Maturity Score, prioritized use cases, architecture blueprint, and a board-ready roadmap with financial impact model.</div><div class="eng-card-meta"><span class="eng-meta-tag">Fixed Scope</span><span class="eng-meta-tag">6&ndash;10 Weeks</span><span class="eng-meta-tag">5 Deliverables</span></div></div>
+      <div class="eng-card reveal reveal-d1"><div class="eng-card-num">02</div><div class="eng-card-badge industrial">AI Industrialization</div><div class="eng-card-title">Production AI</div><div class="eng-card-body">Modular execution, 3&ndash;12+ months. Sequenced by Discovery findings. Data foundation, use case implementation, agent architecture, governance, and ROI tracking — all built for production.</div><div class="eng-card-meta"><span class="eng-meta-tag">Modular</span><span class="eng-meta-tag">3&ndash;12+ Months</span><span class="eng-meta-tag">Production Ready</span></div></div>
+      <div class="eng-card reveal reveal-d2"><div class="eng-card-num">03</div><div class="eng-card-badge pods">Dedicated PODs</div><div class="eng-card-title">Scale &amp; Velocity</div><div class="eng-card-body">Dedicated PODs. Senior, timezone-aligned, tech-agnostic. Monthly engagement designed for organizations that need sustained execution capacity and embedded AI engineering talent.</div><div class="eng-card-meta"><span class="eng-meta-tag">Onshore and Nearshore</span><span class="eng-meta-tag">Monthly</span><span class="eng-meta-tag">Senior PODs</span></div></div>
+    </div>
+    <div style="margin-top:48px;" class="reveal">
+      <a href="contact.html" class="btn-primary">Start with AI Value Discovery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  WHY AI INITIATIVES STALL — Expanded
+════════════════════════════════════════════════════ -->
+<section class="section" id="why-stall">
+  <div class="container">
+
+    <div class="stall-intro reveal">
+      <div class="section-label">Why AI Initiatives Stall</div>
+      <h2 class="section-headline">Most organizations have the <em>ambition</em>. Few have the <em>foundation</em>.</h2>
+      <p class="section-sub">The challenge isn't access to AI tools — it's what comes before. Research consistently shows the same four root causes blocking enterprise AI from delivering value. We built our methodology to solve each one.</p>
+    </div>
+
+    <div class="stall-cards">
+
+      <!-- Card 1: Fragmented Data -->
+      <div class="stall-card reveal">
+        <div class="stall-card-header">
+          <div class="stall-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="stall-card-info">
+            <div class="stall-card-title">Fragmented Data</div>
+            <div class="stall-card-desc">Siloed systems, no single source of truth, and data quality issues that block AI at every step. When AI models train on inconsistent, incomplete, or ungoverned data, the outputs are unreliable — and executives lose trust in the entire program.</div>
+          </div>
+        </div>
+        <div class="stall-card-body">
+          <div>
+            <div class="stall-col-tag red">Business Implications</div>
+            <ul class="stall-col-list red">
+              <li>AI models produce unreliable outputs, eroding executive confidence</li>
+              <li>Duplicate and conflicting customer records cause personalization to fail</li>
+              <li>Compliance and audit risk increases without governed, traceable data</li>
+              <li>Engineering teams spend 60&ndash;80% of time on data wrangling instead of model development</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag muted-tag">What This Looks Like</div>
+            <ul class="stall-col-list">
+              <li>Same customer appears as "Acme Corp" in CRM, "Acme Corporation" in billing, "ACME Inc." in contracts</li>
+              <li>Marketing campaigns target customers who already churned — because churn data lives in a different system</li>
+              <li>Finance team manually reconciles 3 different revenue reports every quarter</li>
+              <li>Data science team can't reproduce model results because training data changes between runs</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag">Research</div>
+            <div class="stall-stat">
+              <div class="stall-stat-value">$12.9M</div>
+              <div class="stall-stat-label">Average annual cost to enterprises due to poor data quality</div>
+              <div class="stall-stat-source">IBM &middot; Cost of Poor Data Quality, 2024</div>
+            </div>
+            <div class="stall-stat" style="margin-top:8px;">
+              <div class="stall-stat-value">73%</div>
+              <div class="stall-stat-label">of enterprise data leaders identify data quality as the primary barrier to AI success</div>
+              <div class="stall-stat-source">Forrester / Capital One Survey, 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Pilots That Never Scale -->
+      <div class="stall-card reveal reveal-d1">
+        <div class="stall-card-header">
+          <div class="stall-icon"><svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></div>
+          <div class="stall-card-info">
+            <div class="stall-card-title">Pilots That Never Scale</div>
+            <div class="stall-card-desc">POCs that prove a point but never reach production. Organizations launch proof-of-concepts in safe sandboxes, but integration, governance, MLOps, and user adoption challenges mean they stall at the demo stage — forever.</div>
+          </div>
+        </div>
+        <div class="stall-card-body">
+          <div>
+            <div class="stall-col-tag red">Business Implications</div>
+            <ul class="stall-col-list red">
+              <li>Millions invested in AI initiatives that never generate revenue or efficiency</li>
+              <li>Pilot purgatory erodes board confidence in AI as a strategic investment</li>
+              <li>Best engineering talent leaves, frustrated by projects that never ship</li>
+              <li>Competitors who ship to production capture market advantage while you demo</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag muted-tag">What This Looks Like</div>
+            <ul class="stall-col-list">
+              <li>18-month "AI initiative" has 5 Jupyter notebooks and zero production deployments</li>
+              <li>Data science team presents impressive accuracy metrics on test data; model has never seen real production traffic</li>
+              <li>CTO reports "12 AI projects in progress" but none have touched a customer</li>
+              <li>New AI vendor contract signed every quarter, each promising the previous one's missing capability</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag">Research</div>
+            <div class="stall-stat">
+              <div class="stall-stat-value">80%</div>
+              <div class="stall-stat-label">of AI projects fail to reach meaningful production deployment</div>
+              <div class="stall-stat-source">RAND Corporation, 2024</div>
+            </div>
+            <div class="stall-stat" style="margin-top:8px;">
+              <div class="stall-stat-value">30%</div>
+              <div class="stall-stat-label">of GenAI projects will be abandoned after proof of concept by end of 2025</div>
+              <div class="stall-stat-source">Gartner, July 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: No Economic Thesis -->
+      <div class="stall-card reveal reveal-d2">
+        <div class="stall-card-header">
+          <div class="stall-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stall-card-info">
+            <div class="stall-card-title">No Economic Thesis</div>
+            <div class="stall-card-desc">AI initiatives disconnected from revenue, margin, or measurable business outcomes. Without a clear financial model from day one, projects compete for budget with no way to prove their value — and lose every time budgets tighten.</div>
+          </div>
+        </div>
+        <div class="stall-card-body">
+          <div>
+            <div class="stall-col-tag red">Business Implications</div>
+            <ul class="stall-col-list red">
+              <li>AI budget gets cut first during cost optimization because ROI is unproven</li>
+              <li>Board and CFO view AI as R&amp;D expense, not strategic investment</li>
+              <li>Teams optimize for technical metrics (accuracy, latency) instead of business outcomes</li>
+              <li>No framework to compare or prioritize competing AI initiatives</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag muted-tag">What This Looks Like</div>
+            <ul class="stall-col-list">
+              <li>AI team reports "94% model accuracy" but nobody can say how that translates to revenue</li>
+              <li>CFO asks "what's the ROI?" and the answer is a 40-slide deck with no numbers</li>
+              <li>Use cases are selected based on what's technically interesting, not what moves the P&amp;L</li>
+              <li>Annual AI budget request is justified by "competitive necessity" instead of projected returns</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag">Research</div>
+            <div class="stall-stat">
+              <div class="stall-stat-value">95%</div>
+              <div class="stall-stat-label">of enterprise AI pilot programs fail to deliver measurable financial returns</div>
+              <div class="stall-stat-source">MIT &middot; "The GenAI Divide", 2025</div>
+            </div>
+            <div class="stall-stat" style="margin-top:8px;">
+              <div class="stall-stat-value">42%</div>
+              <div class="stall-stat-label">of companies abandoned most AI initiatives in 2025, up from 17% in 2024</div>
+              <div class="stall-stat-source">MIT / Fortune, 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Capability & Adoption Gaps -->
+      <div class="stall-card reveal reveal-d3">
+        <div class="stall-card-header">
+          <div class="stall-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stall-card-info">
+            <div class="stall-card-title">Capability &amp; Adoption Gaps</div>
+            <div class="stall-card-desc">Technical execution without change management, governance structures, or user adoption strategy. Organizations invest in models and infrastructure but forget that AI only creates value when people actually use it — and when the organization is structured to sustain it.</div>
+          </div>
+        </div>
+        <div class="stall-card-body">
+          <div>
+            <div class="stall-col-tag red">Business Implications</div>
+            <ul class="stall-col-list red">
+              <li>Deployed AI tools sit unused because end users don't trust or understand them</li>
+              <li>No operating model means AI stays in pockets without organizational scale</li>
+              <li>Talent gaps in MLOps and data engineering create bottlenecks at production</li>
+              <li>Shadow AI proliferates without governance, creating compliance and security risk</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag muted-tag">What This Looks Like</div>
+            <ul class="stall-col-list">
+              <li>Customer service team trained for 2 hours on AI tool, adoption at 12% after 6 months</li>
+              <li>Sales team bypasses AI recommendations and reverts to spreadsheets</li>
+              <li>Individual departments hire their own AI vendors with no central coordination</li>
+              <li>CISO discovers 14 unsanctioned LLM integrations processing customer data</li>
+            </ul>
+          </div>
+          <div>
+            <div class="stall-col-tag">Research</div>
+            <div class="stall-stat">
+              <div class="stall-stat-value">70%</div>
+              <div class="stall-stat-label">of AI resources should be invested in people and processes, not just technology</div>
+              <div class="stall-stat-source">McKinsey, 2024</div>
+            </div>
+            <div class="stall-stat" style="margin-top:8px;">
+              <div class="stall-stat-value">43%</div>
+              <div class="stall-stat-label">of organizations cite lack of skills as a top obstacle to AI success</div>
+              <div class="stall-stat-source">Informatica CDO Insights, 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.stall-cards -->
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  CTA STRIP
+════════════════════════════════════════════════════ -->
+<section class="svc-cta-strip" id="svc-cta">
+  <div class="container">
+    <div class="section-label reveal" style="justify-content:center;">Start Here</div>
+    <h2 class="svc-cta-headline reveal">Ready to find out where AI creates<br><em>real value</em> for your business?</h2>
+    <p class="svc-cta-sub reveal">The AI Value Discovery is the starting point. 6&ndash;10 weeks. Executive clarity. A structured plan backed by economic modeling.</p>
+    <div class="svc-cta-actions reveal">
+      <a href="contact.html" class="btn-primary">Start AI Value Discovery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="manifesto.html" class="btn-secondary">Read our Manifesto</a>
+    </div>
   </div>
 </section>
 
@@ -161,32 +1145,88 @@
 <!-- ════════ FOOTER ════════ -->
 <footer>
 <div class="footer-inner">
-  <div class="footer-main">
+  <div class="footer-top">
     <div class="footer-brand">
-      <a href="index.html" class="footer-logo">PERCEPT<span>Y</span>A</a>
-      <p class="footer-tagline">Boutique Data & AI Transformation.<br>We turn data and AI into measurable business results.</p>
+      <a href="index.html" class="footer-logo">
+        <svg class="footer-logo-mark" width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 50L50 10L84.64 30L84.64 70L50 90L15.36 70L15.36 30L50 10" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.5"/><circle cx="50" cy="50" r="15" stroke="#D4AF37" stroke-width="3"/><path d="M50 20L65 45H35L50 20Z" fill="#D4AF37" fill-opacity="0.8"/><path d="M50 80L35 55H65L50 80Z" fill="#152238" stroke="#D4AF37"/><circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="1" stroke-dasharray="4 4"/></svg>
+        <span class="footer-logo-text">PERCEPT<em>Y</em>A</span>
+      </a>
+      <p class="footer-tagline">Boutique Data &amp; AI transformation consultancy.<br>We turn data and AI into measurable business results &mdash; not experiments.</p>
+      <div class="footer-social">
+        <a href="https://linkedin.com/company/perceptya" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a href="https://instagram.com/perceptya" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="https://x.com/perceptya" title="X" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://youtube.com/@perceptya" title="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
     </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <h4>Pages</h4>
-        <a href="manifesto.html">Manifesto</a>
-        <a href="services.html">Services</a>
-        <a href="industries.html">Industries</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="mailto:hello@perceptya.com">hello@perceptya.com</a>
-        <a href="contact.html">Start AI Value Discovery</a>
-      </div>
+    <div class="footer-nav">
+      <div class="footer-col"><div class="footer-col-label">Site</div><a href="index.html">Home</a><a href="manifesto.html">Manifesto</a><a href="services.html">Services</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><div class="footer-col-label">Methodology</div><a href="services.html#phase1">AI Value Discovery</a><a href="services.html#phase2">AI Industrialization</a><a href="services.html#accelerators">Accelerators</a><a href="services.html#engagement">Engagement Model</a></div>
+      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a></div>
+      <div class="footer-col"><div class="footer-col-label">Contact</div><a href="mailto:hello@perceptya.com">hello@perceptya.com</a><a href="contact.html" class="footer-cta">Start AI Value Discovery &rarr;</a></div>
     </div>
   </div>
+  <div class="footer-method">
+    <span class="footer-method-label">PERCEPTYA AI VALUE SYSTEM&trade;</span>
+    <div class="footer-method-tags"><span class="footer-method-tag">AI Value Discovery</span><span class="footer-method-tag">AI Maturity Score&trade;</span><span class="footer-method-tag">Use Case Prioritization</span><span class="footer-method-tag">Architecture Blueprint</span><span class="footer-method-tag">Financial Impact Model</span><span class="footer-method-tag">AI Industrialization</span><span class="footer-method-tag">Agent Architecture</span><span class="footer-method-tag">ROI &amp; Value Tracking</span></div>
+  </div>
   <div class="footer-bottom">
-    <span class="footer-copyright">© 2025 Perceptya. All rights reserved.</span>
-    <span class="footer-strip">Boutique Data & AI Transformation · São Paulo — Remote Global</span>
+    <span class="footer-copyright">&copy; 2025 Perceptya. All rights reserved.</span>
+    <div class="footer-bottom-right"><a href="#" class="footer-bottom-link">Privacy Policy</a><a href="#" class="footer-bottom-link">Terms of Service</a><span class="footer-locale">S&atilde;o Paulo &middot; Remote Global</span></div>
   </div>
 </div>
 </footer>
+
+
+<!-- ── Scroll reveal observer ──────────────────────── -->
+<script>
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+})();
+</script>
+
+<!-- ── Interactive phase panels ──────────────────── -->
+<script>
+(function() {
+  function initPhase(containerId) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    var steps   = container.querySelectorAll('.phase-step');
+    var details = container.querySelectorAll('.phase-detail');
+    var active  = steps[0] ? steps[0].getAttribute('data-step') : null;
+
+    function openStep(stepId) {
+      steps.forEach(function(s) { s.classList.remove('active'); });
+      details.forEach(function(d) { d.classList.remove('open'); });
+      var step = container.querySelector('[data-step="' + stepId + '"]');
+      var detail = document.getElementById('detail-' + stepId);
+      if (step) step.classList.add('active');
+      if (detail) detail.classList.add('open');
+      active = stepId;
+    }
+
+    steps.forEach(function(step) {
+      step.addEventListener('click', function() {
+        var id = step.getAttribute('data-step');
+        openStep(id);
+        if (window.innerWidth < 768) {
+          var detail = document.getElementById('detail-' + id);
+          if (detail) setTimeout(function() { detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        }
+      });
+    });
+
+    // Default: first step open
+    if (active) openStep(active);
+  }
+
+  initPhase('p1-layout');
+  initPhase('p2-layout');
+})();
+</script>
 
 <script src="assets/js/header.js"></script>
 </body>

@@ -27,23 +27,23 @@ header {
 
 /* Logo */
 .nav-logo {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-mark { width: 26px; height: 26px; flex-shrink: 0; display: block; }
+.nav-logo-text {
   font-family: var(--font);
-  font-weight: 700; font-size: 16px; letter-spacing: 0.14em;
-  color: var(--white); text-decoration: none; flex-shrink: 0;
+  font-weight: 700; font-size: 15px; letter-spacing: 0.14em;
+  color: var(--white);
 }
-.nav-logo span { color: var(--orange); }
+.nav-logo-text em { font-style: normal; color: var(--orange); }
 
-/* Social icons — hidden on mobile */
-.social-icons { display: none; align-items: center; gap: 8px; }
-.social-icons a {
-  display: flex; align-items: center; justify-content: center;
-  width: 28px; height: 28px; border-radius: 5px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.05);
-  color: #777; text-decoration: none; transition: all .18s;
+/* SVG flag in lang toggle */
+.lang-flag {
+  width: 18px; height: 12px;
+  display: block; flex-shrink: 0;
+  border-radius: 2px; overflow: hidden;
 }
-.social-icons a:hover { border-color: var(--orange); color: var(--orange); }
-.social-icons svg { width: 11px; height: 11px; fill: currentColor; display: block; }
 
 /* Desktop nav — hidden on mobile */
 .desktop-nav { display: none; align-items: center; gap: 38px; }
@@ -125,10 +125,9 @@ header {
 
 /* ── Desktop breakpoint ─────────────────────────────── */
 @media (min-width: 768px) {
-  .header-inner { justify-content: flex-start; }
-  .header-left  { gap: 48px; }
-  .hamburger    { display: none; }
-  .social-icons { display: flex; }
-  .desktop-nav  { display: flex; }
+  .header-inner  { justify-content: flex-start; }
+  .header-left   { gap: 112px; }
+  .hamburger     { display: none; }
+  .desktop-nav   { display: flex; }
   .desktop-right { display: flex; margin-left: auto; }
 }
