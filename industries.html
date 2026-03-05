@@ -11,7 +11,492 @@
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <style>
-  /* Page-specific overrides go here */
+
+/* ═══════════════════════════════════════════
+   INDUSTRIES — PAGE-SPECIFIC STYLES
+═══════════════════════════════════════════ */
+
+/* ── Hero ─────────────────────────────────── */
+.ind-hero {
+  padding-top: calc(var(--header-h) + 72px);
+  padding-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.ind-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.ind-hero .container { position: relative; z-index: 1; }
+.ind-hero-headline {
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--white);
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+.ind-hero-headline em { font-style: normal; color: var(--orange); }
+.ind-hero-sub {
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: var(--muted); max-width: 640px;
+}
+/* ── Hero Grid (text + framework) ─────────── */
+.ind-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.ind-hero-headline { max-width: none; }
+
+/* ── Industries Showcase Section ─────────── */
+.ind-showcase {
+  padding: 80px 0 96px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.ind-showcase-headline {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.ind-showcase-headline em { font-style: normal; color: var(--orange); }
+.ind-showcase-sub {
+  font-size: 15px; font-weight: 300; line-height: 1.75;
+  color: var(--muted); max-width: 680px;
+  margin-bottom: 40px;
+}
+
+/* ── Framework Diagram ─────────────────────── */
+.fw-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fw-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+.fw-bar .dot { width: 7px; height: 7px; border-radius: 50%; }
+.fw-bar .dot-r { background: #ff5f57; }
+.fw-bar .dot-y { background: #febc2e; }
+.fw-bar .dot-g { background: #28c840; }
+.fw-bar span {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.3); letter-spacing: .04em;
+  margin-left: 6px;
+}
+.fw-body { padding: 20px 16px 16px; }
+
+/* Vertical industry columns */
+.fw-verticals {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.fw-vert {
+  padding: 10px 4px 14px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: border-color .2s;
+}
+.fw-vert:hover { border-color: rgba(255,255,255,0.1); }
+.fw-vert-icon {
+  width: 22px; height: 22px; margin: 0 auto 6px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+}
+.fw-vert-icon svg {
+  width: 12px; height: 12px; fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.fw-vert-name {
+  font-family: var(--mono); font-size: 7px;
+  letter-spacing: .03em; line-height: 1.3;
+  color: rgba(255,255,255,0.55);
+}
+
+/* Colors for each vertical */
+.fw-vert.v1 .fw-vert-icon { background: rgba(255,107,43,0.12); }
+.fw-vert.v1 .fw-vert-icon svg { stroke: #FF6B2B; }
+.fw-vert.v2 .fw-vert-icon { background: rgba(59,130,246,0.12); }
+.fw-vert.v2 .fw-vert-icon svg { stroke: #3B82F6; }
+.fw-vert.v3 .fw-vert-icon { background: rgba(16,185,129,0.12); }
+.fw-vert.v3 .fw-vert-icon svg { stroke: #10B981; }
+.fw-vert.v4 .fw-vert-icon { background: rgba(168,85,247,0.12); }
+.fw-vert.v4 .fw-vert-icon svg { stroke: #A855F7; }
+.fw-vert.v5 .fw-vert-icon { background: rgba(236,72,153,0.12); }
+.fw-vert.v5 .fw-vert-icon svg { stroke: #EC4899; }
+.fw-vert.v6 .fw-vert-icon { background: rgba(245,158,11,0.12); }
+.fw-vert.v6 .fw-vert-icon svg { stroke: #F59E0B; }
+.fw-vert.v7 .fw-vert-icon { background: rgba(0,212,255,0.12); }
+.fw-vert.v7 .fw-vert-icon svg { stroke: #00D4FF; }
+
+/* Connector dots */
+.fw-connectors {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.fw-conn-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto;
+}
+
+/* Horizontal foundation layers */
+.fw-layers { display: flex; flex-direction: column; gap: 4px; }
+.fw-layer {
+  border-radius: 5px;
+  padding: 10px 12px;
+  border: 1px solid;
+}
+.fw-layer-top {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.fw-layer-label {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: .08em; text-transform: uppercase;
+  font-weight: 500;
+}
+.fw-layer-assets {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.fw-asset {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-family: var(--mono); font-size: 7px;
+  letter-spacing: .03em;
+}
+.fw-asset svg {
+  width: 9px; height: 9px; fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Common Assets — Emerald */
+.fw-layer.l-common {
+  background: rgba(16,185,129,0.04);
+  border-color: rgba(16,185,129,0.18);
+}
+.fw-layer.l-common .fw-layer-label { color: #10B981; }
+.fw-layer.l-common .fw-asset {
+  background: rgba(16,185,129,0.08);
+  color: rgba(16,185,129,0.8);
+}
+.fw-layer.l-common .fw-asset svg { stroke: #10B981; }
+
+/* Foundation Architecture — Blue */
+.fw-layer.l-found {
+  background: rgba(59,130,246,0.04);
+  border-color: rgba(59,130,246,0.18);
+}
+.fw-layer.l-found .fw-layer-label { color: #3B82F6; }
+.fw-layer.l-found .fw-asset {
+  background: rgba(59,130,246,0.08);
+  color: rgba(59,130,246,0.8);
+}
+.fw-layer.l-found .fw-asset svg { stroke: #3B82F6; }
+
+/* Governance — Amber */
+.fw-layer.l-gov {
+  background: rgba(245,158,11,0.04);
+  border-color: rgba(245,158,11,0.18);
+}
+.fw-layer.l-gov .fw-layer-label { color: #F59E0B; }
+.fw-layer.l-gov .fw-asset {
+  background: rgba(245,158,11,0.08);
+  color: rgba(245,158,11,0.8);
+}
+.fw-layer.l-gov .fw-asset svg { stroke: #F59E0B; }
+
+/* ── Responsive: Hero Grid + Framework ────── */
+@media (min-width: 768px) {
+  .ind-hero-grid { grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ind-hero { padding-bottom: 96px; }
+  .ind-showcase { padding: 96px 0; }
+  .fw-body { padding: 24px 22px 20px; }
+  .fw-vert-name { font-size: 7.5px; }
+  .fw-vert { padding: 12px 6px 16px; }
+  .fw-vert-icon { width: 26px; height: 26px; }
+  .fw-vert-icon svg { width: 14px; height: 14px; }
+}
+@media (min-width: 1024px) {
+  .ind-hero-grid { grid-template-columns: 1fr 1.1fr; gap: 56px; }
+  .fw-body { padding: 28px 26px 24px; }
+  .fw-vert-name { font-size: 8px; }
+  .fw-layer { padding: 12px 14px; }
+  .fw-layer-label { font-size: 8.5px; }
+  .fw-asset { font-size: 7.5px; padding: 4px 8px; }
+  .fw-asset svg { width: 10px; height: 10px; }
+}
+@media (max-width: 767px) {
+  .fw-wrap { margin-top: 8px; }
+  .fw-vert-name { font-size: 6.5px; }
+  .fw-vert { padding: 8px 2px 10px; }
+  .fw-vert-icon { width: 20px; height: 20px; }
+  .fw-vert-icon svg { width: 10px; height: 10px; }
+}
+
+/* ── Tab Card Navigation ───────────────────── */
+.ind-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 48px;
+}
+.ind-nav-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all .2s ease;
+  display: flex; align-items: flex-start; gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.ind-nav-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: transparent;
+  transition: background .2s;
+}
+.ind-nav-card:hover {
+  border-color: var(--border2);
+  background: #111;
+}
+.ind-nav-card.active {
+  border-color: rgba(255,107,43,0.35);
+  background: rgba(255,107,43,0.04);
+}
+.ind-nav-card.active::before {
+  background: var(--orange);
+}
+.ind-nav-icon {
+  width: 34px; height: 34px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: all .2s;
+}
+.ind-nav-card.active .ind-nav-icon {
+  background: rgba(255,107,43,0.1);
+  border-color: rgba(255,107,43,0.2);
+}
+.ind-nav-icon svg {
+  width: 15px; height: 15px;
+  stroke: var(--muted); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke .2s;
+}
+.ind-nav-card.active .ind-nav-icon svg { stroke: var(--orange); }
+.ind-nav-card:hover .ind-nav-icon svg { stroke: rgba(255,255,255,0.7); }
+.ind-nav-text { min-width: 0; }
+.ind-nav-name {
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 3px;
+  transition: color .2s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ind-nav-card.active .ind-nav-name { color: var(--white); }
+.ind-nav-card:hover .ind-nav-name { color: rgba(255,255,255,0.85); }
+.ind-nav-teaser {
+  font-family: var(--mono); font-size: 9px;
+  color: rgba(255,255,255,0.3); letter-spacing: .04em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ind-nav-card.active .ind-nav-teaser { color: rgba(255,107,43,0.6); }
+
+/* ── Tab Panels ────────────────────────────── */
+.ind-panel { display: none; animation: fadeUp .35s ease forwards; }
+.ind-panel.active { display: block; }
+
+/* Panel header */
+.ind-panel-header {
+  margin-bottom: 40px;
+}
+.ind-panel-icon {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,107,43,0.08);
+  border: 1px solid rgba(255,107,43,0.15);
+  border-radius: 8px; margin-bottom: 16px;
+}
+.ind-panel-icon svg {
+  width: 22px; height: 22px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.ind-panel-title {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 500; color: var(--white);
+  letter-spacing: -0.01em; margin-bottom: 12px;
+}
+.ind-panel-title em { font-style: normal; color: var(--orange); }
+.ind-panel-context {
+  font-size: 15px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.7); max-width: 720px;
+}
+
+/* KPI row */
+.ind-kpis { margin-bottom: 40px; }
+.ind-kpis-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--orange); letter-spacing: .12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
+}
+.ind-kpis-label::before { content: ''; width: 16px; height: 1px; background: var(--orange); }
+.ind-kpi-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ind-kpi-tag {
+  font-family: var(--mono); font-size: 10px;
+  color: rgba(255,255,255,0.6); letter-spacing: .04em;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 4px;
+}
+
+/* Use cases grid */
+.ind-uc-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--orange); letter-spacing: .12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 20px;
+}
+.ind-uc-label::before { content: ''; width: 16px; height: 1px; background: var(--orange); }
+.ind-uc-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 12px; margin-bottom: 40px;
+}
+.ind-uc-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 22px;
+  transition: border-color .2s, transform .2s;
+}
+.ind-uc-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+.ind-uc-num {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--orange); letter-spacing: .06em;
+  margin-bottom: 8px;
+}
+.ind-uc-name {
+  font-size: 15px; font-weight: 500;
+  color: var(--white); margin-bottom: 6px;
+}
+.ind-uc-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Panel CTA */
+.ind-panel-cta {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.ind-panel-cta a {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--orange); text-decoration: none;
+  letter-spacing: .04em;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: gap .2s;
+}
+.ind-panel-cta a:hover { gap: 12px; }
+.ind-panel-cta a svg {
+  width: 14px; height: 14px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── CTA Strip ─────────────────────────────── */
+.ind-cta-strip {
+  padding: 80px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.ind-cta-strip .section-label { justify-content: center; }
+.ind-cta-headline {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 500; color: var(--white);
+  letter-spacing: -0.01em;
+  max-width: 680px; margin: 0 auto 16px;
+}
+.ind-cta-headline em { font-style: normal; color: var(--orange); }
+.ind-cta-sub {
+  font-size: 15px; font-weight: 300; line-height: 1.7;
+  color: var(--muted); max-width: 540px;
+  margin: 0 auto 36px;
+}
+.ind-cta-btns {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  justify-content: center;
+}
+
+/* ── Scroll Reveal ─────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: .08s; }
+.reveal-d2 { transition-delay: .16s; }
+
+/* ── Responsive ────────────────────────────── */
+@media (min-width: 480px) {
+  .ind-uc-grid { grid-template-columns: 1fr 1fr; }
+  .ind-nav-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+@media (min-width: 768px) {
+  .ind-hero { padding-top: calc(var(--header-h) + 96px); }
+  .ind-nav-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ind-uc-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .ind-uc-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .ind-nav-grid { grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .ind-nav-card { padding: 14px 14px; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+  .ind-nav-icon { width: 36px; height: 36px; }
+  .ind-nav-name { white-space: normal; font-size: 12px; line-height: 1.3; }
+  .ind-nav-teaser { display: none; }
+}
+
+/* ── Animations ────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
@@ -71,81 +556,402 @@
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 7.1 — INDUSTRIES HERO
-  Eyebrow: Horizontal Capability. Vertical Business Fluency.
-  H: "We understand the business before we touch the architecture."
-  Body: "Our teams bring deep familiarity with the economic pressures,
-         regulatory constraints, operational KPIs, and data realities
-         of each sector we serve."
-  Status: TO BUILD
+  HERO
 ════════════════════════════════════════════════════ -->
-<section class="section" id="industries-hero" style="padding-top: calc(var(--header-h) + 96px);">
+<section class="ind-hero section" id="industries-hero">
   <div class="container">
-    <div class="section-label">Horizontal Capability. Vertical Business Fluency.</div>
-    <h1 class="section-headline" style="font-size:clamp(32px,4.5vw,56px); max-width:760px;">
-      We understand the business before we touch the architecture.
-    </h1>
-    <p class="section-sub">
-      Our teams bring deep familiarity with the economic pressures, regulatory constraints, operational KPIs, and data realities of each sector we serve.
-    </p>
+    <div class="ind-hero-grid">
+      <div class="ind-hero-text">
+        <div class="section-label reveal">Industries</div>
+        <h1 class="ind-hero-headline reveal">We understand the <em>business</em> before we touch the architecture.</h1>
+        <p class="ind-hero-sub reveal reveal-d1">Horizontal capability. Vertical fluency. Our teams bring deep familiarity with the economic pressures, regulatory constraints, operational KPIs, and data realities of each sector we serve.</p>
+      </div>
+      <div class="fw-wrap reveal reveal-d2">
+      <div class="fw-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span>industry-framework.map</span>
+      </div>
+      <div class="fw-body">
+
+        <!-- Vertical industry columns -->
+        <div class="fw-verticals">
+          <div class="fw-vert v1">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+            <div class="fw-vert-name">Retail &amp;<br>E-commerce</div>
+          </div>
+          <div class="fw-vert v2">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="fw-vert-name">Financial<br>Services</div>
+          </div>
+          <div class="fw-vert v3">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+            <div class="fw-vert-name">Logistics &amp;<br>Supply Chain</div>
+          </div>
+          <div class="fw-vert v4">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l5 4V8l5 4V4l5 4v12"/></svg></div>
+            <div class="fw-vert-name">Manufac-<br>turing</div>
+          </div>
+          <div class="fw-vert v5">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div class="fw-vert-name">Health-<br>care</div>
+          </div>
+          <div class="fw-vert v6">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+            <div class="fw-vert-name">B2B /<br>SaaS</div>
+          </div>
+          <div class="fw-vert v7">
+            <div class="fw-vert-icon"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></div>
+            <div class="fw-vert-name">Startups &amp;<br>Scale-ups</div>
+          </div>
+        </div>
+
+        <!-- Connector dots -->
+        <div class="fw-connectors">
+          <div class="fw-conn-dot"></div><div class="fw-conn-dot"></div><div class="fw-conn-dot"></div><div class="fw-conn-dot"></div><div class="fw-conn-dot"></div><div class="fw-conn-dot"></div><div class="fw-conn-dot"></div>
+        </div>
+
+        <!-- Horizontal foundation layers -->
+        <div class="fw-layers">
+
+          <!-- Common Assets -->
+          <div class="fw-layer l-common">
+            <div class="fw-layer-top">
+              <div class="fw-layer-label">Common Assets</div>
+            </div>
+            <div class="fw-layer-assets">
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg> Data Models</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Reusable Components</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Libraries</span>
+            </div>
+          </div>
+
+          <!-- Foundation Architecture -->
+          <div class="fw-layer l-found">
+            <div class="fw-layer-top">
+              <div class="fw-layer-label">Foundation Architecture</div>
+            </div>
+            <div class="fw-layer-assets">
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg> Agentic Architecture</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> APIs</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> Cloud Platforms</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Datasets</span>
+            </div>
+          </div>
+
+          <!-- Governance -->
+          <div class="fw-layer l-gov">
+            <div class="fw-layer-top">
+              <div class="fw-layer-label">Governance</div>
+            </div>
+            <div class="fw-layer-assets">
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Controls</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Compliance</span>
+              <span class="fw-asset"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Management</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 7.2 — INDUSTRY TABS / PANELS
-  Recommended UX: Horizontal tab nav + content panel per industry
-  Each panel template: Context · KPIs · Use Cases · CTA
-
-  6 industries:
-  ─────────────────────────────────────────────────────
-  1 · RETAIL & E-COMMERCE
-      KPIs: Conversion rate · AOV · CLV · Churn · Inventory turnover · NPS
-      Use Cases: Demand forecasting · Hyperpersonalization · Dynamic pricing
-                 Churn prediction · AI-powered search & recommendations
-
-  2 · FINANCIAL SERVICES
-      KPIs: Default rate · Cost-to-serve · Fraud detection · NPS
-            Time-to-decision · AML false positive rate
-      Use Cases: Credit risk with alt data · Fraud real-time decisioning
-                 CLV optimization · Regulatory reporting · AI underwriting
-
-  3 · LOGISTICS & SUPPLY CHAIN
-      KPIs: On-time delivery · Cost per shipment · Warehouse utilization
-            SLA compliance · Fuel efficiency · Return rate
-      Use Cases: Route optimization · Predictive maintenance
-                 Inventory positioning · Shipment anomaly detection
-
-  4 · MANUFACTURING / INDUSTRIAL
-      KPIs: OEE · Downtime · Defect rate · Energy · Yield · Maintenance cost
-      Use Cases: Predictive maintenance · Computer vision QC
-                 Production scheduling · Energy optimization · Digital twin
-
-  5 · HEALTHCARE
-      KPIs: Readmission · Length of stay · Diagnostic accuracy
-            Bed utilization · Cost per patient · NPS
-      Use Cases: Patient risk stratification · Clinical doc automation
-                 Demand forecasting · Claims processing · Diagnostic support
-
-  6 · B2B / SAAS / SERVICES
-      KPIs: ARR/MRR · Churn · NPS · LTV/CAC · Time-to-value · Expansion revenue
-      Use Cases: Churn prediction · Usage analytics · Customer success automation
-                 Pricing optimization · AI-powered onboarding
-
-  Status: TO BUILD
+  INDUSTRIES SHOWCASE
 ════════════════════════════════════════════════════ -->
-<section class="section" id="industry-tabs">
+<section class="ind-showcase" id="industries-showcase">
   <div class="container">
+    <div class="section-label reveal">Explore Industries</div>
+    <h2 class="ind-showcase-headline reveal">Vertical expertise. <em>Shared</em> foundations.</h2>
+    <p class="ind-showcase-sub reveal reveal-d1">Each industry vertical is powered by a common architecture layer — reusable assets, production-grade infrastructure, and enterprise governance that accelerate every engagement.</p>
 
-    <!-- TODO: Tab navigation -->
-    <div class="industry-tabs" style="margin-bottom:48px;">
-      <!-- Tabs: Retail | Financial Services | Logistics | Manufacturing | Healthcare | B2B/SaaS -->
-      [Tab nav placeholder]
+    <div class="ind-nav-grid reveal reveal-d2">
+
+      <div class="ind-nav-card active" data-tab="retail">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Retail &amp; E-commerce</div><div class="ind-nav-teaser">Personalization &middot; Pricing &middot; CLV</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="financial">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Financial Services</div><div class="ind-nav-teaser">Risk &middot; Fraud &middot; Compliance</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="logistics">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Logistics &amp; Supply Chain</div><div class="ind-nav-teaser">Routes &middot; Planning &middot; Fulfillment</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="manufacturing">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l5 4V8l5 4V4l5 4v12"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Manufacturing</div><div class="ind-nav-teaser">OEE &middot; Quality &middot; Maintenance</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="healthcare">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Healthcare</div><div class="ind-nav-teaser">Clinical &middot; Operations &middot; Revenue</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="b2b">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">B2B / SaaS / Services</div><div class="ind-nav-teaser">Retention &middot; Expansion &middot; NRR</div></div>
+      </div>
+
+      <div class="ind-nav-card" data-tab="startups">
+        <div class="ind-nav-icon"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <div class="ind-nav-text"><div class="ind-nav-name">Startups &amp; Scale-ups</div><div class="ind-nav-teaser">Growth &middot; Product &middot; Efficiency</div></div>
+      </div>
+
     </div>
 
-    <!-- TODO: Tab panels (one per industry, same template) -->
-    <div class="industry-panels">
-      [Industry panels placeholder]
+    <!-- ── PANELS ─────────────────────────────── -->
+
+    <!-- ── RETAIL & E-COMMERCE ─────────────────── -->
+    <div class="ind-panel active" id="panel-retail" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <div class="ind-panel-title"><em>Retail &amp; E-commerce</em></div>
+        <p class="ind-panel-context">Consumer expectations are evolving faster than most retail operations can adapt. Margins are compressing, acquisition costs are rising, and the gap between digital-native disruptors and traditional retailers continues to widen. AI creates competitive advantage when it is connected directly to revenue — through personalization, pricing, inventory optimization, and customer retention.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">Conversion Rate</span>
+          <span class="ind-kpi-tag">Average Order Value</span>
+          <span class="ind-kpi-tag">Customer Lifetime Value</span>
+          <span class="ind-kpi-tag">Churn Rate</span>
+          <span class="ind-kpi-tag">Inventory Turnover</span>
+          <span class="ind-kpi-tag">NPS</span>
+          <span class="ind-kpi-tag">Return Rate</span>
+          <span class="ind-kpi-tag">Gross Margin</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Demand Forecasting</div><div class="ind-uc-desc">ML-driven demand signals that reduce stockouts by up to 30% and cut overstock waste, directly improving inventory turnover and working capital allocation.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Hyperpersonalization</div><div class="ind-uc-desc">Real-time personalization of product recommendations, content, and offers based on behavioral signals — driving higher AOV and conversion rates across channels.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Dynamic Pricing</div><div class="ind-uc-desc">AI-powered pricing engines that adapt to demand elasticity, competitor positioning, and inventory levels in real-time to maximize margin and revenue.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Churn Prediction &amp; Retention</div><div class="ind-uc-desc">Predictive models that identify at-risk customers before they leave, enabling proactive retention strategies that reduce churn and protect CLV.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">AI-Powered Search &amp; Recommendations</div><div class="ind-uc-desc">Semantic search and recommendation engines that understand buyer intent, improving product discovery, engagement, and cross-sell conversion.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">Customer Segmentation Intelligence</div><div class="ind-uc-desc">Advanced clustering that moves beyond demographics to behavioral and transactional patterns, enabling precision marketing and resource allocation.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Retail <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── FINANCIAL SERVICES ──────────────────── -->
+    <div class="ind-panel" id="panel-financial" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="ind-panel-title"><em>Financial Services</em></div>
+        <p class="ind-panel-context">Financial institutions face simultaneous pressure to reduce cost-to-serve, accelerate decision-making, strengthen compliance, and deliver hyper-relevant customer experiences. Regulatory complexity and legacy infrastructure make AI adoption uniquely challenging — but the economic upside is proportionally large. From underwriting to fraud detection, AI transforms risk management from reactive to predictive.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">Default Rate</span>
+          <span class="ind-kpi-tag">Cost-to-Serve</span>
+          <span class="ind-kpi-tag">Fraud Detection Rate</span>
+          <span class="ind-kpi-tag">NPS</span>
+          <span class="ind-kpi-tag">Time-to-Decision</span>
+          <span class="ind-kpi-tag">AML False Positive Rate</span>
+          <span class="ind-kpi-tag">CLV</span>
+          <span class="ind-kpi-tag">Operational Loss Ratio</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Credit Risk with Alternative Data</div><div class="ind-uc-desc">AI models that incorporate non-traditional data sources — transactional behavior, digital footprint, geolocation — to improve credit scoring accuracy and expand addressable markets.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Real-Time Fraud Decisioning</div><div class="ind-uc-desc">Sub-second fraud detection leveraging behavioral biometrics, transaction graph analysis, and anomaly detection — reducing fraud losses while minimizing false positives.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">CLV Optimization</div><div class="ind-uc-desc">Predictive lifetime value models that inform product bundling, pricing strategies, and resource allocation across the customer portfolio.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Regulatory Reporting Automation</div><div class="ind-uc-desc">AI-driven extraction, validation, and generation of regulatory reports — reducing manual effort, error rates, and compliance risk while accelerating time-to-submission.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">AI Underwriting</div><div class="ind-uc-desc">Automated underwriting pipelines that process applications faster, assess risk more accurately, and enable real-time decisioning for lending and insurance products.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">AML &amp; Transaction Monitoring</div><div class="ind-uc-desc">Graph-based AI that identifies suspicious patterns across networks of transactions, reducing false positives by up to 60% while improving detection of complex money laundering schemes.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Financial Services <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── LOGISTICS & SUPPLY CHAIN ────────────── -->
+    <div class="ind-panel" id="panel-logistics" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="ind-panel-title"><em>Logistics &amp; Supply Chain</em></div>
+        <p class="ind-panel-context">Global supply chains face unprecedented volatility — from geopolitical disruption and raw material shortages to last-mile delivery expectations that continue to compress. AI transforms supply chain management from reactive firefighting to predictive orchestration, turning operational complexity into competitive advantage through intelligent planning, routing, and resource allocation.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">On-Time Delivery</span>
+          <span class="ind-kpi-tag">Cost per Shipment</span>
+          <span class="ind-kpi-tag">Warehouse Utilization</span>
+          <span class="ind-kpi-tag">SLA Compliance</span>
+          <span class="ind-kpi-tag">Fuel Efficiency</span>
+          <span class="ind-kpi-tag">Return Rate</span>
+          <span class="ind-kpi-tag">Order Accuracy</span>
+          <span class="ind-kpi-tag">Lead Time</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Route Optimization</div><div class="ind-uc-desc">Dynamic route planning that adapts to real-time traffic, weather, delivery windows, and vehicle constraints — reducing fuel costs and improving on-time delivery rates.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Predictive Maintenance (Fleet)</div><div class="ind-uc-desc">IoT sensor data combined with ML models to predict vehicle and equipment failures before they happen, reducing unplanned downtime and maintenance costs.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Inventory Positioning</div><div class="ind-uc-desc">AI-driven inventory allocation across warehouses and distribution centers based on demand forecasts, seasonal patterns, and lead time variability.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Shipment Anomaly Detection</div><div class="ind-uc-desc">Real-time monitoring of shipments to detect delays, route deviations, temperature excursions, and handling anomalies — enabling proactive intervention before SLA breaches.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">Demand Sensing &amp; Planning</div><div class="ind-uc-desc">Near-real-time demand signals from POS data, weather, events, and social media that improve forecast accuracy and reduce the bullwhip effect across the supply chain.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">Warehouse Automation Intelligence</div><div class="ind-uc-desc">AI-optimized picking routes, slotting strategies, and labor scheduling that increase warehouse throughput and reduce cost per order fulfilled.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Logistics <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── MANUFACTURING / INDUSTRIAL ──────────── -->
+    <div class="ind-panel" id="panel-manufacturing" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l5 4V8l5 4V4l5 4v12"/></svg></div>
+        <div class="ind-panel-title"><em>Manufacturing</em> / Industrial</div>
+        <p class="ind-panel-context">Manufacturing operates at the intersection of physical complexity and digital opportunity. Rising energy costs, quality expectations, labor shortages, and the push toward Industry 4.0 create urgent demand for AI that directly impacts the production floor — from predictive maintenance that prevents costly downtime to computer vision that catches defects the human eye cannot.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">OEE</span>
+          <span class="ind-kpi-tag">Unplanned Downtime</span>
+          <span class="ind-kpi-tag">Defect Rate</span>
+          <span class="ind-kpi-tag">Energy Consumption</span>
+          <span class="ind-kpi-tag">Yield</span>
+          <span class="ind-kpi-tag">Maintenance Cost</span>
+          <span class="ind-kpi-tag">Scrap Rate</span>
+          <span class="ind-kpi-tag">Throughput</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Predictive Maintenance</div><div class="ind-uc-desc">Vibration analysis, thermal imaging, and sensor data models that predict equipment failures 2&ndash;4 weeks in advance — reducing unplanned downtime by up to 40% and extending asset life.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Computer Vision Quality Control</div><div class="ind-uc-desc">Automated visual inspection at production speed — detecting surface defects, dimensional deviations, and assembly errors with accuracy exceeding human inspectors.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Production Scheduling Optimization</div><div class="ind-uc-desc">AI-driven scheduling that balances machine availability, material constraints, order priorities, and changeover times to maximize throughput and minimize waste.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Energy Optimization</div><div class="ind-uc-desc">ML models that optimize energy consumption per production unit by adjusting process parameters in real-time based on demand, equipment state, and energy pricing.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">Digital Twin Simulation</div><div class="ind-uc-desc">Virtual replicas of production lines that enable what-if scenario analysis, capacity planning, and process optimization without disrupting live operations.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">Supply Chain Risk Intelligence</div><div class="ind-uc-desc">AI monitoring of supplier networks, geopolitical signals, and commodity markets to provide early warning of disruptions and enable proactive sourcing decisions.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Manufacturing <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── HEALTHCARE ──────────────────────────── -->
+    <div class="ind-panel" id="panel-healthcare" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="ind-panel-title"><em>Healthcare</em></div>
+        <p class="ind-panel-context">Healthcare systems worldwide face a fundamental tension: rising patient volumes and complexity against constrained resources, staffing shortages, and regulatory burden. AI in healthcare must be clinically validated, explainable, and built with patient safety as the non-negotiable foundation. When deployed responsibly, it transforms clinical decision-making, operational efficiency, and the patient experience.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">Readmission Rate</span>
+          <span class="ind-kpi-tag">Length of Stay</span>
+          <span class="ind-kpi-tag">Diagnostic Accuracy</span>
+          <span class="ind-kpi-tag">Bed Utilization</span>
+          <span class="ind-kpi-tag">Cost per Patient</span>
+          <span class="ind-kpi-tag">NPS</span>
+          <span class="ind-kpi-tag">Claims Processing Time</span>
+          <span class="ind-kpi-tag">Staff Utilization</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Patient Risk Stratification</div><div class="ind-uc-desc">Predictive models that identify high-risk patients based on clinical history, social determinants, and real-time vitals — enabling early intervention and reducing readmission rates.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Clinical Documentation Automation</div><div class="ind-uc-desc">AI-assisted clinical notes that reduce documentation burden by up to 50%, freeing clinician time for patient care while maintaining compliance and coding accuracy.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Capacity &amp; Demand Forecasting</div><div class="ind-uc-desc">ML-driven forecasting of patient volumes, bed occupancy, and staffing needs that improve resource planning and reduce wait times across departments.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Claims Processing &amp; Revenue Cycle</div><div class="ind-uc-desc">Automated claims validation, coding optimization, and denial prediction that accelerate cash flow, reduce denials, and minimize revenue leakage.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">Diagnostic Decision Support</div><div class="ind-uc-desc">AI models that assist radiologists and pathologists with pattern detection in imaging and lab results — improving diagnostic speed and reducing missed findings.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">Operational Flow Optimization</div><div class="ind-uc-desc">Real-time optimization of OR scheduling, patient flow, and discharge planning that reduces bottlenecks, improves bed turnover, and enhances patient experience.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Healthcare <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── B2B / SAAS / SERVICES ───────────────── -->
+    <div class="ind-panel" id="panel-b2b" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div class="ind-panel-title"><em>B2B / SaaS</em> / Services</div>
+        <p class="ind-panel-context">B2B companies and SaaS platforms operate in a metrics-driven environment where retention, expansion, and efficiency determine long-term viability. Customer acquisition costs continue to rise, making net revenue retention the critical growth lever. AI enables these businesses to predict churn before it happens, optimize pricing dynamically, automate customer success at scale, and accelerate time-to-value for every customer.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">ARR / MRR</span>
+          <span class="ind-kpi-tag">Churn Rate</span>
+          <span class="ind-kpi-tag">NPS</span>
+          <span class="ind-kpi-tag">LTV / CAC</span>
+          <span class="ind-kpi-tag">Time-to-Value</span>
+          <span class="ind-kpi-tag">Expansion Revenue</span>
+          <span class="ind-kpi-tag">Net Revenue Retention</span>
+          <span class="ind-kpi-tag">Support Resolution Time</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">Churn Prediction &amp; Prevention</div><div class="ind-uc-desc">Behavioral and usage-based models that identify churn signals weeks in advance, triggering automated intervention workflows through customer success teams.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Product Usage Analytics</div><div class="ind-uc-desc">AI-driven analysis of feature adoption, user journeys, and engagement patterns that inform product roadmap decisions and identify underserved segments.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Customer Success Automation</div><div class="ind-uc-desc">Intelligent automation of health scoring, QBR preparation, expansion identification, and proactive outreach — enabling CS teams to manage larger portfolios without quality degradation.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Pricing Optimization</div><div class="ind-uc-desc">Dynamic pricing and packaging models that maximize willingness-to-pay across segments while maintaining competitive positioning and reducing discounting dependency.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">AI-Powered Onboarding</div><div class="ind-uc-desc">Personalized onboarding flows that adapt to user behavior, role, and use case — reducing time-to-value and improving activation rates for new customers.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">Revenue Intelligence</div><div class="ind-uc-desc">AI analysis of pipeline health, deal velocity, and win/loss patterns that give sales leadership predictive visibility into revenue outcomes and resource allocation priorities.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for B2B / SaaS <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+
+    <!-- ── STARTUPS & SCALE-UPS ────────────────── -->
+    <div class="ind-panel" id="panel-startups" role="tabpanel">
+      <div class="ind-panel-header">
+        <div class="ind-panel-icon"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <div class="ind-panel-title"><em>Startups &amp; Scale-ups</em></div>
+        <p class="ind-panel-context">Startups and scale-ups operate under a unique constraint: the need to move fast, prove product-market fit, and scale efficiently — all while resources are limited and every investment decision is magnified. AI is not a luxury for high-growth companies; it is the lever that separates those who scale intelligently from those who burn through runway. The challenge is knowing where AI creates the highest ROI with the smallest operational footprint.</p>
+      </div>
+
+      <div class="ind-kpis">
+        <div class="ind-kpis-label">KPIs We Track</div>
+        <div class="ind-kpi-tags">
+          <span class="ind-kpi-tag">Burn Rate</span>
+          <span class="ind-kpi-tag">CAC Payback</span>
+          <span class="ind-kpi-tag">Activation Rate</span>
+          <span class="ind-kpi-tag">Net Revenue Retention</span>
+          <span class="ind-kpi-tag">Time-to-Value</span>
+          <span class="ind-kpi-tag">LTV / CAC</span>
+          <span class="ind-kpi-tag">Rule of 40</span>
+          <span class="ind-kpi-tag">Engineering Velocity</span>
+        </div>
+      </div>
+
+      <div class="ind-uc-label">Top AI Use Cases</div>
+      <div class="ind-uc-grid">
+        <div class="ind-uc-card"><div class="ind-uc-num">01</div><div class="ind-uc-name">AI-Native Product Features</div><div class="ind-uc-desc">Embedding AI directly into the product — intelligent recommendations, natural language interfaces, automated workflows — to create differentiation that competitors cannot easily replicate.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">02</div><div class="ind-uc-name">Data Architecture for Scale</div><div class="ind-uc-desc">Building the data foundation right from the start — event-driven pipelines, clean data models, and governance — so AI initiatives at Series B+ don't require re-engineering from scratch.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">03</div><div class="ind-uc-name">Growth &amp; Conversion Optimization</div><div class="ind-uc-desc">ML models that optimize acquisition funnels, predict conversion likelihood, and personalize the user journey — reducing CAC and accelerating time-to-revenue.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">04</div><div class="ind-uc-name">Operational Efficiency Automation</div><div class="ind-uc-desc">AI agents that automate repetitive internal processes — support triage, document processing, billing reconciliation — freeing the team to focus on high-value work without adding headcount.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">05</div><div class="ind-uc-name">User Behavior Intelligence</div><div class="ind-uc-desc">Deep analytics on user activation, feature adoption, and engagement patterns that inform product decisions, reduce churn, and identify expansion opportunities before they surface in revenue data.</div></div>
+        <div class="ind-uc-card"><div class="ind-uc-num">06</div><div class="ind-uc-name">AI Readiness &amp; Strategy for Fundraising</div><div class="ind-uc-desc">Structured AI maturity assessment and roadmap that demonstrates to investors a credible, production-ready AI strategy — not just a pitch deck promise but a buildable plan with clear milestones.</div></div>
+      </div>
+
+      <div class="ind-panel-cta"><a href="contact.html">Explore AI Value Discovery for Startups <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
 
   </div>
@@ -153,17 +959,22 @@
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 7.3 — INDUSTRIES CTA
-  CTA: "See our methodology →" → services.html
-  Status: TO BUILD
+  CTA STRIP
 ════════════════════════════════════════════════════ -->
-<section class="section" id="industries-cta">
-  <div class="container" style="text-align:center;">
-    [CTA placeholder]
+<section class="ind-cta-strip" id="industries-cta">
+  <div class="container">
+    <div class="section-label reveal" style="justify-content:center;">Next Step</div>
+    <h2 class="ind-cta-headline reveal">Every industry starts with the same question: <em>where does AI create real value?</em></h2>
+    <p class="ind-cta-sub reveal reveal-d1">The AI Value Discovery answers that question in 6&ndash;10 weeks. Executive clarity. A prioritized roadmap. An economic model you can take to the board.</p>
+    <div class="ind-cta-btns reveal reveal-d2">
+      <a href="contact.html" class="btn-primary">Start AI Value Discovery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="services.html" class="btn-secondary">See our methodology</a>
+    </div>
   </div>
 </section>
 
 
+<!-- ════════ FOOTER ════════ -->
 <footer>
 <div class="footer-inner">
   <div class="footer-top">
@@ -189,7 +1000,7 @@
     <div class="footer-nav">
       <div class="footer-col"><div class="footer-col-label">Site</div><a href="index.html">Home</a><a href="manifesto.html">Manifesto</a><a href="services.html">Services</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></div>
       <div class="footer-col"><div class="footer-col-label">Methodology</div><a href="services.html#phase1">AI Value Discovery</a><a href="services.html#phase2">AI Industrialization</a><a href="services.html#accelerators">Accelerators</a><a href="services.html#engagement">Engagement Model</a></div>
-      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a></div>
+      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a><a href="industries.html#startups">Startups &amp; Scale-ups</a></div>
       <div class="footer-col"><div class="footer-col-label">Contact</div><a href="mailto:hello@perceptya.com">hello@perceptya.com</a><a href="contact.html" class="footer-cta">Start AI Value Discovery &rarr;</a></div>
     </div>
   </div>
@@ -208,12 +1019,47 @@
 </div>
 </footer>
 
+<!-- ════════ SCRIPTS ════════ -->
 <script>
 (function() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  // ── Scroll reveal ──
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
   }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+
+  // ── Tab navigation ──
+  var cards = document.querySelectorAll('.ind-nav-card');
+  var panels = document.querySelectorAll('.ind-panel');
+
+  function activateTab(tabId) {
+    cards.forEach(function(c) {
+      c.classList.toggle('active', c.getAttribute('data-tab') === tabId);
+    });
+    panels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+  }
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      activateTab(this.getAttribute('data-tab'));
+    });
+  });
+
+  // ── Hash-based tab activation ──
+  if (window.location.hash) {
+    var hash = window.location.hash.substring(1);
+    var matchingCard = document.querySelector('.ind-nav-card[data-tab="' + hash + '"]');
+    if (matchingCard) {
+      activateTab(hash);
+      setTimeout(function() {
+        document.getElementById('industries-showcase').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
 })();
 </script>
 
