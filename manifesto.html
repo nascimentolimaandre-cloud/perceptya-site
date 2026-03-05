@@ -11,12 +11,219 @@
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <style>
-  /* Page-specific overrides go here */
-  .manifesto-hero {
-    padding-top: calc(var(--header-h) + 96px);
-    padding-bottom: 96px;
-    text-align: center;
-  }
+
+/* ═══════════════════════════════════════════
+   MANIFESTO — PAGE-SPECIFIC STYLES
+═══════════════════════════════════════════ */
+
+/* ── Hero ─────────────────────────────────── */
+.mf-hero {
+  padding-top: calc(var(--header-h) + 100px);
+  padding-bottom: 96px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mf-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.mf-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(255,107,43,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.mf-hero .container { position: relative; z-index: 1; }
+.mf-hero-headline {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--white);
+  max-width: 900px;
+  margin: 0 auto 28px;
+}
+.mf-hero-headline em { font-style: normal; color: var(--orange); }
+.mf-hero-sub {
+  font-size: 18px; font-weight: 300; line-height: 1.8;
+  color: var(--muted); max-width: 620px;
+  margin: 0 auto;
+}
+.mf-hero-line {
+  width: 48px; height: 1px;
+  background: var(--orange);
+  margin: 40px auto 0;
+  opacity: 0.5;
+}
+
+/* ── Body (Editorial Long-Form) ───────────── */
+.mf-body {
+  padding: 80px 0;
+}
+.mf-body .container {
+  max-width: 780px;
+}
+.mf-article {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.82);
+}
+.mf-article h2 {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin: 64px 0 20px;
+  line-height: 1.25;
+}
+.mf-article h2 em { font-style: normal; color: var(--orange); }
+.mf-article p {
+  margin-bottom: 24px;
+}
+.mf-article strong {
+  font-weight: 500;
+  color: var(--white);
+}
+.mf-pull-quote {
+  margin: 56px 0;
+  padding: 32px 0 32px 28px;
+  border-left: 2px solid var(--orange);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+.mf-pull-quote em { font-style: normal; color: var(--orange); }
+.mf-divider {
+  width: 40px; height: 1px;
+  background: var(--border2);
+  margin: 56px 0;
+}
+
+/* ── 9 Differentials ──────────────────────── */
+.mf-diff {
+  padding: 96px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.mf-diff .section-label { margin-bottom: 16px; }
+.mf-diff-headline {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 56px;
+  max-width: 700px;
+}
+.mf-diff-headline em { font-style: normal; color: var(--orange); }
+.mf-diff-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.mf-diff-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 32px;
+  transition: border-color .2s, transform .2s;
+}
+.mf-diff-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+.mf-diff-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: .06em;
+  margin-bottom: 12px;
+}
+.mf-diff-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.mf-diff-body {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+/* ── CTA Strip ────────────────────────────── */
+.mf-cta {
+  padding: 80px 0;
+  text-align: center;
+}
+.mf-cta .section-label { justify-content: center; }
+.mf-cta-headline {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  max-width: 680px;
+  margin: 0 auto 16px;
+}
+.mf-cta-headline em { font-style: normal; color: var(--orange); }
+.mf-cta-sub {
+  font-size: 15px; font-weight: 300; line-height: 1.7;
+  color: var(--muted); max-width: 540px;
+  margin: 0 auto 36px;
+}
+.mf-cta-btns {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  justify-content: center;
+}
+
+/* ── Scroll Reveal ────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: .08s; }
+.reveal-d2 { transition-delay: .16s; }
+
+/* ── Responsive ───────────────────────────── */
+@media (min-width: 480px) {
+  .mf-diff-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 768px) {
+  .mf-hero { padding-top: calc(var(--header-h) + 120px); padding-bottom: 112px; }
+  .mf-body { padding: 96px 0; }
+  .mf-diff { padding: 96px 0; }
+  .mf-diff-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (min-width: 1024px) {
+  .mf-diff-grid { grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .mf-diff-card { padding: 28px 28px 32px; }
+}
+
+/* ── Animations ───────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
@@ -35,7 +242,6 @@
       </svg>
       <span class="nav-logo-text">PERCEPT<em>Y</em>A</span>
     </a>
-
     <nav class="desktop-nav">
       <a href="manifesto.html" class="active">Manifesto</a>
       <a href="services.html">Services</a>
@@ -43,54 +249,17 @@
       <a href="contact.html">Contact</a>
     </nav>
   </div>
-
   <div class="desktop-right">
     <div class="lang-toggle">
-      <span class="active">
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#fff"/>
-          <rect y="0"    width="18" height="1.85" fill="#B22234"/>
-          <rect y="3.7"  width="18" height="1.85" fill="#B22234"/>
-          <rect y="7.4"  width="18" height="1.85" fill="#B22234"/>
-          <rect y="10.15" width="18" height="1.85" fill="#B22234"/>
-          <rect width="7.5" height="6.5" fill="#3C3B6E"/>
-          <circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/>
-        </svg>
-        EN
-      </span>
+      <span class="active"><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#fff"/><rect y="0" width="18" height="1.85" fill="#B22234"/><rect y="3.7" width="18" height="1.85" fill="#B22234"/><rect y="7.4" width="18" height="1.85" fill="#B22234"/><rect y="10.15" width="18" height="1.85" fill="#B22234"/><rect width="7.5" height="6.5" fill="#3C3B6E"/><circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/><circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/><circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/><circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/><circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/><circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/><circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/><circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/><circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/></svg> EN</span>
       <div class="lang-sep"></div>
-      <span>
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#009C3B"/>
-          <polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/>
-          <circle cx="9" cy="6" r="2.8" fill="#002776"/>
-          <path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/>
-        </svg>
-        PT
-      </span>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#009C3B"/><polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/><circle cx="9" cy="6" r="2.8" fill="#002776"/><path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/></svg> PT</span>
       <div class="lang-sep"></div>
-      <span>
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#c60b1e"/>
-          <rect y="3" width="18" height="6" fill="#ffc400"/>
-        </svg>
-        ES
-      </span>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg> ES</span>
     </div>
     <button class="btn-nav" onclick="location.href='contact.html'">Start AI Value Discovery</button>
   </div>
-
-  <button class="hamburger" id="burger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </div>
 </header>
 
@@ -102,135 +271,184 @@
   <a href="contact.html">Contact</a>
   <div class="mobile-nav-footer">
     <div class="lang-toggle">
-      <span class="active">
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#fff"/>
-          <rect y="0"     width="18" height="1.85" fill="#B22234"/>
-          <rect y="3.7"   width="18" height="1.85" fill="#B22234"/>
-          <rect y="7.4"   width="18" height="1.85" fill="#B22234"/>
-          <rect y="10.15" width="18" height="1.85" fill="#B22234"/>
-          <rect width="7.5" height="6.5" fill="#3C3B6E"/>
-          <circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/>
-          <circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/>
-          <circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/>
-          <circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/>
-          <circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/>
-        </svg>
-        EN
-      </span>
+      <span class="active"><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#fff"/><rect y="0" width="18" height="1.85" fill="#B22234"/><rect y="3.7" width="18" height="1.85" fill="#B22234"/><rect y="7.4" width="18" height="1.85" fill="#B22234"/><rect y="10.15" width="18" height="1.85" fill="#B22234"/><rect width="7.5" height="6.5" fill="#3C3B6E"/><circle cx="1.8" cy="1.6" r="0.55" fill="#fff"/><circle cx="3.75" cy="1.6" r="0.55" fill="#fff"/><circle cx="5.7" cy="1.6" r="0.55" fill="#fff"/><circle cx="1.8" cy="3.3" r="0.55" fill="#fff"/><circle cx="3.75" cy="3.3" r="0.55" fill="#fff"/><circle cx="5.7" cy="3.3" r="0.55" fill="#fff"/><circle cx="1.8" cy="5.0" r="0.55" fill="#fff"/><circle cx="3.75" cy="5.0" r="0.55" fill="#fff"/><circle cx="5.7" cy="5.0" r="0.55" fill="#fff"/></svg> EN</span>
       <div class="lang-sep"></div>
-      <span>
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#009C3B"/>
-          <polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/>
-          <circle cx="9" cy="6" r="2.8" fill="#002776"/>
-          <path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/>
-        </svg>
-        PT
-      </span>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#009C3B"/><polygon points="9,1.2 16.8,6 9,10.8 1.2,6" fill="#FFDF00"/><circle cx="9" cy="6" r="2.8" fill="#002776"/><path d="M6.5 5.8 Q9 4.6 11.5 5.8" stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round"/></svg> PT</span>
       <div class="lang-sep"></div>
-      <span>
-        <svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
-          <rect width="18" height="12" fill="#c60b1e"/>
-          <rect y="3" width="18" height="6" fill="#ffc400"/>
-        </svg>
-        ES
-      </span>
+      <span><svg class="lang-flag" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg> ES</span>
     </div>
     <button class="btn-nav" onclick="location.href='contact.html'">Start AI Value Discovery</button>
-    </div>
+  </div>
 </div>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 5.1 — MANIFESTO HERO
-  Brief: Hero for Manifesto page
-  H: (TBD — brief flags this page as open for copy iteration)
-  Tone: Opinionated, direct, POV-forward
-  Background: Dark — no video (static dark bg with subtle grid/glow)
-  Status: TO BUILD
+  HERO
 ════════════════════════════════════════════════════ -->
-<section class="section manifesto-hero" id="manifesto-hero">
+<section class="mf-hero" id="manifesto-hero">
   <div class="container">
-    <div class="section-label">Our Manifesto</div>
-    <h1 class="section-headline" style="font-size:clamp(36px,5vw,64px); max-width:800px; margin:0 auto 24px;">
-      <!-- TODO: H1 headline -->
-      [Headline placeholder]
-    </h1>
-    <p class="section-sub" style="margin:0 auto;">
-      <!-- TODO: intro paragraph -->
-      [Intro copy placeholder]
-    </p>
+    <div class="section-label reveal">Our Manifesto</div>
+    <h1 class="mf-hero-headline reveal">AI is not a strategy. <em>Value</em> is.</h1>
+    <p class="mf-hero-sub reveal reveal-d1">We believe that every AI initiative must begin and end with a single question: what measurable value does this create for the business?</p>
+    <div class="mf-hero-line reveal reveal-d2"></div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 5.2 — MANIFESTO BODY
-  Brief: Long-form opinionated content
-  The Perceptya point of view on AI transformation:
-  — Why most AI initiatives fail
-  — Why economic value is the only north star
-  — Why production beats pilots, always
-  — Our commitment to clients
-  Layout: Long-read article format — large type, generous spacing
-  Status: TO BUILD
+  MANIFESTO BODY — LONG-FORM EDITORIAL
 ════════════════════════════════════════════════════ -->
-<section class="section" id="manifesto-body">
-  <div class="container" style="max-width:800px;">
-    <!-- TODO: Long-form manifesto content -->
-    [Content placeholder]
-  </div>
-</section>
-
-
-<!-- ════════════════════════════════════════════════════
-  📌 SECTION 5.3 — THE 9 DIFFERENTIALS
-  Brief: 9 locked differentials (verbatim from business doc — do not rewrite)
-  01 · Value-Backed AI Transformation
-  02 · From Data Readiness to AI Readiness
-  03 · Revenue & Efficiency Use Cases, Prioritized
-  04 · Architecture Before Automation
-  05 · Industrialization Over Pilots
-  06 · Embedded Value Tracking
-  07 · Experience-Driven AI Design
-  08 · Productivity Amplification
-  09 · Executive-Level Orchestration
-  Layout: Numbered grid — each card has number, title, body
-  Status: TO BUILD
-════════════════════════════════════════════════════ -->
-<section class="section" id="differentials">
+<section class="mf-body" id="manifesto-body">
   <div class="container">
-    <div class="section-label">Our Differentials</div>
-    <h2 class="section-headline">9 reasons we deliver where others stall.</h2>
-    <!-- TODO: 9-card grid -->
-    [Differentials grid placeholder]
+    <div class="mf-article">
+
+      <h2 class="reveal">The problem is not a lack of <em>ambition</em></h2>
+
+      <p class="reveal">Every boardroom in every industry is talking about AI. The ambition is there. The budgets are approved. The vendors are lined up. And yet, the vast majority of AI initiatives fail to reach production, fail to deliver measurable outcomes, and fail to earn their place on the P&L.</p>
+
+      <p class="reveal">This is not a technology problem. It is a design problem. Most organizations jump from ambition directly to tooling &mdash; buying platforms, hiring data scientists, launching proof-of-concept sprints &mdash; without ever answering the foundational question: where, specifically, does AI create economic value in this business?</p>
+
+      <p class="reveal">The result is predictable. Fragmented data that cannot support production workloads. Pilots that prove a point in isolation but never scale. Governance gaps that block enterprise adoption. And, ultimately, initiatives disconnected from revenue, margin, or any metric that the board actually cares about.</p>
+
+      <div class="mf-pull-quote reveal">
+        The gap is not between having AI and not having AI. The gap is between <em>experimenting</em> with AI and <em>industrializing</em> it.
+      </div>
+
+      <h2 class="reveal">Economic value is the <em>only</em> north star</h2>
+
+      <p class="reveal">We founded Perceptya on a single conviction: AI transformation must be anchored in economic value from day one. Not in technology roadmaps. Not in maturity frameworks. Not in the promise that insights will eventually emerge from a data lake.</p>
+
+      <p class="reveal">Every engagement we take on starts with the same discipline. We identify the specific revenue pools, cost structures, and operational levers where AI can create measurable impact. We build a Financial Impact Model before a single line of production code is written. And we track ROI continuously &mdash; not as a quarterly review exercise, but as an embedded, living system that informs every decision throughout execution.</p>
+
+      <p class="reveal">This is what separates transformation from experimentation. Experiments ask &ldquo;what can AI do?&rdquo; Transformation asks &ldquo;what must AI deliver &mdash; and by when &mdash; to justify the investment?&rdquo;</p>
+
+      <div class="mf-divider reveal"></div>
+
+      <h2 class="reveal">Production beats pilots. <em>Always.</em></h2>
+
+      <p class="reveal">A proof of concept that works in a sandbox with clean data proves nothing about production readiness. It proves that a model can produce output. It does not prove that the organization can operationalize it &mdash; with governance, monitoring, adoption, security, and continuous improvement.</p>
+
+      <p class="reveal">We design for production from the first conversation. That means data foundation first, because production AI requires reliable, governed, integrated data &mdash; not dashboards built on brittle pipelines. It means architecture before automation, because sustainable AI systems need strong infrastructure to scale. And it means embedded governance from the start, because enterprises that bolt on compliance later always pay more &mdash; in money, time, and trust.</p>
+
+      <p class="reveal">This is not a slower approach. It is a faster one. The organizations that reach production first are the ones that did not skip the foundations.</p>
+
+      <div class="mf-pull-quote reveal">
+        We don&rsquo;t build demos. We build systems that <em>earn their place</em> in the enterprise &mdash; production-grade, governed, and connected to the P&L.
+      </div>
+
+      <h2 class="reveal">What <em>industrialization</em> really means</h2>
+
+      <p class="reveal">Industrialization is not a buzzword. It is a design philosophy. It means every AI initiative is conceived, built, and deployed with the explicit intent of operating at enterprise scale &mdash; with real users, real data, real governance, and real measurement.</p>
+
+      <p class="reveal">It means thinking about the operating model from the beginning: who owns the AI lifecycle? How are models monitored and retrained? How does the organization prioritize the next use case? How does governance evolve as the AI portfolio grows?</p>
+
+      <p class="reveal">Most consultancies deliver a roadmap and step away. We stay through execution because the roadmap is not the product. The product is measurable, sustainable value capture &mdash; revenue growth, cost reduction, productivity gains, and customer experience improvements that compound over time.</p>
+
+      <div class="mf-divider reveal"></div>
+
+      <h2 class="reveal">Our commitment to <em>clients</em></h2>
+
+      <p class="reveal">We are a boutique firm by design. We do not scale through volume. We scale through depth, precision, and an uncompromising focus on outcomes. Every engagement is led by senior practitioners who have built and operated AI systems in production &mdash; not project managers reciting frameworks.</p>
+
+      <p class="reveal">We believe in transparency. If AI is not the right investment for a specific use case, we will say so. If the data foundation is not ready, we will address that before promising AI magic. If a vendor solution is better than a custom build, we will recommend it.</p>
+
+      <p class="reveal">We measure our success the same way our clients measure theirs: by the value captured, the outcomes delivered, and the capabilities that remain long after our engagement ends.</p>
+
+    </div>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 5.4 — MANIFESTO CTA
-  CTA: "Start AI Value Discovery →" → contact.html
-  Status: TO BUILD
+  THE 9 DIFFERENTIALS
+  ⚠️ COPY LOCKED — Verbatim from approved business document
 ════════════════════════════════════════════════════ -->
-<section class="section" id="manifesto-cta">
-  <div class="container" style="text-align:center;">
-    <!-- TODO: CTA strip -->
-    [CTA placeholder]
+<section class="mf-diff" id="differentials">
+  <div class="container">
+    <div class="section-label reveal">Why Perceptya</div>
+    <h2 class="mf-diff-headline reveal"><em>9</em> reasons we deliver where others stall.</h2>
+
+    <div class="mf-diff-grid">
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">01</div>
+        <div class="mf-diff-title">Value-Backed AI Transformation</div>
+        <div class="mf-diff-body">Every initiative begins with a clear economic thesis&mdash;revenue growth, operational efficiency, customer experience improvement, or productivity gains&mdash;with defined value metrics from day one.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">02</div>
+        <div class="mf-diff-title">From Data Readiness to AI Readiness</div>
+        <div class="mf-diff-body">We structure data ecosystems so they are reliable, governed, integrated, and genuinely prepared to power scalable AI systems&mdash;not just dashboards or storage layers.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">03</div>
+        <div class="mf-diff-title">Revenue &amp; Efficiency Use Cases, Prioritized</div>
+        <div class="mf-diff-body">We design and prioritize AI use cases based on measurable impact on growth, margin, personalization, hyperpersonalization, cost reduction, and operational efficiency.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">04</div>
+        <div class="mf-diff-title">Architecture Before Automation</div>
+        <div class="mf-diff-body">We build strong data and system foundations before deploying intelligent layers, reducing rework and accelerating sustainable value capture.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">05</div>
+        <div class="mf-diff-title">Industrialization Over Pilots</div>
+        <div class="mf-diff-body">We design AI initiatives for production from day one, ensuring governance, monitoring, adoption, and long-term scalability.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">06</div>
+        <div class="mf-diff-title">Embedded Value Tracking</div>
+        <div class="mf-diff-body">We implement structured mechanisms to measure ROI, savings, revenue uplift, NPS impact, and productivity gains throughout execution.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">07</div>
+        <div class="mf-diff-title">Experience-Driven AI Design</div>
+        <div class="mf-diff-body">We apply AI to enhance customer journeys, reduce friction, increase personalization, and create measurable improvements in customer satisfaction and loyalty.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">08</div>
+        <div class="mf-diff-title">Productivity Amplification</div>
+        <div class="mf-diff-body">We design agents and intelligent systems that eliminate repetitive work, accelerate decision-making, and increase enterprise productivity.</div>
+      </div>
+
+      <div class="mf-diff-card reveal">
+        <div class="mf-diff-num">09</div>
+        <div class="mf-diff-title">Executive-Level Orchestration</div>
+        <div class="mf-diff-body">We connect AI transformation to board-level priorities, aligning governance, risk management, and economic impact with enterprise strategy.</div>
+      </div>
+
+    </div>
   </div>
 </section>
 
 
+<!-- ════════════════════════════════════════════════════
+  CTA STRIP
+════════════════════════════════════════════════════ -->
+<section class="mf-cta" id="manifesto-cta">
+  <div class="container">
+    <div class="section-label reveal" style="justify-content:center;">Next Step</div>
+    <h2 class="mf-cta-headline reveal">Ready to find out where AI creates <em>real value</em> for your business?</h2>
+    <p class="mf-cta-sub reveal reveal-d1">The AI Value Discovery is the starting point. 6&ndash;10 weeks. Executive clarity. A clear plan backed by economic modeling.</p>
+    <div class="mf-cta-btns reveal reveal-d2">
+      <a href="contact.html" class="btn-primary">Start AI Value Discovery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="services.html" class="btn-secondary">Explore our methodology</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════ FOOTER ════════ -->
 <footer>
 <div class="footer-inner">
-
   <div class="footer-top">
-
     <div class="footer-brand">
       <a href="index.html" class="footer-logo">
         <svg class="footer-logo-mark" width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -242,78 +460,25 @@
         </svg>
         <span class="footer-logo-text">PERCEPT<em>Y</em>A</span>
       </a>
-      <p class="footer-tagline">
-        Boutique Data &amp; AI transformation consultancy.<br>
-        We turn data and AI into measurable business results &mdash; not experiments.
-      </p>
+      <p class="footer-tagline">Boutique Data &amp; AI transformation consultancy.<br>We turn data and AI into measurable business results &mdash; not experiments.</p>
       <div class="footer-social">
-        <a href="https://linkedin.com/company/perceptya" title="LinkedIn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
-        <a href="https://instagram.com/perceptya" title="Instagram" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        </a>
-        <a href="https://x.com/perceptya" title="X" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://youtube.com/@perceptya" title="YouTube" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </a>
+        <a href="https://linkedin.com/company/perceptya" title="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a href="https://instagram.com/perceptya" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="https://x.com/perceptya" title="X" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://youtube.com/@perceptya" title="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
       </div>
     </div>
-
     <div class="footer-nav">
-
-      <div class="footer-col">
-        <div class="footer-col-label">Site</div>
-        <a href="index.html">Home</a>
-        <a href="manifesto.html">Manifesto</a>
-        <a href="services.html">Services</a>
-        <a href="industries.html">Industries</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="footer-col">
-        <div class="footer-col-label">Methodology</div>
-        <a href="services.html#phase1">AI Value Discovery</a>
-        <a href="services.html#phase2">AI Industrialization</a>
-        <a href="services.html#accelerators">Accelerators</a>
-        <a href="services.html#engagement">Engagement Model</a>
-      </div>
-
-      <div class="footer-col">
-        <div class="footer-col-label">Industries</div>
-        <a href="industries.html#retail">Retail &amp; E-commerce</a>
-        <a href="industries.html#financial">Financial Services</a>
-        <a href="industries.html#logistics">Logistics &amp; Supply Chain</a>
-        <a href="industries.html#manufacturing">Manufacturing</a>
-        <a href="industries.html#healthcare">Healthcare</a>
-        <a href="industries.html#b2b">B2B / SaaS</a>
-      </div>
-
-      <div class="footer-col">
-        <div class="footer-col-label">Contact</div>
-        <a href="mailto:hello@perceptya.com">hello@perceptya.com</a>
-        <a href="contact.html" class="footer-cta">Start AI Value Discovery &rarr;</a>
-      </div>
-
+      <div class="footer-col"><div class="footer-col-label">Site</div><a href="index.html">Home</a><a href="manifesto.html">Manifesto</a><a href="services.html">Services</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><div class="footer-col-label">Methodology</div><a href="services.html#phase1">AI Value Discovery</a><a href="services.html#phase2">AI Industrialization</a><a href="services.html#accelerators">Accelerators</a><a href="services.html#engagement">Engagement Model</a></div>
+      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a><a href="industries.html#startups">Startups &amp; Scale-ups</a></div>
+      <div class="footer-col"><div class="footer-col-label">Contact</div><a href="mailto:hello@perceptya.com">hello@perceptya.com</a><a href="contact.html" class="footer-cta">Start AI Value Discovery &rarr;</a></div>
     </div>
   </div>
-
   <div class="footer-method">
     <span class="footer-method-label">PERCEPTYA AI VALUE SYSTEM&trade;</span>
-    <div class="footer-method-tags">
-      <span class="footer-method-tag">AI Value Discovery</span>
-      <span class="footer-method-tag">AI Maturity Score&trade;</span>
-      <span class="footer-method-tag">Use Case Prioritization</span>
-      <span class="footer-method-tag">Architecture Blueprint</span>
-      <span class="footer-method-tag">Financial Impact Model</span>
-      <span class="footer-method-tag">AI Industrialization</span>
-      <span class="footer-method-tag">Agent Architecture</span>
-      <span class="footer-method-tag">ROI &amp; Value Tracking</span>
-    </div>
+    <div class="footer-method-tags"><span class="footer-method-tag">AI Value Discovery</span><span class="footer-method-tag">AI Maturity Score&trade;</span><span class="footer-method-tag">Use Case Prioritization</span><span class="footer-method-tag">Architecture Blueprint</span><span class="footer-method-tag">Financial Impact Model</span><span class="footer-method-tag">AI Industrialization</span><span class="footer-method-tag">Agent Architecture</span><span class="footer-method-tag">ROI &amp; Value Tracking</span></div>
   </div>
-
   <div class="footer-bottom">
     <span class="footer-copyright">&copy; 2025 Perceptya. All rights reserved.</span>
     <div class="footer-bottom-right">
@@ -322,17 +487,18 @@
       <span class="footer-locale">S&atilde;o Paulo &middot; Remote Global</span>
     </div>
   </div>
-
 </div>
 </footer>
 
-<!-- Scroll reveal observer -->
+<!-- ════════ SCRIPTS ════════ -->
 <script>
 (function() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
   }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 })();
 </script>
 

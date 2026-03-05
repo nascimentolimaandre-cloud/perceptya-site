@@ -11,40 +11,301 @@
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <style>
-  /* ── Contact form styles ─────────────────────────── */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  .form-group label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    font-family: var(--font);
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--white);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 13px 16px;
-    outline: none;
-    transition: border-color .2s;
-    width: 100%;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--orange); }
-  .form-group textarea { min-height: 120px; resize: vertical; }
-  .form-group select option { background: var(--bg2); }
+
+/* ═══════════════════════════════════════════
+   CONTACT — PAGE-SPECIFIC STYLES
+═══════════════════════════════════════════ */
+
+/* ── Hero ─────────────────────────────────── */
+.ct-hero {
+  padding-top: calc(var(--header-h) + 80px);
+  padding-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.ct-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.ct-hero .container { position: relative; z-index: 1; max-width: 760px; }
+.ct-hero-headline {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.ct-hero-headline em { font-style: normal; color: var(--orange); }
+.ct-hero-sub {
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.7); margin-bottom: 14px;
+}
+.ct-hero-note {
+  font-size: 14px; color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
+
+/* ── Form ──────────────────────────────────── */
+.ct-form-section {
+  padding: 0 0 80px;
+}
+.ct-form-section .container { max-width: 620px; }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.form-group label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--white);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--orange); }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-group select option { background: var(--bg2); }
+.form-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+}
+.form-email {
+  margin-top: 24px; text-align: center;
+  font-size: 13px; color: rgba(255,255,255,0.35);
+}
+.form-email a {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color .15s;
+}
+.form-email a:hover { color: var(--orange); }
+
+/* ── Journey Section ──────────────────────── */
+.ct-journey {
+  padding: 96px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.ct-journey-headline {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 56px;
+  max-width: 600px;
+}
+.ct-journey-headline em { font-style: normal; color: var(--orange); }
+
+/* Journey track */
+.ct-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+/* Vertical line connector */
+.ct-track::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 24px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--orange) 0%, rgba(255,107,43,0.3) 70%, rgba(16,185,129,0.5) 100%);
+}
+
+/* Step */
+.ct-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 24px;
+  align-items: start;
+  padding-bottom: 48px;
+  position: relative;
+}
+.ct-step:last-child { padding-bottom: 0; }
+
+/* Step node */
+.ct-step-node {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.ct-step-node.node-orange {
+  background: rgba(255,107,43,0.1);
+  border: 1px solid rgba(255,107,43,0.3);
+}
+.ct-step-node.node-orange svg {
+  width: 20px; height: 20px;
+  stroke: var(--orange); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.ct-step-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: .06em;
+  font-weight: 500;
+}
+
+/* Step content */
+.ct-step-content {
+  padding-top: 4px;
+}
+.ct-step-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.ct-step-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.ct-step-desc {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 520px;
+}
+
+/* End state */
+.ct-end-state {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 24px;
+  align-items: start;
+  position: relative;
+  padding-top: 48px;
+}
+.ct-end-node {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.ct-end-node svg {
+  width: 22px; height: 22px;
+  stroke: #10B981; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.ct-end-content {
+  padding-top: 2px;
+}
+.ct-end-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #10B981;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.ct-end-title {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  max-width: 560px;
+}
+.ct-end-title em { font-style: normal; color: #10B981; }
+
+/* Deliverables row in step */
+.ct-step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.ct-step-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .04em;
+  color: rgba(255,107,43,0.7);
+  background: rgba(255,107,43,0.06);
+  border: 1px solid rgba(255,107,43,0.15);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+/* ── Scroll Reveal ────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: .08s; }
+.reveal-d2 { transition-delay: .16s; }
+.reveal-d3 { transition-delay: .24s; }
+.reveal-d4 { transition-delay: .32s; }
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 479px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (min-width: 768px) {
+  .ct-hero { padding-top: calc(var(--header-h) + 96px); padding-bottom: 56px; }
+  .ct-journey { padding: 96px 0; }
+  .ct-step { gap: 32px; }
+  .ct-end-state { gap: 32px; }
+}
+
+/* ── Animations ───────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
@@ -104,51 +365,27 @@
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 8.1 — CONTACT HERO
-  H: "Let's find out where AI creates real value for your business."
-  Body: Description of AI Value Discovery (6–10 wks, what it delivers)
-  Secondary: "No generic proposals. No 100-page reports with no action.
-              A clear plan, backed by economic modeling."
-  Status: TO BUILD (copy ready in brief)
+  HERO
 ════════════════════════════════════════════════════ -->
-<section class="section" id="contact-hero" style="padding-top: calc(var(--header-h) + 80px); padding-bottom:48px;">
-  <div class="container" style="max-width:760px;">
-    <div class="section-label">Start Here</div>
-    <h1 class="section-headline" style="font-size:clamp(28px,4vw,52px);">
-      Let's find out where AI creates real value for your business.
-    </h1>
-    <p class="section-sub">
-      The AI Value Discovery is a 6–10 week engagement that delivers executive clarity: a prioritized use case portfolio, an architecture blueprint, and a financial impact model — ready to present to your board.
-    </p>
-    <p style="font-size:14px; color:rgba(255,255,255,0.4); font-style:italic;">
-      No generic proposals. No 100-page reports with no action. A clear plan, backed by economic modeling.
-    </p>
+<section class="ct-hero" id="contact-hero">
+  <div class="container">
+    <div class="section-label reveal">Start Here</div>
+    <h1 class="ct-hero-headline reveal">Let's find out where AI creates <em>real value</em> for your business.</h1>
+    <p class="ct-hero-sub reveal reveal-d1">The AI Value Discovery is a 6&ndash;10 week engagement that delivers executive clarity: a prioritized use case portfolio, an architecture blueprint, and a financial impact model &mdash; ready to present to your board.</p>
+    <p class="ct-hero-note reveal reveal-d2">No generic proposals. No 100-page reports with no action. A clear plan, backed by economic modeling.</p>
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 8.2 — CONTACT FORM
-  Fields:
-    · Name
-    · Company
-    · Role / Title
-    · Email
-    · Industry (dropdown):
-        Retail & E-commerce | Financial Services | Logistics & Supply Chain
-        Manufacturing | Healthcare | B2B / SaaS / Services | Other
-    · "What's your biggest AI/data challenge right now?" (free text)
-  Submit CTA: "Request AI Value Discovery"
-  Below form: "Or reach us directly: hello@perceptya.com"
-  📌 ITERATION FLAG: Consider Calendly embed as alt CTA
-  Status: PARTIALLY STUBBED — needs form handler (email / Notion / HubSpot)
+  CONTACT FORM
 ════════════════════════════════════════════════════ -->
-<section class="section" id="contact-form" style="padding-top:0;">
-  <div class="container" style="max-width:620px;">
+<section class="ct-form-section" id="contact-form">
+  <div class="container">
 
     <form id="discoveryForm" onsubmit="handleSubmit(event)">
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 20px;">
+      <div class="form-row">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" placeholder="Your name" required>
@@ -159,7 +396,7 @@
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 20px;">
+      <div class="form-row">
         <div class="form-group">
           <label for="role">Role / Title</label>
           <input type="text" id="role" name="role" placeholder="Your role">
@@ -174,12 +411,13 @@
         <label for="industry">Industry</label>
         <select id="industry" name="industry">
           <option value="" disabled selected>Select your industry</option>
-          <option>Retail & E-commerce</option>
+          <option>Retail &amp; E-commerce</option>
           <option>Financial Services</option>
-          <option>Logistics & Supply Chain</option>
+          <option>Logistics &amp; Supply Chain</option>
           <option>Manufacturing / Industrial</option>
           <option>Healthcare</option>
           <option>B2B / SaaS / Services</option>
+          <option>Startups &amp; Scale-ups</option>
           <option>Other</option>
         </select>
       </div>
@@ -189,47 +427,115 @@
         <textarea id="challenge" name="challenge" placeholder="Describe your current situation, goals, or blockers..."></textarea>
       </div>
 
-      <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:16px;">
+      <button type="submit" class="btn-primary form-submit">
         Request AI Value Discovery
         <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
     </form>
 
-    <p style="margin-top:24px; text-align:center; font-size:13px; color:rgba(255,255,255,0.35);">
+    <p class="form-email">
       Or reach us directly:
-      <a href="mailto:hello@perceptya.com" style="color:rgba(255,255,255,0.55); text-decoration:none; transition:color .15s;">hello@perceptya.com</a>
+      <a href="mailto:hello@perceptya.com">hello@perceptya.com</a>
     </p>
-
-    <!-- TODO: Optional Calendly embed
-    <div style="margin-top:40px; padding-top:40px; border-top:1px solid var(--border); text-align:center;">
-      <p style="font-size:14px; color:rgba(255,255,255,0.4); margin-bottom:16px;">Prefer to talk directly?</p>
-      <a href="#" class="btn-secondary">Book a 30-minute discovery call</a>
-    </div>
-    -->
 
   </div>
 </section>
 
 
 <!-- ════════════════════════════════════════════════════
-  📌 SECTION 8.3 — WHAT HAPPENS NEXT
-  3 steps after form submission:
-    1 · We review your submission (within 24h)
-    2 · Intro call to align scope and context
-    3 · AI Value Discovery kicks off
-  Layout: 3-step horizontal flow with connecting line
-  Status: TO BUILD
+  WHAT HAPPENS NEXT — JOURNEY
 ════════════════════════════════════════════════════ -->
-<section class="section" id="what-next">
-  <div class="container" style="max-width:760px;">
-    <div class="section-label">What Happens Next</div>
-    <!-- TODO: 3-step flow -->
-    [Next steps placeholder]
+<section class="ct-journey" id="what-next">
+  <div class="container">
+    <div class="section-label reveal">What Happens Next</div>
+    <h2 class="ct-journey-headline reveal">Your path from first contact to <em>AI-driven value</em>.</h2>
+
+    <div class="ct-track">
+
+      <!-- Step 1 -->
+      <div class="ct-step reveal">
+        <div class="ct-step-node node-orange">
+          <!-- Send / message icon -->
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="ct-step-content">
+          <div class="ct-step-label">Step 01</div>
+          <div class="ct-step-title">You reach out</div>
+          <div class="ct-step-desc">Fill out the form above or send us a direct email. Tell us a bit about your business, your current data and AI landscape, and what challenges or ambitions are driving you forward. There is no commitment at this stage &mdash; just a conversation starter.</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="ct-step reveal reveal-d1">
+        <div class="ct-step-node node-orange">
+          <!-- Calendar icon -->
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="ct-step-content">
+          <div class="ct-step-label">Step 02</div>
+          <div class="ct-step-title">Schedule a discovery call</div>
+          <div class="ct-step-desc">We schedule a 30-minute conversation with one of our senior specialists. This is not a sales pitch &mdash; it is a focused dialogue to understand your context, your biggest blockers, and what a successful outcome looks like for your organization.</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="ct-step reveal reveal-d2">
+        <div class="ct-step-node node-orange">
+          <!-- Layers / build icon -->
+          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <div class="ct-step-content">
+          <div class="ct-step-label">Step 03</div>
+          <div class="ct-step-title">We build a tailored proposal</div>
+          <div class="ct-step-desc">Through a focused set of conversations, we go deeper into your needs, data maturity, organizational context, and strategic priorities. Based on this, we build a structured AI Value Discovery proposal &mdash; scoped to your reality, with clear deliverables, timeline, and investment.</div>
+          <div class="ct-step-tags">
+            <span class="ct-step-tag">Scope Definition</span>
+            <span class="ct-step-tag">Stakeholder Mapping</span>
+            <span class="ct-step-tag">Tailored Proposal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="ct-step reveal reveal-d3">
+        <div class="ct-step-node node-orange">
+          <!-- Rocket icon -->
+          <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+        </div>
+        <div class="ct-step-content">
+          <div class="ct-step-label">Step 04</div>
+          <div class="ct-step-title">Your transformation begins</div>
+          <div class="ct-step-desc">We kick off the AI Value Discovery engagement with a structured process: executive alignment, AI &amp; data maturity assessment, use case identification and prioritization, target architecture, and financial impact modeling. In 6&ndash;10 weeks, you have a board-ready plan.</div>
+          <div class="ct-step-tags">
+            <span class="ct-step-tag">AI Maturity Score</span>
+            <span class="ct-step-tag">Use Case Portfolio</span>
+            <span class="ct-step-tag">Architecture Blueprint</span>
+            <span class="ct-step-tag">Financial Impact Model</span>
+            <span class="ct-step-tag">18&ndash;36 Month Roadmap</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- End State -->
+      <div class="ct-end-state reveal reveal-d4">
+        <div class="ct-end-node">
+          <!-- Checkmark circle icon -->
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="ct-end-content">
+          <div class="ct-end-label">End State</div>
+          <div class="ct-end-title">Your organization, <em>data-driven</em> and ready to capture value at scale with AI.</div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
 
+<!-- ════════ FOOTER ════════ -->
 <footer>
 <div class="footer-inner">
   <div class="footer-top">
@@ -255,7 +561,7 @@
     <div class="footer-nav">
       <div class="footer-col"><div class="footer-col-label">Site</div><a href="index.html">Home</a><a href="manifesto.html">Manifesto</a><a href="services.html">Services</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></div>
       <div class="footer-col"><div class="footer-col-label">Methodology</div><a href="services.html#phase1">AI Value Discovery</a><a href="services.html#phase2">AI Industrialization</a><a href="services.html#accelerators">Accelerators</a><a href="services.html#engagement">Engagement Model</a></div>
-      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a></div>
+      <div class="footer-col"><div class="footer-col-label">Industries</div><a href="industries.html#retail">Retail &amp; E-commerce</a><a href="industries.html#financial">Financial Services</a><a href="industries.html#logistics">Logistics &amp; Supply Chain</a><a href="industries.html#manufacturing">Manufacturing</a><a href="industries.html#healthcare">Healthcare</a><a href="industries.html#b2b">B2B / SaaS</a><a href="industries.html#startups">Startups &amp; Scale-ups</a></div>
       <div class="footer-col"><div class="footer-col-label">Contact</div><a href="mailto:hello@perceptya.com">hello@perceptya.com</a><a href="contact.html" class="footer-cta">Start AI Value Discovery &rarr;</a></div>
     </div>
   </div>
@@ -274,23 +580,26 @@
 </div>
 </footer>
 
+<!-- ════════ SCRIPTS ════════ -->
 <script>
 (function() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
   }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 })();
 </script>
 
 <script src="assets/js/header.js"></script>
 <script>
-  function handleSubmit(e) {
-    e.preventDefault();
-    // TODO: Wire up to email handler / Notion / HubSpot / Formspree
-    // Example with Formspree: change <form action="https://formspree.io/f/YOUR_ID" method="POST">
-    alert('Form submitted! (TODO: connect to backend)');
-  }
+function handleSubmit(e) {
+  e.preventDefault();
+  // TODO: Wire up to email handler / Notion / HubSpot / Formspree
+  // Example with Formspree: change <form action="https://formspree.io/f/YOUR_ID" method="POST">
+  alert('Form submitted! (TODO: connect to backend)');
+}
 </script>
 </body>
 </html>
