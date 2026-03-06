@@ -35,7 +35,7 @@ footer {
   text-decoration: none;
   margin-bottom: 16px;
 }
-.footer-logo-mark { width: 24px; height: 24px; flex-shrink: 0; display: block; }
+.footer-logo-mark { width: 28px; height: 28px; flex-shrink: 0; display: block; }
 .footer-logo-text {
   font-family: var(--font);
   font-weight: 700; font-size: 14px; letter-spacing: .14em;

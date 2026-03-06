@@ -27,16 +27,48 @@ header {
 
 /* Logo */
 .nav-logo {
-  display: flex; align-items: center; gap: 9px;
+  display: flex; align-items: center; gap: 10px;
   text-decoration: none; flex-shrink: 0;
 }
-.nav-logo-mark { width: 26px; height: 26px; flex-shrink: 0; display: block; }
+.nav-logo-mark { width: 32px; height: 32px; flex-shrink: 0; display: block; }
 .nav-logo-text {
   font-family: var(--font);
   font-weight: 700; font-size: 15px; letter-spacing: 0.14em;
   color: var(--white);
 }
 .nav-logo-text em { font-style: normal; color: var(--orange); }
+
+/* Logo SVG animation */
+@keyframes logoOrbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes logoPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+@keyframes logoNodePulse {
+  0%, 100% { opacity: 0.3; r: 2; }
+  50%      { opacity: 1; r: 2.8; }
+}
+@keyframes logoNodePulseLg {
+  0%, 100% { opacity: 0.3; r: 3; }
+  50%      { opacity: 1; r: 4; }
+}
+@keyframes logoCircuitPulse {
+  0%, 100% { stroke-opacity: 0.2; }
+  50%      { stroke-opacity: 0.7; }
+}
+.logo-orbit    { transform-box: fill-box; transform-origin: center; animation: logoOrbitSpin 14s linear infinite; }
+.logo-pulse    { animation: logoPulse 3s ease-in-out infinite; }
+.logo-node-1   { animation: logoNodePulseLg 2.4s ease-in-out infinite 0s; }
+.logo-node-2   { animation: logoNodePulse 2.4s ease-in-out infinite 0.6s; }
+.logo-node-3   { animation: logoNodePulse 2.4s ease-in-out infinite 1.2s; }
+.logo-circuit-1 { animation: logoCircuitPulse 2.4s ease-in-out infinite 0.3s; }
+.logo-circuit-2 { animation: logoCircuitPulse 2.4s ease-in-out infinite 0.9s; }
+.logo-circuit-3 { animation: logoCircuitPulse 2.4s ease-in-out infinite 1.5s; }
+.nav-logo:hover .nav-logo-mark { filter: drop-shadow(0 0 6px rgba(255,107,43,0.5)); transition: filter .3s ease; }
+.nav-logo:hover .logo-orbit { animation-duration: 5s; }
 
 /* SVG flag in lang toggle */
 .lang-flag {
